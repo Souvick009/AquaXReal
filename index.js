@@ -14,10 +14,13 @@ const token = process.env.token;
 // const cooldown = new Discord.Collection();
 const DisTube = require('distube')
 
-bot.distube = new DisTube(bot, { searchSongs: false, emitNewSongOnly: true });
+// Queue status template
+const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
+
+bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
 bot.distube
     .on("playSong", (message, queue, song) => message.channel.send(
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
+        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
     ))
     .on("addSong", (message, queue, song) => message.channel.send(
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
