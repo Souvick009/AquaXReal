@@ -1,6 +1,6 @@
 module.exports = {
     name: "queue",
-    aliases: [],
+    aliases: ["q"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>queue",
