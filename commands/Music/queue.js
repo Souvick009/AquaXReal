@@ -3,12 +3,12 @@ const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
 module.exports = {
-    name: "skip",
+    name: "queue",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>skip",
-    example: ">>skip",
+    usage: ">>queue",
+    example: ">>queue",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
