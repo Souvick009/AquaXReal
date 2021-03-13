@@ -7,7 +7,7 @@ const queue = new Map
 
 module.exports = {
     name: "stop",
-    aliases: [],
+    aliases: ["disconnect","dc"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>stop",
@@ -24,7 +24,7 @@ module.exports = {
         if(queue) {
             bot.distube.stop(message)
     
-            message.channel.send('DONE!')
+            message.channel.send('Successfully Disconnected!')
         } else if (!queue) {
             return
         };
