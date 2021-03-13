@@ -62,7 +62,7 @@ module.exports = {
             queue.set(message.guild.id, queue_constructor);
             queue_constructor.songs.push(song);
 
-            //Establish a connection and play the song with the vide_player function.
+            //Establish a connection and play the song with the video_player function.
             try {
                 const connection = await voice_channel.join();
                 queue_constructor.connection = connection;
