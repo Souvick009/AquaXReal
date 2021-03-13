@@ -20,10 +20,10 @@ const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filt
 bot.distube = new DisTube(bot, { searchSongs: false, emitNewSongOnly: true });
 bot.distube
     .on("playSong", (message, queue, song) => message.channel.send(
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
+        `Playing \`***${song.name}***\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
     ))
     .on("addSong", (message, queue, song) => message.channel.send(
-        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
+        `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
     ))
 
 bot.commands = new Discord.Collection();
