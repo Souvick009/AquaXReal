@@ -1,7 +1,3 @@
-const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-
 module.exports = {
     name: "queue",
     aliases: [],
@@ -16,9 +12,14 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
+        if (queue) {
+            message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
             `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\``
         ).slice(0, 10).join("\n"));
+        } else if (!queue) {
+            return message.channel.send("Nothing is playing right now!")
+        };
+        
     }
 
 }
