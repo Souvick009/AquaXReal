@@ -19,19 +19,15 @@ module.exports = {
 
         if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
 
-        //This is our server queue. We are getting this server queue from the global queue.
-        const server_queue = queue.get(message.guild.id);
-
-        let song = {};
-
-        //If the first argument is a link. Set the song object to have two keys. Title and URl.
-        if (ytdl.validateURL(args[0])) {
-            const song_info = await ytdl.getInfo(args[0]);
-            song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url }
-        }
-
-        await stop_song(message, server_queue);
-        await message.channel.send('Leaving channel :smiling_face_with_tear:')
+        let queue = await bot.distube.getQueue(message);
+    
+        if(queue) {
+            bot.distube.stop(message)
+    
+            message.channel.send('DONE!')
+        } else if (!queue) {
+            return
+        };
     }
 }
 
