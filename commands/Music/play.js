@@ -37,10 +37,10 @@ module.exports = {
             connection.play(stream, { seek: 0, volume: 1 })
                 .on('finish', () => {
                     voiceChannel.leave();
-                    message.channel.send('leaving channel');
+                    message.channel.send('Leaving Channel!');
                 });
 
-            await message.reply(`:thumbsup: Now Playing ${validURL.title}!***`)
+            await message.reply(`:thumbsup: Now Playing ${stream.title}!***`)
 
             return
         }
