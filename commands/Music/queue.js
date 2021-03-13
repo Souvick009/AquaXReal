@@ -14,7 +14,7 @@ module.exports = {
 
         if (queue) {
             message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
-            `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\`\n\`Requested by: ${song.user}\``
+            `**${id + 1}**. ${song.name} - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
         ).slice(0, 10).join("\n"));
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")

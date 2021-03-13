@@ -22,7 +22,7 @@ module.exports = {
         if (queue) {
             bot.distube.skip(message)
 
-            message.channel.send('DONE!')
+            message.channel.send(':track_next: Skipped!')
         } else if (!queue) {
             return
         };
