@@ -6,12 +6,12 @@ const ytSearch = require('yt-search');
 const queue = new Map
 
 module.exports = {
-    name: "stop",
+    name: "skip",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>stop",
-    example: ">>stop",
+    usage: ">>skip",
+    example: ">>skip",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
@@ -22,15 +22,17 @@ module.exports = {
         //This is our server queue. We are getting this server queue from the global queue.
         const server_queue = queue.get(message.guild.id);
 
-        await stop_song(message, server_queue);
+        await skip_song(message, server_queue);
         await message.channel.send('Leaving channel :smiling_face_with_tear:')
     }
 
 
 }
 
-const stop_song = (message, server_queue) => {
+const skip_song = (message, server_queue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
-    server_queue.songs = [];
+    if (!server_queue) {
+        return message.channel.send(`There are no songs in queue 😔`);
+    }
     server_queue.connection.dispatcher.end();
 }
