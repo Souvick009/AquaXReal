@@ -22,11 +22,21 @@ module.exports = {
         //This is our server queue. We are getting this server queue from the global queue.
         const server_queue = queue.get(message.guild.id);
 
-        await skip_song(message, server_queue);
-        await message.channel.send('Leaving channel :smiling_face_with_tear:')
+        //If the server queue does not exist (which doesn't for the first video queued) then create a constructor to be added to our global queue.
+        if (!server_queue) {
+
+            const queue_constructor = {
+                voice_channel: voice_channel,
+                text_channel: message.channel,
+                connection: null,
+                songs: []
+            }
+
+            await skip_song(message, server_queue);
+            await message.channel.send('Leaving channel :smiling_face_with_tear:')
+        }
+
     }
-
-
 }
 
 const skip_song = (message, server_queue) => {
