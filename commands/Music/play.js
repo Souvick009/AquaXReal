@@ -40,7 +40,7 @@ module.exports = {
                     message.channel.send('leaving channel');
                 });
 
-            await message.reply(`:thumbsup: Now Playing ***Your Link!***`)
+            await message.reply(`:thumbsup: Now Playing ${validURL.title}!***`)
 
             return
         }
