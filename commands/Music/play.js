@@ -22,9 +22,12 @@ module.exports = {
         if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
         const music = args.join(" ");
-        const embed = new Discord.MessageEmbed()
-        embed.setDescription(":x: No result");
-        embed.setColor("#FF0000");
+        const search = new Discord.MessageEmbed()
+        search.setTitle("Searching!");
+        search.setDescription(args.join(" "))
+        search.setColor("#FFFF00");
+        message.channel.send(search)
+        
         bot.distube.play(message, music)
     }
 
