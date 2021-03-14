@@ -7,7 +7,7 @@ module.exports = {
   category: "Info",
   description: "Returns all commands, or one specific command info",
   usage: "<command | alias>",
-  example: "=help, =help mute, =help clear, =help avatar",
+  example: ">>help, >>help volume, >>help queue, >>help play",
   accessableby: "None",
   run: async (bot, message, args) => {
     // If there's an args found
