@@ -22,8 +22,10 @@ module.exports = {
         if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
         const music = args.join(" ");
-
-        bot.distube.play(message, music)
+        const embed = Discord.MessageEmbed()
+        embed.setDescription(":x: No result");
+        embed.setColor("#FF0000");
+        bot.distube.play(message, music).catch(error => message.channel.send(embed))
     }
 
 

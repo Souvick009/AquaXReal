@@ -22,6 +22,10 @@ module.exports = {
         // Join the same voice channel of the author of the message
         if (voiceChannel) {
             const connection = await message.member.voice.channel.join();
+            const embed = Discord.MessageEmbed()
+            embed.setAuthor(bot.user.username, bot.user.displayAvatarURL());
+            embed.setDescription("I have been summoned!");
+            embed.setColor("#008000");
         }
     }
 }
