@@ -26,6 +26,7 @@ module.exports = {
             embed.setAuthor(bot.user.username, bot.user.displayAvatarURL());
             embed.setDescription("I have been summoned!");
             embed.setColor("#008000");
+            message.channel.send(embed)
         }
     }
 }
