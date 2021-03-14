@@ -21,7 +21,7 @@ bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
 bot.distube
     .on("playSong", (message, queue, song) => {
         const Playsong = new Discord.MessageEmbed();
-        Playsong.setTitle(`Playing new Song!`);
+        Playsong.setTitle(`:notes: Playing New Song!`);
         Playsong.setDescription(`**Song:** \`${song.name}\`  -  \`${song.formattedDuration}\` \n\n**Requested by:** ${song.user}\n${status(queue)}`)
         Playsong.setColor("#00ff00");
         Playsong.setFooter(bot.user.username, bot.user.displayAvatarURL());
