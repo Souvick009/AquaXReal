@@ -74,7 +74,7 @@ bot.on('ready', () => {
     })
     bot.user.setPresence({
         activity: {
-            name: `on ${bot.guilds.cache.size} servers | !help`,
+            name: `on ${bot.guilds.cache.size} servers | >>help`,
             type: 'PLAYING'
         },
         status: 'idle'
@@ -86,7 +86,7 @@ bot.on("guildCreate", guild => {
     console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
     bot.user.setPresence({
         activity: {
-            name: `on ${bot.guilds.cache.size} servers | !help`,
+            name: `on ${bot.guilds.cache.size} servers | >>help`,
             type: 'PLAYING'
         },
         status: 'idle'
@@ -100,7 +100,7 @@ bot.on("guildDelete", guild => {
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
     bot.user.setPresence({
         activity: {
-            name: `on ${bot.guilds.cache.size} servers | !help`,
+            name: `on ${bot.guilds.cache.size} servers | >>help`,
             type: 'PLAYING'
         },
         status: 'idle'
