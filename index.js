@@ -27,13 +27,31 @@ bot.distube
     ))
     .on("searchResult", (message, result) => {
         let i = 0;
-        embedbuilder(client, message, "YELLOW", "", `**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`)
+        const SearchResult = new Discord.MessageEmbed();
+        SearchResult.setTitle(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+        SearchResult.setColor("#FFFF00");
+        SearchResult.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        SearchResult.setTimestamp();
+        message.channel.send(SearchResult)
     })
     // DisTubeOptions.searchSongs = true
-    .on("searchCancel", (message) => embedbuilder(client, message, "RED", `Searching canceled`, "")
-    )
-    .on("error", (message, err) => embedbuilder(client, message, "RED", "An error encountered:", err)
-    )
+    .on("searchCancel", (message) => {
+        const SearchCancel = new Discord.MessageEmbed();
+        SearchCancel.setTitle(`Searching canceled`);
+        SearchCancel.setColor("#FF0000");
+        SearchCancel.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        SearchCancel.setTimestamp();
+        message.channel.send(SearchCancel)
+    })
+    .on("error", (message, err) => {
+        const error1 = new Discord.MessageEmbed();
+        error1.setTitle(`An error encountered:`);
+        error1.setColor("#FF0000");
+        error1.setDescription(err)
+        error1.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        error1.setTimestamp();
+        message.channel.send(error1)
+})
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
