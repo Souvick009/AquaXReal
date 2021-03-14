@@ -25,7 +25,7 @@ module.exports = {
             if (0 <= Number(args[0]) && Number(args[0]) <= 2) {
                 bot.distube.setRepeatMode(message, parseInt(args[0]))
                 const Loop = new Discord.MessageEmbed();
-                Loop.setTitle("Repeat mode set to:!");
+                Loop.setTitle("Repeat mode set to:");
                 Loop.setDescription(`${args[0].replace("0", "OFF").replace("1", "Repeat song").replace("2", "Repeat Queue")}`);
                 Loop.setColor("#FFFF00");
                 Loop.setFooter(bot.user.username, bot.user.displayAvatarURL());
