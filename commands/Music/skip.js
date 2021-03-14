@@ -23,7 +23,7 @@ module.exports = {
             bot.distube.skip(message)
 
             const embed = new Discord.MessageEmbed();
-            embed.setTitle("SKIPPED!");
+            embed.setTitle(":track_next: SKIPPED!");
             embed.setColor("#FFFF00");
             embed.setDescription(`Skipped the song!`);
             embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
