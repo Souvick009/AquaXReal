@@ -19,9 +19,15 @@ const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filt
 
 bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
 bot.distube
-    .on("playSong", (message, queue, song) => message.channel.send(
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
-    ))
+    .on("playSong", (message, queue, song) => {
+        const Playsong = new Discord.MessageEmbed();
+        Playsong.setTitle(`Playing new Song!`);
+        Playsong.setDescription(`Song: \`${song.name}\`  -  \`${song.formattedDuration}\` \n\nRequested by: ${song.user}\n${status(queue)}`)
+        Playsong.setColor("#00ff00");
+        Playsong.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        Playsong.setTimestamp();
+        message.channel.send(Playsong)
+    })
     .on("addSong", (message, queue, song) => message.channel.send(
         `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
     ))
@@ -51,7 +57,7 @@ bot.distube
         error1.setFooter(bot.user.username, bot.user.displayAvatarURL());
         error1.setTimestamp();
         message.channel.send(error1)
-})
+    })
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
