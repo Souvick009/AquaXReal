@@ -21,7 +21,7 @@ module.exports = {
         seek.setDescription(`seeked the song for \`${args[0]} seconds\``)
         seek.setColor("#00ff00");
         message.channel.send(seek)
-        return distube.seek(message, Number(args[0] * 1000));
+        return bot.distube.seek(message, Number(args[0] * 1000));
     }
 
 
