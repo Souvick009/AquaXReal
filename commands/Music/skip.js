@@ -29,6 +29,7 @@ module.exports = {
             embed.setFooter(client.user.username, client.user.displayAvatarURL());
             embed.setTimestamp();
 
+            message.channel.send(embed)
         } else if (!queue) {
             return
         };
