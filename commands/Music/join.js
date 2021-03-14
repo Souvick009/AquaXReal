@@ -25,7 +25,7 @@ module.exports = {
             const embed = new Discord.MessageEmbed()
             embed.setAuthor(bot.user.username, bot.user.displayAvatarURL());
             embed.setDescription("I have been summoned!");
-            embed.setColor("#008000");
+            embed.setColor("#00ff00");
             message.channel.send(embed)
         }
     }
