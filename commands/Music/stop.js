@@ -25,10 +25,10 @@ module.exports = {
             bot.distube.stop(message)
     
             const embed = new Discord.MessageEmbed();
-            embed.setTitle("STOPPED!");
+            embed.setTitle("STOPPED!");s
             embed.setColor("#");
             embed.setDescription('Successfully Disconnected!');
-            embed.setFooter(client.user.username, client.user.displayAvatarURL());
+            embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
             embed.setTimestamp();
 
             message.channel.send(embed)
