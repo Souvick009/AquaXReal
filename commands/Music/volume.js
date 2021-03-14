@@ -26,7 +26,7 @@ module.exports = {
         embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
         embed.setTimestamp();
 
-        return distube.setVolume(message, args[0]);
+        return bot.distube.setVolume(message, args[0]);
     }
 }
 
