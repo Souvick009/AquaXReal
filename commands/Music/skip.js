@@ -26,7 +26,7 @@ module.exports = {
             embed.setTitle("SKIPPED!");
             embed.setColor("#FFFF00");
             embed.setDescription(`Skipped the song!`);
-            embed.setFooter(client.user.username, client.user.displayAvatarURL());
+            embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
             embed.setTimestamp();
 
             message.channel.send(embed)
