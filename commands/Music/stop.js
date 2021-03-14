@@ -27,11 +27,11 @@ module.exports = {
             const embed = new Discord.MessageEmbed();
             embed.setTitle("STOPPED!");
             embed.setColor("#");
-            embed.setDescription(`Leaved the channel`);
+            embed.setDescription('Successfully Disconnected!');
             embed.setFooter(client.user.username, client.user.displayAvatarURL());
             embed.setTimestamp();
 
-            message.channel.send('Successfully Disconnected!')
+            message.channel.send(embed)
         } else if (!queue) {
             return
         };
