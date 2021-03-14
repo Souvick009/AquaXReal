@@ -18,7 +18,7 @@ module.exports = {
 
         const seek = new Discord.MessageEmbed()
         seek.setTitle(":fast_forward: Seeked!");
-        seek.setDescription(`seeked the song for \`${args[0]} seconds\``)
+        seek.setDescription(`Seeked the song for \`${args[0]} seconds\``)
         seek.setColor("#00ff00");
         message.channel.send(seek)
         return bot.distube.seek(message, Number(args[0] * 1000));
