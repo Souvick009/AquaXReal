@@ -17,7 +17,7 @@ const DisTube = require('distube')
 // Queue status template
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 
-bot.distube = new DisTube(bot, { searchSongs: false, emitNewSongOnly: true });
+bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
 bot.distube
     .on("playSong", (message, queue, song) => message.channel.send(
         `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`
@@ -25,6 +25,15 @@ bot.distube
     .on("addSong", (message, queue, song) => message.channel.send(
         `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
     ))
+    .on("searchResult", (message, result) => {
+        let i = 0;
+        embedbuilder(client, message, "YELLOW", "", `**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`)
+    })
+    // DisTubeOptions.searchSongs = true
+    .on("searchCancel", (message) => embedbuilder(client, message, "RED", `Searching canceled`, "")
+    )
+    .on("error", (message, err) => embedbuilder(client, message, "RED", "An error encountered:", err)
+    )
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
