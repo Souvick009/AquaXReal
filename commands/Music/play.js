@@ -23,7 +23,7 @@ module.exports = {
 
         const music = args.join(" ");
         const search = new Discord.MessageEmbed()
-        search.setTitle("Searching!");
+        search.setTitle(":mag: Searching!");
         search.setDescription(args.join(" "))
         search.setColor("#FFFF00");
         message.channel.send(search)
