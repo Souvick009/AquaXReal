@@ -22,7 +22,13 @@ module.exports = {
         if (queue) {
             bot.distube.skip(message)
 
-            message.channel.send(':track_next: Skipped!')
+            const embed = new Discord.MessageEmbed();
+            embed.setTitle("SKIPPED!");
+            embed.setColor("#FFFF00");
+            embed.setDescription(`Skipped the song!`);
+            embed.setFooter(client.user.username, client.user.displayAvatarURL());
+            embed.setTimestamp();
+
         } else if (!queue) {
             return
         };
