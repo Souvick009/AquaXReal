@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
+const prefix = '>>';
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const { getTracks, getPreview } = require("spotify-url-info");
 
 module.exports = {
     name: "play",
@@ -14,23 +16,63 @@ module.exports = {
     run: async (bot, message, args) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
-        if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
+        const vc = new Discord.MessageEmbed()
+        if (!voice_channel) {
+            vc.setColor("#FF0000")
+            vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
+            vc.setTitle(`❌ ERROR | Please join a voice channel first`)
+            return message.channel.send(vc)
+        };
+
         const permissions = voice_channel.permissionsFor(message.client.user);
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the correct permissins');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the correct permissins');
 
-        if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
+        const samevc = new Discord.MessageEmbed()
+        if (bot.distube.getQueue(message) && channel.id !== message.guild.me.voice.channel.id) {
+            samevc.setColor("#FF0000")
+            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
+            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            return message.channel.send(samevc)
+        };
 
-        const music = args.join(" ");
+        const Searchterm = new Discord.MessageEmbed()
+        if (!args[0]) {
+            Searchterm.setColor("#FF0000")
+            Searchterm.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
+            Searchterm.setDescription(`Usage: \`${prefix}play <URL / TITLE>\``)
+            return message.channel.send(Searchterm)
+        };
         const search = new Discord.MessageEmbed()
         search.setTitle(":mag: Searching!");
         search.setDescription(args.join(" "))
         search.setColor("#FFFF00");
         message.channel.send(search)
-        
-        bot.distube.play(message, music)
+
+        //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
+        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {
+            getPreview(args.join(" ")).then(result => {
+                bot.distube.play(message, result.title);
+            })
+        }
+        else if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
+            getTracks(args.join(" ")).then(result => {
+                for (const song of result)
+                    bot.distube.play(message, song.name);
+            })
+        }
+        else {
+            const music = args.join(" ");
+
+
+            bot.distube.play(message, music)
+        }
     }
 
-
 }
+
+
+
 
