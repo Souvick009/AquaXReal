@@ -26,6 +26,8 @@ module.exports = {
         embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
         embed.setTimestamp();
 
+        message.channel.send(embed)
+
         return bot.distube.setVolume(message, args[0]);
     }
 }
