@@ -25,7 +25,7 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
         embed.setDescription(":x: No result");
         embed.setColor("#FF0000");
-        bot.distube.play(message, music).catch(error => message.channel.send(embed))
+        bot.distube.play(message, music)
     }
 
 
