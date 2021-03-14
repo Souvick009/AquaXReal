@@ -32,12 +32,12 @@ function getAll(bot, message) {
   const commands = (category) => {
     return bot.commands.filter(cmd => cmd.category === category).filter(cmd => cmd.secret === false || !cmd.secret).map(cmd => `\`${cmd.name}\``).join(" | ");
   }
-  const categories = ["Info", "Music"]
+  const categories = ["Music","Info"]
   // Map all the categories
   const lines = categories.map((category, name) => "**" + category + "**" + "\n" + commands(category)
   );
   console.log(bot.categories)
-  return message.channel.send(embed.setDescription(`${lines.join("\n")} \n **Prefix (Default)** \n = \n For More Information Use **=help command** \n Example:- **=help kick**`).setFooter(message.author.tag, message.author.displayAvatarURL()).setThumbnail(message.guild.iconURL()).setTimestamp().setTitle("Here are the available commands you can use:"));
+  return message.channel.send(embed.setDescription(`${lines.join("\n")} \n **Prefix (Default)** \n >> \n For More Information Use **>>help command** \n Example:- **>>help kick**`).setFooter(message.author.tag, message.author.displayAvatarURL()).setThumbnail(message.guild.iconURL()).setTimestamp().setTitle("Here are the available commands you can use:"));
 }
 
 function getCMD(bot, message, input) {
