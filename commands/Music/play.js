@@ -7,8 +7,8 @@ module.exports = {
     aliases: ['p'],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: "=play",
-    example: "=play ",
+    usage: ">>play",
+    example: ">>play ",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
