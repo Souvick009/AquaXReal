@@ -12,14 +12,23 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        if (queue) {
-            message.channel.send('Current queue:\n' + queue.songs.map((song, id) =>
+        let curqueue = queue.songs.map((song, id) =>
             `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
-        ).slice(0, 10).join("\n"));
+        ).slice(0, 10).join("\n");
+
+
+        if (queue) {
+            const currentqueue = new Discord.MessageEmbed();
+            currentqueue.setTitle("Current Queue!");
+            currentqueue.setDescription(curqueue);
+            currentqueue.setColor("#FFFF00");
+            currentqueue.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            currentqueue.setTimestamp();
+            message.channel.send(currentqueue)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
         };
-        
+
     }
 
 }
