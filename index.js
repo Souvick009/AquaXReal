@@ -17,7 +17,7 @@ const DisTube = require('distube')
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
-bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
+bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true, leaveOnEmpty: true });
 bot.distube
     .on("playSong", (message, queue, song) => {
         const Playsong = new Discord.MessageEmbed();
