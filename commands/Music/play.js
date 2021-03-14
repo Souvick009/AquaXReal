@@ -28,8 +28,9 @@ module.exports = {
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the correct permissins');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the correct permissins');
 
+        var channel = bot.guilds.cache.get(message.channel.id).id;
         const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel.id !== message.guild.me.voice.channel.id) {
+        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
