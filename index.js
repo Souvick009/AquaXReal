@@ -28,7 +28,7 @@ bot.distube
     .on("searchResult", (message, result) => {
         let i = 0;
         const SearchResult = new Discord.MessageEmbed();
-        SearchResult.setTitle(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+        SearchResult.setDescription(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
         SearchResult.setColor("#FFFF00");
         SearchResult.setFooter(bot.user.username, bot.user.displayAvatarURL());
         SearchResult.setTimestamp();
