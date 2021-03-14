@@ -12,12 +12,13 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        let curqueue = queue.songs.map((song, id) =>
-            `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
-        ).slice(0, 10).join("\n");
+        let curqueue
 
 
         if (queue) {
+            curqueue = queue.songs.map((song, id) =>
+                `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
+            ).slice(0, 10).join("\n");
             const currentqueue = new Discord.MessageEmbed();
             currentqueue.setTitle("Current Queue!");
             currentqueue.setDescription(curqueue);
