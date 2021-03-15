@@ -30,8 +30,8 @@ module.exports = {
             let counter = 0;
             for (let i = 0; i < queue.songs.length; i += 15) {
                 let k = queue.songs;
-                let songs = k.slice(i, i + 15);
-                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 15}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))
+                let songs = k.slice(i, i + 20);
+                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 20}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))
                 counter++;
             }
             //const currentqueue = new Discord.MessageEmbed();
