@@ -14,13 +14,14 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        let curqueue
+        //let curqueue
 
 
         if (queue) {
-            curqueue = queue.songs.map((song, id) =>
-                `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
-            ).slice(0, 10).join("\n");
+            //curqueue = queue.songs.map((song, id) =>
+            //    `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
+            //).slice(0, 10).join("\n");
+            
             let embed = new Discord.MessageEmbed()
             embed.setTitle(`Queue for: ${message.guild.name}`);
             embed.setColor("#FFFF00");

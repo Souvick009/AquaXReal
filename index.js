@@ -72,7 +72,7 @@ bot.distube
     .on("playList", (message, queue, playlist, song) => {
         const PlayList = new Discord.MessageEmbed();
         PlayList.setTitle("Playling Playlist")
-        PlayList.setDescription(`**Playlist:** \`${playlist.title}\`  -  \`${playlist.total_items} songs\` \n **Starting playing Song:** \`${song.name}\`  -  \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`);
+        PlayList.setDescription(`**Playlist:** \`${playlist.name}\`  -  \`${playlist.total_items} songs\` \n **Starting playing Song:** \`${song.name}\`  -  \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`);
         PlayList.setColor("#00ff00");
         PlayList.setFooter(bot.user.username, bot.user.displayAvatarURL());
         PlayList.setTimestamp();
