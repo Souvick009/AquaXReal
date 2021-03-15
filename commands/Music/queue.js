@@ -33,7 +33,7 @@ module.exports = {
                 if (counter >= 10) break;
                 let k = queue.songs;
                 let songs = k.slice(i, i + 20);
-                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 20}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))
+                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 20}** [${song.name}](${song.url}) - ${song.formattedDuration}`)).toISOString().substr(11, 8))
                 counter++;
             }
             //const currentqueue = new Discord.MessageEmbed();
