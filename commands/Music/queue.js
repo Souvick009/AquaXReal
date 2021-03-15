@@ -23,7 +23,7 @@ module.exports = {
             //).slice(0, 10).join("\n");
 
             let embed = new Discord.MessageEmbed()
-            embed.setTitle(`Queue for: ${message.guild.name}`);
+            embed.setTitle(`Current Queue for: ${message.guild.name}`);
             embed.setColor("#FFFF00");
             embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
             embed.setTimestamp();
@@ -33,7 +33,7 @@ module.exports = {
                 if (counter >= 10) break;
                 let k = queue.songs;
                 let songs = k.slice(i, i + 10);
-                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 10}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))
+                message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 10}**. [${song.name}](${song.url}) - ${song.formattedDuration}\nRequested by: ${song.user}`)))
                 counter++;
             }
             //const currentqueue = new Discord.MessageEmbed();
