@@ -25,12 +25,12 @@ const filters = [
 ]
 
 module.exports = {
-    name: "play",
-    aliases: ['p'],
+    name: "filter",
+    aliases: [""],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>play",
-    example: ">>play ",
+    usage: ">>filter",
+    example: ">>filter",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
