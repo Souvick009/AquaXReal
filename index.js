@@ -17,19 +17,50 @@ const DisTube = require('distube')
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
-bot.distube = new DisTube(bot, { 
-    searchSongs: true, 
-    emitNewSongOnly: true, 
-    leaveOnEmpty: true 
+bot.distube = new DisTube(bot, {
+    searchSongs: false,
+    emitNewSongOnly: true,
+    leaveOnEmpty: true,
+    youtubeDL: true,
+    updateYouTubeDL: true,
+    customFilters: {
+        "clear": "dynaudnorm=f=200",
+        "bassboost": "bass=g=20,dynaudnorm=f=200",
+        "8D": "apulsator=hz=0.08",
+        "vaporwave": "aresample=48000,asetrate=48000*0.8",
+        "nightcore": "aresample=48000,asetrate=48000*1.25",
+        "phaser": "aphaser=in_gain=0.4",
+        "tremolo": "tremolo",
+        "vibrato": "vibrato=f=6.5",
+        "reverse": "areverse",
+        "treble": "treble=g=5",
+        "normalizer": "dynaudnorm=f=200",
+        "surrounding": "surround",
+        "pulsator": "apulsator=hz=1",
+        "subboost": "asubboost",
+        "karaoke": "stereotools=mlev=0.03",
+        "flanger": "flanger",
+        "gate": "agate",
+        "haas": "haas",
+        "mcompand": "mcompand"
+    }
 });
 
 bot.distube
+    .on("initQueue", queue => {
+        queue.autoplay = false;
+        queue.volume = 100;
+        queue.filter = "bassboost";
+    })
     .on("playSong", (message, queue, song) => {
         const Playsong = new Discord.MessageEmbed();
-        Playsong.setTitle(`:notes: Playing New Song!`);
-        Playsong.setDescription(`**Song:** \`${song.name}\`  -  \`${song.formattedDuration}\` \n\n**Requested by:** ${song.user}\n${status(queue)}`)
+        Playsong.setTitle("Playing :notes: " + song.name)
+        Playsong.setURL(song.url)
+        Playsong.addField("Duration", `\`${song.formattedDuration}\``)
+        Playsong.addField("QueueStatus", status(queue))
         Playsong.setColor("#00ff00");
-        Playsong.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        Playsong.setThumbnail(song.thumbnail)
+        Playsong.setFooter(`Requested by: ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
         Playsong.setTimestamp();
         message.channel.send(Playsong)
     })
@@ -45,7 +76,7 @@ bot.distube
         PlayList.setTimestamp();
         message.channel.send(PlayList)
     })
-    .on("addList", (message, queue, song) => {
+    .on("addList", (message, queue, playlist) => {
         const AddList = new Discord.MessageEmbed();
         AddList.setTitle("Added a Playlist!")
         AddList.setDescription(`Playlist: \`${playlist.title}\`  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}`);
@@ -81,6 +112,7 @@ bot.distube
         error1.setTimestamp();
         message.channel.send(error1)
     })
+    .on("empty", message => message.channel.send("Channel is empty. Leaving the channel"))
 
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
