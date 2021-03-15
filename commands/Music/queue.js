@@ -21,7 +21,7 @@ module.exports = {
             //curqueue = queue.songs.map((song, id) =>
             //    `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
             //).slice(0, 10).join("\n");
-            
+
             let embed = new Discord.MessageEmbed()
             embed.setTitle(`Queue for: ${message.guild.name}`);
             embed.setColor("#FFFF00");
@@ -29,7 +29,7 @@ module.exports = {
             embed.setTimestamp();
 
             let counter = 0;
-            for (let i = 0; i < queue.songs.length; i += 15) {
+            for (let i = 0; i < queue.songs.length; i += 20) {
                 let k = queue.songs;
                 let songs = k.slice(i, i + 20);
                 message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 20}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))
