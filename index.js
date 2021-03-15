@@ -52,7 +52,7 @@ bot.distube
     .on("initQueue", queue => {
         queue.autoplay = false;
         queue.volume = 100;
-        queue.filter = "lowbass";
+        queue.filter = "clear";
     })
     .on("playSong", (message, queue, song) => {
         const Playsong = new Discord.MessageEmbed();
