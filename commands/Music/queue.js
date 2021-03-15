@@ -29,7 +29,6 @@ module.exports = {
 
             let counter = 0;
             for (let i = 0; i < queue.songs.length; i += 20) {
-                if (counter >= 10) break;
                 let k = queue.songs;
                 let songs = k.slice(i, i + 20);
                 message.channel.send(embed.setDescription(songs.map((song, index) => `**${index + 1 + counter * 20}** [${song.name}](${song.url}) - ${song.formattedDuration}`)))

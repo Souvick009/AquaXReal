@@ -71,8 +71,8 @@ bot.distube
     ))
     .on("playList", (message, queue, playlist, song) => {
         const PlayList = new Discord.MessageEmbed();
-        PlayList.setTitle("Playling playlist")
-        PlayList.setDescription(`Playlist: \`${playlist.title}\`  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}\n\nstarting playing Song: \`${song.name}\`  -  \`${song.formattedDuration}\`\n${status(queue)}`);
+        PlayList.setTitle("Playling Playlist")
+        PlayList.setDescription(`**Playlist:** \`${playlist.title}\`  -  \`${playlist.total_items} songs\` \n **Starting playing Song:** \`${song.name}\`  -  \`${song.formattedDuration}\`\nRequested by: ${song.user}\n${status(queue)}`);
         PlayList.setColor("#00ff00");
         PlayList.setFooter(bot.user.username, bot.user.displayAvatarURL());
         PlayList.setTimestamp();
@@ -81,7 +81,7 @@ bot.distube
     .on("addList", (message, queue, playlist) => {
         const AddList = new Discord.MessageEmbed();
         AddList.setTitle("Added a Playlist!")
-        AddList.setDescription(`Playlist: \`${playlist.title}\`  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}`);
+        AddList.setDescription(`Playlist: \`${playlist.name}\`  -  \`${playlist.total_items} songs\` \n\nRequested by: ${song.user}`);
         AddList.setColor("#FFFF00");
         AddList.setFooter(bot.user.username, bot.user.displayAvatarURL());
         AddList.setTimestamp();
