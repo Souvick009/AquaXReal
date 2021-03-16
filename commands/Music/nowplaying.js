@@ -35,10 +35,10 @@ module.exports = {
         };
 
         //function for creating a bar
-        let createBar = function (maxtime, currentTime, size = 25, line = "▬", slider = "🔶") {
-            let bar = currentTime > maxtime ? [line.repeat(size / 2 * 2), (currentTime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currentTime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currentTime / maxtime)) + 1), currentTime / maxtime];
+        let createBar = function (formattedDuration, currentTime, size = 25, line = "▬", slider = "🔶") {
+            let bar = currentTime > formattedDuration ? [line.repeat(size / 2 * 2), (currentTime / formattedDuration) * 100] : [line.repeat(Math.round(size / 2 * (currentTime / formattedDuration))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currentTime / formattedDuration)) + 1), currentTime / formattedDuration];
             if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
-            return `**[${bar[0]}]**\n**${new Date(currentTime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
+            return `**[${bar[0]}]**\n**${new Date(currentTime).toISOString().substr(11, 8) + " / " + (formattedDuration == 0 ? " ◉ LIVE" : new Date(formattedDuration).toISOString().substr(11, 8))}**`;
         }
 
         let queue = bot.distube.getQueue(message);
