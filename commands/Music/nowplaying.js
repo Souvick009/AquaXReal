@@ -56,8 +56,8 @@ module.exports = {
         nowplaying.addField("Views", `▶ ${track.views}`, true);
         nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
         nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
-        nowplaying.addField("Duration: ", createBar(queue.currenttime));
         nowplaying.addField("QueueStatus", status(queue));
+        nowplaying.addField("Duration: ", createBar(queue.currenttime));
         return message.channel.send(nowplaying)
     }
 }
