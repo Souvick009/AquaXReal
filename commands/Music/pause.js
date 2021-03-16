@@ -15,7 +15,7 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
-        const voiceChannel = message.member.voice.channel;
+        const voice_channel = message.member.voice.channel;
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
