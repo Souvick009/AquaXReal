@@ -44,6 +44,9 @@ module.exports = {
         let queue = bot.distube.getQueue(message);
         let track = queue.songs[0];
 
+        // Queue status template
+        const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
+
         const nowplaying = new Discord.MessageEmbed()
         nowplaying.setColor("#00ff00");
         nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
@@ -54,6 +57,7 @@ module.exports = {
         nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
         nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
         nowplaying.addField("Duration: ", createBar(queue.currenttime));
+        nowplaying.addField("QueueStatus", status(queue));
         return message.channel.send(nowplaying)
     }
 }
