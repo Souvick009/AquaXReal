@@ -41,7 +41,7 @@ module.exports = {
             embed.setColor("#FF0000")
             embed.setFooter(bot.user.username, bot.user.displayAvatarURL())
             embed.setTitle(`❌ ERROR | You didn't provided a vaild volume number`)
-            embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`${prefix}volume <0-150>\``)
+            embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`${prefix}volume <0-200>\``)
             return message.channel.send(embed)
         };
 
