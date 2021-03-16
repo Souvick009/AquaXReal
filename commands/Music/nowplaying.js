@@ -45,8 +45,8 @@ module.exports = {
         let track = queue.songs[0];
 
         const nowplaying = new Discord.MessageEmbed()
-        nowplaying.setColor(ee.color);
-        nowplaying.setFooter(ee.footertext, ee.footericon);
+        nowplaying.setColor("#00ff00");
+        nowplaying.setFooter(message.author.username, message.author.displayAvatarURL());
         nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
         nowplaying.setURL(track.url);
         nowplaying.setThumbnail(track.thumbnail);
