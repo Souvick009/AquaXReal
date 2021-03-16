@@ -40,9 +40,8 @@ module.exports = {
             if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
             return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
         }
-        let queue = bot.distube.getQueue(message);
 
-        let currentTime = queue.currenttime
+        let queue = bot.distube.getQueue(message);
 
         if (queue) {
             let track = queue.songs[0];
@@ -60,7 +59,7 @@ module.exports = {
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
             nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
             nowplaying.addField("QueueStatus", status(queue));
-            nowplaying.addField("Duration: ", createBar(queue.currentTime));
+            nowplaying.addField("Duration: ", createBar(queue.currenttime));
             return message.channel.send(nowplaying)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
