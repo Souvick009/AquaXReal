@@ -21,6 +21,7 @@ bot.distube = new DisTube(bot, {
     searchSongs: false,
     emitNewSongOnly: true,
     leaveOnEmpty: true,
+    leaveOnFinish: true,
     youtubeDL: true,
     updateYouTubeDL: true,
     customFilters: {
