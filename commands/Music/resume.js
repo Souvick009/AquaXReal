@@ -59,9 +59,10 @@ module.exports = {
         
 
         const resumed = new Discord.MessageEmbed()
-        resumed.setColor("#FFFF00");
-        resumed.setFooter(`Resumed by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
         resumed.setTitle("▶ Resumed the Song");
+        resumed.setColor("#FFFF00");
+        resumed.setDescription(`[${song.name}](${song.url})`)
+        resumed.setFooter(`Resumed by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
         return message.channel.send(resumed)
     }
 }

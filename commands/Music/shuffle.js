@@ -6,12 +6,12 @@ const ytSearch = require('yt-search');
 const queue = new Map
 
 module.exports = {
-    name: "pause",
+    name: "shuffle",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>pause",
-    example: ">>pause",
+    usage: ">>shuffle",
+    example: ">>shuffle",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
@@ -34,22 +34,23 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
-        const alreadyPaused = new Discord.MessageEmbed()
-        if (bot.distube.isPaused(message)) {
-            alreadyPaused.setColor("#FF0000");
-            alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
-            alreadyPaused.setTitle(`❌ ERROR | Cannot pause the Song`);
-            alreadyPaused.setDescription(`It's already paused!`);
-            return message.channel.send(alreadyPaused)
+        let queue = await bot.distube.getQueue(message);
+
+        //let curqueue
+
+
+        if (queue) {
+
+            bot.distube.shuffle(message);
+            
+            const resumed = new Discord.MessageEmbed()
+            resumed.setColor("#FFFF00");
+            resumed.setFooter(`🔀 Shuffled the Queue by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
+            resumed.setTitle("🔀 Shuffled the Queue");
+            return message.channel.send(resumed)
+            
+        } else if (!queue) {
+            return message.channel.send("Nothing is playing right now!")
         };
-
-        bot.distube.pause(message);
-
-        const paused = new Discord.MessageEmbed()
-        paused.setTitle("⏸ Paused the Song");
-        paused.setColor("#FFFF00");
-        paused.setDescription(`[${song.name}](${song.url})`)
-        paused.setFooter(`Paused by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
-        return message.channel.send(paused)
     }
 }
