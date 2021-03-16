@@ -45,9 +45,12 @@ module.exports = {
 
         bot.distube.pause(message);
 
+        let queue = bot.distube.getQueue(message);
+        let track = queue.songs[0];
         const paused = new Discord.MessageEmbed()
         paused.setTitle("⏸ Paused the Song");
         paused.setColor("#FFFF00");
+        paused.setDescription(`[${track.name}](${track.url})`)
         paused.setFooter(`Paused by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
         return message.channel.send(paused)
     }

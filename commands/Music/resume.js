@@ -57,10 +57,13 @@ module.exports = {
         await delay(100);
         bot.distube.resume(message);
         
+        let queue = bot.distube.getQueue(message);
+        let track = queue.songs[0];
 
         const resumed = new Discord.MessageEmbed()
         resumed.setTitle("▶ Resumed the Song");
         resumed.setColor("#FFFF00");
+        resumed.setDescription(`[${track.name}](${track.url})`)
         resumed.setFooter(`Resumed by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
         return message.channel.send(resumed)
     }
