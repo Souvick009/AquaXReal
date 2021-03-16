@@ -34,16 +34,16 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
+        //function for creating a bar
+        var createBar = function (maxtime, currenttime, size = 25, line = "▬", slider = "🔶") {
+            let bar = currenttime > maxtime ? [line.repeat(size / 2 * 2), (currenttime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currenttime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currenttime / maxtime)) + 1), currenttime / maxtime];
+            if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
+            return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
+        }
         let queue = bot.distube.getQueue(message);
 
-        //function for creating a bar
-        let createBar = function (formattedDuration, currentTime, size = 25, line = "▬", slider = "🔶") {
-            let bar = currentTime > formattedDuration ? [line.repeat(size / 2 * 2), (currentTime / formattedDuration) * 100] : [line.repeat(Math.round(size / 2 * (currentTime / formattedDuration))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currentTime / formattedDuration)) + 1), currentTime / formattedDuration];
-            if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
-            return `**[${bar[0]}]**\n**${new Date(currentTime).toISOString().substr(11, 8) + " / " + (formattedDuration == 0 ? " ◉ LIVE" : new Date(formattedDuration).toISOString().substr(11, 8))}**`;
-        }
+        let currentTime = queue.currenttime
 
-        
         if (queue) {
             let track = queue.songs[0];
 
