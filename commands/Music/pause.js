@@ -48,7 +48,6 @@ module.exports = {
         const paused = new Discord.MessageEmbed()
         paused.setTitle("⏸ Paused the Song");
         paused.setColor("#FFFF00");
-        paused.setDescription(`[${song.name}](${song.url})`)
         paused.setFooter(`Paused by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
         return message.channel.send(paused)
     }
