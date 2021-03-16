@@ -46,7 +46,7 @@ module.exports = {
 
         const nowplaying = new Discord.MessageEmbed()
         nowplaying.setColor("#00ff00");
-        nowplaying.setFooter(message.author.username, message.author.displayAvatarURL());
+        nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
         nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
         nowplaying.setURL(track.url);
         nowplaying.setThumbnail(track.thumbnail);
