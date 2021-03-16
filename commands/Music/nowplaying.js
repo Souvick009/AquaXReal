@@ -34,6 +34,8 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
+        let queue = bot.distube.getQueue(message);
+
         //function for creating a bar
         let createBar = function (formattedDuration, currentTime, size = 25, line = "▬", slider = "🔶") {
             let bar = currentTime > formattedDuration ? [line.repeat(size / 2 * 2), (currentTime / formattedDuration) * 100] : [line.repeat(Math.round(size / 2 * (currentTime / formattedDuration))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currentTime / formattedDuration)) + 1), currentTime / formattedDuration];
@@ -41,23 +43,27 @@ module.exports = {
             return `**[${bar[0]}]**\n**${new Date(currentTime).toISOString().substr(11, 8) + " / " + (formattedDuration == 0 ? " ◉ LIVE" : new Date(formattedDuration).toISOString().substr(11, 8))}**`;
         }
 
-        let queue = bot.distube.getQueue(message);
-        let track = queue.songs[0];
+        
+        if (queue) {
+            let track = queue.songs[0];
 
-        // Queue status template
-        const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
+            // Queue status template
+            const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
-        const nowplaying = new Discord.MessageEmbed()
-        nowplaying.setColor("#00ff00");
-        nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
-        nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
-        nowplaying.setURL(track.url);
-        nowplaying.setThumbnail(track.thumbnail);
-        nowplaying.addField("Views", `▶ ${track.views}`, true);
-        nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
-        nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
-        nowplaying.addField("QueueStatus", status(queue));
-        nowplaying.addField("Duration: ", createBar(queue.currentTime));
-        return message.channel.send(nowplaying)
+            const nowplaying = new Discord.MessageEmbed()
+            nowplaying.setColor("#00ff00");
+            nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
+            nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
+            nowplaying.setURL(track.url);
+            nowplaying.setThumbnail(track.thumbnail);
+            nowplaying.addField("Views", `▶ ${track.views}`, true);
+            nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
+            nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
+            nowplaying.addField("QueueStatus", status(queue));
+            nowplaying.addField("Duration: ", createBar(queue.currentTime));
+            return message.channel.send(nowplaying)
+        } else if (!queue) {
+            return message.channel.send("Nothing is playing right now!")
+        };
     }
 }
