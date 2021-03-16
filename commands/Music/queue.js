@@ -25,7 +25,7 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
             embed.setTitle(`Current Queue for: ${message.guild.name}`);
             embed.setColor("#FFFF00");
-            embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            embed.setFooter(bot.user.username, bot.user.displayAvatarURL(), queue.duration);
             embed.setTimestamp();
 
             let counter = 0;
