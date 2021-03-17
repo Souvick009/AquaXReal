@@ -51,9 +51,8 @@ module.exports = {
             // assaign values to total and current
             var total = track.duration;
             var current = queue.currentTime;
-            const size = 20;
             const line = "▬";
-            const slider = "🔘";
+            const slider = "🔶";
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
             // There you go, now you have progress bar and percentage returned in an array as string
@@ -66,6 +65,7 @@ module.exports = {
             nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
             nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
             nowplaying.setURL(track.url);
+            nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addField("Views", `▶ ${track.views}`, true);
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
