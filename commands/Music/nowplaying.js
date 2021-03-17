@@ -71,7 +71,7 @@ module.exports = {
             nowplaying.addField("Views", `▶ ${track.views}`, true);
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
             nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
-            nowplaying.addField("Channel Name: ", `${track.author}`, true);
+            nowplaying.addField("Requested By: ", `${track.user}`, true);
             nowplaying.addField("Duration: ", `\`${current} / ${total}\``, true);
             nowplaying.addField("QueueStatus", status(queue));
             return message.channel.send(nowplaying)
