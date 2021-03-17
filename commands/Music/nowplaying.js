@@ -49,7 +49,7 @@ module.exports = {
             let track = queue.songs[0];
 
             // assaign values to total and current
-            var total = track.formattedDuration;
+            var total = track.duration;
             var current = queue.currentTime;
             const size = 20;
             const line = "▬";
