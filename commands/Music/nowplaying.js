@@ -43,20 +43,21 @@ module.exports = {
         //}
 
         let queue = bot.distube.getQueue(message);
-        let track = queue.songs[0];
-
-        // assaign values to total and current
-        var total = queue.currentTime;
-        var current = track.formattedDuration;
-        const size = 25;
-        const line = "▬";
-        const slider = "🔶";
-        // Call the createBar method, first two arguments are mandatory
-        // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
-        // There you go, now you have progress bar and percentage returned in an array as string
 
         if (queue) {
-            
+
+            let track = queue.songs[0];
+
+            // assaign values to total and current
+            var total = queue.currentTime;
+            var current = track.formattedDuration;
+            const size = 25;
+            const line = "▬";
+            const slider = "🔶";
+            // Call the createBar method, first two arguments are mandatory
+            // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
+            // There you go, now you have progress bar and percentage returned in an array as string
+
             // Queue status template
             const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
