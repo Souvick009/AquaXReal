@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
-const createBar = require('string-progressbar');
+// const createBar = require('string-progressbar');
 
 //Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
 const queue = new Map
@@ -36,11 +36,11 @@ module.exports = {
         };
 
         //function for creating a bar
-        // const createBar = function (maxtime, currenttime, size = 15, line = "▬", slider = "🔶") {
-        //    let bar = currenttime > maxtime ? [line.repeat(size / 2 * 2), (currenttime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currenttime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currenttime / maxtime)) + 1), currenttime / maxtime];
-        //    if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
-        //    return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
-        // }
+        const createBar = function (maxtime, currenttime, size = 15, line = "▬", slider = "🔶") {
+           let bar = currenttime > maxtime ? [line.repeat(size / 2 * 2), (currenttime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currenttime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currenttime / maxtime)) + 1), currenttime / maxtime];
+           if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
+           return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
+        }
 
         let queue = bot.distube.getQueue(message);
 
