@@ -51,6 +51,7 @@ module.exports = {
             // assaign values to total and current
             var total = track.duration;
             var current = queue.currentTime;
+            const size = 40;
             const line = "▬";
             const slider = "🔶";
             // Call the createBar method, first two arguments are mandatory
