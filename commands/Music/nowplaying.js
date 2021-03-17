@@ -49,8 +49,8 @@ module.exports = {
             let track = queue.songs[0];
 
             // assaign values to total and current
-            var total = track.duration;
-            var current = queue.currentTime;
+            var total = track.formattedDuration;
+            var current = queue.formattedCurrentTime;
             const size = 15;
             const line = "▬";
             const slider = "🔶";
@@ -72,7 +72,7 @@ module.exports = {
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
             nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
             nowplaying.addField("QueueStatus", status(queue));
-            nowplaying.addField("Duration: ", `${current / total}`, true);
+            nowplaying.addField("Duration: ", `${current} / ${total}`, true);
             return message.channel.send(nowplaying)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
