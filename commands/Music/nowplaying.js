@@ -69,7 +69,7 @@ module.exports = {
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addField("Views", `▶ ${track.views}`, true);
-            nowplaying.addField("Likes", `👍: ${track.likes}`, true);
+            nowplaying.addField("Likes", `👍 ${track.likes}`, true);
             nowplaying.addField("Dislikes", `👎 ${track.dislikes}`, true);
             nowplaying.addField("Requested By: ", `${track.user}`, true);
             nowplaying.addField("Duration: ", `\`${current} / ${total}\``, true);
