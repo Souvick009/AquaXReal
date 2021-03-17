@@ -49,8 +49,8 @@ module.exports = {
             let track = queue.songs[0];
 
             // assaign values to total and current
-            var total = [(track.duration) / 100];
-            var current = [(queue.currentTime) / 100];
+            var total = track.duration;
+            var current = queue.currentTime;
             const size = 15;
             const line = "▬";
             const slider = "🔶";
