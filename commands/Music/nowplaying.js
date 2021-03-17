@@ -36,11 +36,11 @@ module.exports = {
         };
 
         //function for creating a bar
-        const createBar = function (maxtime, currenttime, size = 15, line = "▬", slider = "🔶") {
-           let bar = currenttime > maxtime ? [line.repeat(size / 2 * 2), (currenttime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currenttime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currenttime / maxtime)) + 1), currenttime / maxtime];
-           if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
-           return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
-        }
+        // const createBar = function (maxtime, currenttime, size = 15, line = "▬", slider = "🔶") {
+        //    let bar = currenttime > maxtime ? [line.repeat(size / 2 * 2), (currenttime / maxtime) * 100] : [line.repeat(Math.round(size / 2 * (currenttime / maxtime))).replace(/.$/, slider) + line.repeat(size - Math.round(size * (currenttime / maxtime)) + 1), currenttime / maxtime];
+        //    if (!String(bar).includes("🔶")) return `**[🔶${line.repeat(size - 1)}]**\n**00:00:00 / 00:00:00**`;
+        //    return `**[${bar[0]}]**\n**${new Date(currenttime).toISOString().substr(11, 8) + " / " + (maxtime == 0 ? " ◉ LIVE" : new Date(maxtime).toISOString().substr(11, 8))}**`;
+        // }
 
         let queue = bot.distube.getQueue(message);
 
@@ -72,7 +72,7 @@ module.exports = {
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
             nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
             nowplaying.addField("QueueStatus", status(queue));
-            nowplaying.addField("Duration: ", createBar(total, current, size, line, slider));
+            nowplaying.addField("Duration: ", `${current / total}`, true);
             return message.channel.send(nowplaying)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
