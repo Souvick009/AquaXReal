@@ -71,8 +71,9 @@ module.exports = {
             nowplaying.addField("Views", `▶ ${track.views}`, true);
             nowplaying.addField("Likes", `:thumbsup: ${track.likes}`, true);
             nowplaying.addField("Dislikes", `:thumbsdown: ${track.dislikes}`, true);
+            nowplaying.addField("Channel Name: ", `${track.author}`, true);
+            nowplaying.addField("Duration: ", `\`${current} / ${total}\``, true);
             nowplaying.addField("QueueStatus", status(queue));
-            nowplaying.addField("Duration: ", `${current} / ${total}`, true);
             return message.channel.send(nowplaying)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
