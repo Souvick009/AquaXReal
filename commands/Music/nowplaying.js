@@ -48,9 +48,9 @@ module.exports = {
         // assaign values to total and current
         var total = queue.currentTime;
         var current = track.formattedDuration;
-        var size = 25;
-        var line = "▬";
-        var slider = "🔶";
+        const size = 25;
+        const line = "▬";
+        const slider = "🔶";
         // Call the createBar method, first two arguments are mandatory
         // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
         // There you go, now you have progress bar and percentage returned in an array as string
