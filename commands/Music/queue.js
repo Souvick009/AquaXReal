@@ -23,7 +23,7 @@ module.exports = {
             //).slice(0, 10).join("\n");
 
             let embed = new Discord.MessageEmbed()
-            embed.setTitle(`Current Queue for: ${message.guild.name}`);
+            embed.setTitle(`Current Queue for: ${message.guild.name} (Total Duration: ${queue.duration})`);
             embed.setColor("#FFFF00");
             embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
             embed.setTimestamp();
