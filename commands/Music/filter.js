@@ -2,15 +2,14 @@ const Discord = require("discord.js");
 const prefix = ">>"
 const filters = [
     "clear",
+        "clear",
         "lowbass",
         "bassboost",
         "purebass",
         "4D",
-        "vaporwave",
         "nightcore",
-        "tremolo",
         "normalizer",
-        "surrounding",
+        "beats",
         "4D Fast Phase",
         "subboost",
         "8D",
