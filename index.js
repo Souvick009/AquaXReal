@@ -45,7 +45,7 @@ bot.distube = new DisTube(bot, {
         "Beats": "surround",
         "4D Fast Phase": "apulsator=hz=1",
         "subboost": "asubboost",
-        "8D": "haas,bass=g=6",
+        "8D": "haas,bass=g=6,dynaudnorm=f=200",
         "mcompand": "mcompand"
     }
 });
