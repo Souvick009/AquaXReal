@@ -27,9 +27,8 @@ module.exports = {
             if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue Or -ve.
 
             const embed = new Discord.MessageEmbed()
-                .setTitle('Song Removed')
+                .setTitle(`Removed:- [${arr[remove].name}](${arr[remove].url})`)
                 .setColor('#FFFF00')
-                .addField(`Removed:- **[${arr[remove].name}](${arr[remove].url})**`)
                 .addField('Song Removed by:-', message.author)
                 .setTimestamp()
                 .setFooter('Song Removed')
@@ -40,7 +39,7 @@ module.exports = {
             else {
                 arr.splice(remove, 1)
             }
-            message.bot.queue.set(message.guild.id, queue)
+            message.bot.queue.set(queue)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
         };
