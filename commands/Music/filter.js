@@ -2,26 +2,19 @@ const Discord = require("discord.js");
 const prefix = ">>"
 const filters = [
     "clear",
-    "lowbass",
-    "bassboost",
-    "purebass",
-    "8D",
-    "vaporwave",
-    "nightcore",
-    "phaser",
-    "tremolo",
-    "vibrato",
-    "reverse",
-    "treble",
-    "normalizer",
-    "surrounding",
-    "pulsator",
-    "subboost",
-    "karaoke",
-    "flanger",
-    "gate",
-    "haas",
-    "mcompand"
+        "lowbass",
+        "bassboost",
+        "purebass",
+        "4D",
+        "vaporwave",
+        "nightcore",
+        "tremolo",
+        "normalizer",
+        "surrounding",
+        "4D Fast Phase",
+        "subboost",
+        "8D",
+        "mcompand"
 ]
 
 module.exports = {
