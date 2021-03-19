@@ -8,7 +8,6 @@ const filters = [
         "purebass",
         "4D",
         "nightcore",
-        "normalizer",
         "beats",
         "4D Fast Phase",
         "subboost",
