@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const skip = require("./skip")
 
 //Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
 const queue = new Map
@@ -28,11 +29,18 @@ module.exports = {
             const embed = new Discord.MessageEmbed()
                 .setTitle('Song Removed')
                 .setColor('#FFFF00')
-                .addField(`Removed:- **${arr[remove].title}**`, '<a:Next:803138566091309057>')
+                .addField(`Removed:- **[${arr[remove].name}](${arr[remove].url})**`)
                 .addField('Song Removed by:-', message.author)
                 .setTimestamp()
                 .setFooter('Song Removed')
             message.channel.send(embed)
+            if (remove === 0) {
+                skip.execute(message, agrs)
+            }
+            else {
+                arr.splice(remove, 1)
+            }
+            message.bot.queue.set(message.guild.id, queue)
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
         };
