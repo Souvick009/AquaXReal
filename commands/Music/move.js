@@ -58,10 +58,10 @@ module.exports = {
             }
 
             let song = queue.songs[args[0] - 1];
-            let newpos = queue.songs[args[1] == 1 ? 1 : args[1] - 1];
+            let newpos = queue.songs[args[0] - 1, args[1] == 1 ? 1 : args[1] - 1];
 
             queue.songs = move(queue.songs, args[0] - 1, args[1] == 1 ? 1 : args[1] - 1);
-            message.channel.send(`✅ Moved \`${song.title}\` to position ${newpos}`);
+            message.channel.send(`✅ Moved \`${song.name}\` to position ${newpos}`);
             // queue.textChannel.send(
             //     i18n.__mf("move.result", {
             //         author: message.author,
