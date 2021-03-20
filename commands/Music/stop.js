@@ -43,11 +43,9 @@ module.exports = {
             embed1.setFooter(bot.user.username, bot.user.displayAvatarURL());
             embed1.setTimestamp();
             return message.channel.send(embed1)
-        };
-
-        if (!queue) {
+        } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
-        }
+        };
 
     }
 }
