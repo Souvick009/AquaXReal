@@ -32,13 +32,13 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
-        const vc = new Discord.MessageEmbed()
+        const novc = new Discord.MessageEmbed()
         if (!message.guild.me.voice.channel) {
-            vc.setColor("#FF0000")
-            vc.setFooter(bot.user.username, bot.user.displayAvatarURL())
-            vc.setTitle(`❌ ERROR | I am not connected with your voice channel`)
-            vc.setDescription(`Channel Name: \`${message.member.voice.channel.name}\``)
-            return message.channel.send(vc)
+            novc.setColor("#FF0000")
+            novc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            novc.setTitle(`❌ ERROR | I am not connected with your voice channel`)
+            novc.setDescription(`Channel Name: \`${message.member.voice.channel.name}\``)
+            return message.channel.send(novc)
         }
 
         //if bot and the user is present in same vc then the bot will get disconnected
