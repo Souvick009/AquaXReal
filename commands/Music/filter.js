@@ -2,17 +2,16 @@ const Discord = require("discord.js");
 const prefix = ">>"
 const filters = [
     "clear",
-        "clear",
-        "lowbass",
-        "bassboost",
-        "purebass",
-        "4D",
-        "nightcore",
-        "beats",
-        "4D>>",
-        "subboost",
-        "8D",
-        "mcompand"
+    "lowbass",
+    "bassboost",
+    "purebass",
+    "4D",
+    "nightcore",
+    "beats",
+    "4D>>",
+    "subboost",
+    "8D",
+    "mcompand"
 ]
 
 module.exports = {
