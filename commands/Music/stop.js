@@ -36,7 +36,13 @@ module.exports = {
             message.channel.send(embed)
         } else if (connection) {
             message.guild.me.voice.channel.leave();
-            return
+            const embed1 = new Discord.MessageEmbed();
+            embed1.setTitle("⏹ STOPPED!");
+            embed1.setColor("#FF0000");
+            embed1.setDescription('Successfully Disconnected!');
+            embed1.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            embed1.setTimestamp();
+            return message.channel.send(embed1)
         };
 
         if (!queue) {
