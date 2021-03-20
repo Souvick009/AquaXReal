@@ -7,7 +7,6 @@ const filters = [
     "purebass",
     "4D",
     "nightcore",
-    "beats",
     "4D>>",
     "subboost",
     "8D",
