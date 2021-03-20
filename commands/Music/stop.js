@@ -7,7 +7,7 @@ const queue = new Map
 
 module.exports = {
     name: "stop",
-    aliases: ["disconnect","dc"],
+    aliases: ["disconnect", "dc"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>stop",
@@ -21,11 +21,11 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        const connection = message.member.voice.channel.join();
-    
-        if(queue) {
+        let channel = message.member.voice.channel.id;
+
+        if (queue) {
             bot.distube.stop(message)
-    
+
             const embed = new Discord.MessageEmbed();
             embed.setTitle("⏹ STOPPED!");
             embed.setColor("#FF0000");
@@ -34,7 +34,7 @@ module.exports = {
             embed.setTimestamp();
 
             message.channel.send(embed)
-        } else if (connection) {
+        } else if (channel === message.guild.me.voice.channel.id) {
             message.guild.me.voice.channel.leave();
             const embed1 = new Discord.MessageEmbed();
             embed1.setTitle("⏹ STOPPED!");
@@ -48,5 +48,6 @@ module.exports = {
         if (!queue) {
             return message.channel.send("Nothing is playing right now!")
         }
+
     }
 }

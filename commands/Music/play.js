@@ -33,8 +33,8 @@ module.exports = {
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
-            samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
+            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
             return message.channel.send(samevc)
         };
 
