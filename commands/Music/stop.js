@@ -20,6 +20,8 @@ module.exports = {
         if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
 
         let queue = await bot.distube.getQueue(message);
+
+        const connection = await message.member.voice.channel.join();
     
         if(queue) {
             bot.distube.stop(message)
@@ -32,8 +34,13 @@ module.exports = {
             embed.setTimestamp();
 
             message.channel.send(embed)
-        } else if (!queue) {
+        } else if (connection) {
+            message.guild.me.voice.channel.leave();
             return
         };
+
+        if (!queue) {
+            return message.channel.send("Nothing is playing right now!")
+        }
     }
 }
