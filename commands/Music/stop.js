@@ -21,7 +21,7 @@ module.exports = {
 
         let queue = await bot.distube.getQueue(message);
 
-        const connection = await message.member.voice.channel.join();
+        const connection = message.member.voice.channel.join();
     
         if(queue) {
             bot.distube.stop(message)
