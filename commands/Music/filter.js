@@ -9,7 +9,7 @@ const filters = [
         "4D",
         "nightcore",
         "beats",
-        "4D Fast Phase",
+        "4D>>",
         "subboost",
         "8D",
         "mcompand"
