@@ -40,7 +40,7 @@ bot.distube = new DisTube(bot, {
         "bassboost": "bass=g=15,dynaudnorm=f=200",
         "purebass": "bass=g=20,dynaudnorm=f=200,asubboost",
         "4D": "apulsator=hz=0.08",
-        "nightcore": "aresample=48000,asetrate=48000*1.10",
+        "nightcore": "aresample=48000,asetrate=48000*1.5",
         "beats": "surround",
         "4D Fast Phase": "apulsator=hz=1",
         "subboost": "asubboost",
