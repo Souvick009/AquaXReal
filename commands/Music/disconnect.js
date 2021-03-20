@@ -32,6 +32,8 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
+        if (!message.guild.me.voice.channel) return message.channel.send(`I am not connected with \`${message.member.voice.channel.name}\``)
+
         //if bot and the user is present in same vc then the bot will get disconnected
         if (channel === message.guild.me.voice.channel.id) {
             message.guild.me.voice.channel.leave();

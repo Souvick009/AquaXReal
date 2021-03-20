@@ -7,7 +7,7 @@ const queue = new Map
 
 module.exports = {
     name: "loop",
-    aliases: ["disconnect", "dc"],
+    aliases: ["repeat"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>loop",
