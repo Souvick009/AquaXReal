@@ -47,12 +47,21 @@ module.exports = {
             return message.channel.send(samevc)
         };
 
+        const notPlaying = new Discord.MessageEmbed()
+        if (!bot.distube.isPlaying(message)) {
+            notPlaying.setColor("#FF0000");
+            notPlaying.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            notPlaying.setTitle(`❌ ERROR | Can't Filter the song`);
+            notPlaying.setDescription(`I'm not playing anything!`);
+            return message.channel.send(notPlaying)
+        };
+
         const Filtertype = new Discord.MessageEmbed()
         if (!args[0]) {
             Filtertype.setColor("#FF0000");
             Filtertype.setFooter(bot.user.username, bot.user.displayAvatarURL());
             Filtertype.setTitle(`❌ ERROR | Please add a Filtertype`);
-            Filtertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nExample: \`${prefix}filter bassboost\``);
+            Filtertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048));
             return message.channel.send(Filtertype);
         };
 
