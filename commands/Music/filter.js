@@ -15,7 +15,7 @@ const filters = [
 
 module.exports = {
     name: "filter",
-    aliases: [""],
+    aliases: ["f"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>filter",
