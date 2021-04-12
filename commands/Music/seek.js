@@ -23,6 +23,7 @@ module.exports = {
 
         var total = track.duration;
 
+        const embed1 = new Discord.MessageEmbed()
         if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
             embed1.setColor("#FF0000")
             embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
