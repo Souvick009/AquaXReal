@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+// const Song = require("distube/typings/Song");
 
 module.exports = {
     name: "seek",
@@ -15,6 +16,19 @@ module.exports = {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
+
+        let queue = bot.distube.getQueue(message);
+
+        let track = queue.songs[0];
+
+        var total = track.duration;
+
+        if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
+            embed1.setColor("#FF0000")
+            embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            embed1.setTitle(`❌ ERROR | Seeking out of Range`)
+            return message.channel.send(embed1)
+        }
 
         const seek = new Discord.MessageEmbed()
         seek.setTitle(":fast_forward: Seeked!");
