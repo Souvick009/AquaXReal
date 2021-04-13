@@ -67,15 +67,15 @@ bot.distube
         Playsong.setTimestamp();
         message.channel.send(Playsong)
     })
-    .on("addSong", (message, queue, song) => {
+    .on("addSong", (message, queue, song, args) => {
         var playlistLogo = [];
         var totalSongs = [];
         const spotifyPlaylist = new Discord.MessageEmbed()
         if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-            getPreview(result => {
+            getPreview(args.join(" ")).then(result => {
                 playlistLogo.push(result.image)
             })
-            getTracks(result => {
+            getTracks(args.join(" ")).then(result => {
                 for (const songs of result)
                     totalSongs.push(songs.length)
                 console.log(songs.length)
