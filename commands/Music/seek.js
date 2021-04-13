@@ -23,6 +23,11 @@ module.exports = {
 
         var total = track.duration;
 
+        const formatInt = int => {
+            if (int < 10) return `0${int}`;
+            return `${int}`;
+          };
+
         var formatDuration = milliseconds => {
             if (!milliseconds || !parseInt(milliseconds)) return "00:00";
             const seconds = Math.floor(milliseconds % 60000 / 1000);
