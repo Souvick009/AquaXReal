@@ -23,14 +23,6 @@ module.exports = {
 
         var total = track.duration;
 
-        const embed1 = new Discord.MessageEmbed()
-        if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
-            embed1.setColor("#FF0000")
-            embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
-            embed1.setTitle(`❌ ERROR | Seeking out of Range`)
-            return message.channel.send(embed1)
-        }
-
         var formatDuration = milliseconds => {
             if (!milliseconds || !parseInt(milliseconds)) return "00:00";
             const seconds = Math.floor(milliseconds % 60000 / 1000);
@@ -44,6 +36,15 @@ module.exports = {
             }
             return `00:${formatInt(seconds)}`;
         };
+
+        const embed1 = new Discord.MessageEmbed()
+        if (!(0 <= Number(args[0]) && Number(args[0]) <= total.formatDuration)) {
+            embed1.setColor("#FF0000")
+            embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            embed1.setTitle(`❌ ERROR | Seeking out of Range`)
+            return message.channel.send(embed1)
+        }
+
 
         const seek = new Discord.MessageEmbed()
         seek.setTitle(":fast_forward: Seeked!");
