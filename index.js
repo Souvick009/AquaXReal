@@ -12,7 +12,8 @@ const token = process.env.token;
 //})
 //const talkedRecently = new Set();
 // const cooldown = new Discord.Collection();
-const DisTube = require('distube')
+const DisTube = require('distube');
+const { getTracks, getPreview } = require("spotify-url-info");
 
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
@@ -21,7 +22,7 @@ bot.distube = new DisTube(bot, {
     searchSongs: false,
     emitNewSongOnly: true,
     leaveOnEmpty: true,
-    leaveOnFinish: true,
+    leaveOnFinish: false,
     leaveOnStop: true,
     youtubeDL: true,
     updateYouTubeDL: true,
@@ -66,9 +67,32 @@ bot.distube
         Playsong.setTimestamp();
         message.channel.send(Playsong)
     })
-    .on("addSong", (message, queue, song) => message.channel.send(
-        `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
-    ))
+    .on("addSong", (message, queue, song) => {
+        var playlistLogo = [];
+        var totalSongs = [];
+        const spotifyPlaylist = Discord.MessageEmbed()
+        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
+            getPreview(args.join(" ")).then(result => {
+                playlistLogo.push(result.image)
+            })
+            getTracks(args.join(" ")).then(result => {
+                for (const songs of result)
+                    totalSongs.push(songs.length)
+                console.log(songs.length)
+            })
+
+            spotifyPlaylist.author(`Playlist Added to the queue`, message.author.displayAvatarURL())
+            spotifyPlaylist.setThumbnail(playlistLogo)
+            spotifyPlaylist.addField(`Enqueued`, `${totalSongs} Songs`)
+            return message.channel.send(spotifyPlaylist)
+
+        }
+        else {
+            message.channel.send(
+                `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
+            )
+        }
+    })
     .on("playList", (message, queue, playlist, song) => {
         const PlayList = new Discord.MessageEmbed();
         PlayList.setTitle("Playling Playlist")
