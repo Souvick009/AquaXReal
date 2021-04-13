@@ -31,12 +31,26 @@ module.exports = {
             return message.channel.send(embed1)
         }
 
+        var formatDuration = milliseconds => {
+            if (!milliseconds || !parseInt(milliseconds)) return "00:00";
+            const seconds = Math.floor(milliseconds % 60000 / 1000);
+            const minutes = Math.floor(milliseconds % 3600000 / 60000);
+            const hours = Math.floor(milliseconds / 3600000);
+            if (hours > 0) {
+                return `${formatInt(hours)}:${formatInt(minutes)}:${formatInt(seconds)}`;
+            }
+            if (minutes > 0) {
+                return `${formatInt(minutes)}:${formatInt(seconds)}`;
+            }
+            return `00:${formatInt(seconds)}`;
+        };
+
         const seek = new Discord.MessageEmbed()
         seek.setTitle(":fast_forward: Seeked!");
         seek.setDescription(`Seeked the song for \`${args[0]} seconds\``)
         seek.setColor("#00ff00");
         message.channel.send(seek)
-        return bot.distube.seek(message, Number(args[0] * 1000));
+        return bot.distube.seek(message, Number(args[0] * formatDuration));
     }
 
 
