@@ -67,31 +67,13 @@ bot.distube
         Playsong.setTimestamp();
         message.channel.send(Playsong)
     })
-    .on("addSong", (message, queue, song, args) => {
-        var playlistLogo = [];
-        var totalSongs = [];
-        const spotifyPlaylist = new Discord.MessageEmbed()
-        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-            getPreview(args.join(" ")).then(result => {
-                playlistLogo.push(result.image)
-            })
-            getTracks(args.join(" ")).then(result => {
-                for (const songs of result)
-                    totalSongs.push(songs.length)
-                console.log(songs.length)
-            })
+    .on("addSong", (message, queue, song) => {
 
-            spotifyPlaylist.author(`Playlist Added to the queue`, message.author.displayAvatarURL())
-            spotifyPlaylist.setThumbnail(playlistLogo)
-            spotifyPlaylist.addField(`Enqueued`, `${totalSongs} Songs`)
-            return message.channel.send(spotifyPlaylist)
 
-        }
-        else {
-            message.channel.send(
-                `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
-            )
-        }
+        message.channel.send(
+            `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
+        )
+
     })
     .on("playList", (message, queue, playlist, song) => {
         const PlayList = new Discord.MessageEmbed();
