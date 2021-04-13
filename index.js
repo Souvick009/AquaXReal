@@ -72,10 +72,10 @@ bot.distube
         var totalSongs = [];
         const spotifyPlaylist = new Discord.MessageEmbed()
         if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-            getPreview(args.join(" ")).then(result => {
+            getPreview(result => {
                 playlistLogo.push(result.image)
             })
-            getTracks(args.join(" ")).then(result => {
+            getTracks(result => {
                 for (const songs of result)
                     totalSongs.push(songs.length)
                 console.log(songs.length)
