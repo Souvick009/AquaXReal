@@ -70,7 +70,7 @@ bot.distube
     .on("addSong", (message, queue, song) => {
         var playlistLogo = [];
         var totalSongs = [];
-        const spotifyPlaylist = Discord.MessageEmbed()
+        const spotifyPlaylist = new Discord.MessageEmbed()
         if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
             getPreview(args.join(" ")).then(result => {
                 playlistLogo.push(result.image)
