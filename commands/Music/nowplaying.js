@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
-// const createBar = require('string-progressbar');
-
+const createBar = require('string-progressbar');
+const ms = require('ms');
 //Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
 const queue = new Map
 
