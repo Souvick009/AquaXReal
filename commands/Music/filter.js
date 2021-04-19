@@ -8,6 +8,7 @@ const filters = [
     "4D",
     "nightcore",
     "4D>>",
+    "3D",
     "subboost",
     "8D",
     "mcompand"

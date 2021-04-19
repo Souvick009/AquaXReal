@@ -43,6 +43,7 @@ bot.distube = new DisTube(bot, {
         "4D": "apulsator=hz=0.08,dynaudnorm=f=200",
         "nightcore": "aresample=48000,asetrate=48000*1.11",
         "4D>>": "apulsator=hz=1,dynaudnorm=f=200",
+        "3D": "apulsator=hz=0.125",
         "subboost": "asubboost,dynaudnorm=f=200",
         "8D": "haas,bass=g=6,dynaudnorm=f=200",
         "mcompand": "mcompand,dynaudnorm=f=200"
