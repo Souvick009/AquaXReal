@@ -75,7 +75,7 @@ module.exports = {
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addField("Requested By: ", `${track.user}`, true);
-            nowplaying.addField("Duration: ", `\`${current} / ${total}\` ${bar[0]}`, true);
+            nowplaying.addField("Duration: ", `\`${current} / ${total}\` \n${bar[0]}`, true);
             nowplaying.addField("QueueStatus", status(queue));
             return message.channel.send(nowplaying)
         } else if (!queue) {
