@@ -31,6 +31,15 @@ module.exports = {
             return message.channel.send(embed1)
         }
 
+        const alreadyPaused = new Discord.MessageEmbed()
+        if (bot.distube.isPaused(message)) {
+            alreadyPaused.setColor("#FF0000");
+            alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
+            alreadyPaused.setDescription(`First resume the song then try to seek!`);
+            return message.channel.send(alreadyPaused)
+        };
+
         const seek = new Discord.MessageEmbed()
         seek.setTitle(":fast_forward: Seeked!");
         seek.setDescription(`Seeked the song for \`${args[0]} seconds\``)
