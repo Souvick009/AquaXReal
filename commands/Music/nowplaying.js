@@ -51,9 +51,15 @@ module.exports = {
             // assaign values to total and current
             var total = track.formattedDuration;
             var current = queue.formattedCurrentTime;
-            const size = 15;
-            const line = "▬";
-            const slider = "🔶";
+            console.log("current " + current)
+            console.log("Total " + total)
+            const newTotal = total.replace(':', "")
+            const newCurrent = current.replace(':', "")
+            console.log(newTotal)
+            var totalperct = (newCurrent/newTotal)*100
+            console.log(totalperct)
+            let bar = createBar(100, totalperct, 10);
+            console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
             // There you go, now you have progress bar and percentage returned in an array as string
@@ -69,7 +75,7 @@ module.exports = {
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addField("Requested By: ", `${track.user}`, true);
-            nowplaying.addField("Duration: ", `\`${current} / ${total}\``, true);
+            nowplaying.addField("Duration: ", `\`${current} / ${total}\` ${bar[0]}`, true);
             nowplaying.addField("QueueStatus", status(queue));
             return message.channel.send(nowplaying)
         } else if (!queue) {
