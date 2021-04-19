@@ -58,7 +58,7 @@ module.exports = {
             console.log(newTotal)
             var totalperct = (newCurrent/newTotal)*100
             console.log(totalperct)
-            let bar = createBar(100, totalperct, 25);
+            let bar = createBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
             console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
