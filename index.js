@@ -115,10 +115,11 @@ bot.distube
         const error1 = new Discord.MessageEmbed();
         error1.setTitle(`An error encountered:`);
         error1.setColor("#FF0000");
-        error1.setDescription(err)
+        error1.setDescription("Facing some errors to execute this command")
         error1.setFooter(bot.user.username, bot.user.displayAvatarURL());
         error1.setTimestamp();
         message.channel.send(error1)
+        console.log(err)
     })
     .on("empty", message => message.channel.send("Channel is empty. Leaving the channel"))
 
