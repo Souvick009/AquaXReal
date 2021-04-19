@@ -5,10 +5,9 @@ const filters = [
     "lowbass",
     "bassboost",
     "purebass",
-    "4D",
-    "nightcore",
-    "4D>>",
     "3D",
+    "nightcore",
+    "3D>>",
     "subboost",
     "8D",
     "mcompand"
