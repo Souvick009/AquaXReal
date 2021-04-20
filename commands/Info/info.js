@@ -15,7 +15,7 @@ module.exports = {
       .setTimestamp()
       .setDescription(bot.user.username)
       .addField(`:crown: __Creator/Owner__`, "Gaming Knights Z#1637")
-      .addField(`:tools: __Developer Team__`, `\n:first_place: Gaming Knights Z#1637`)
+      .addField(`:tools: __Developer Team__`, `\n:first_place: Gaming Knights Z#1637\n:second_place: Shander#6460`)
       .addField(`:gear: __Version__`, "Version 2.4.1")
       .addField(`Want To Invite Me In Your Server?`, "Actually you can't cuz this bot is under beta testing xD")
       .setFooter(message.author.username, message.author.displayAvatarURL())
