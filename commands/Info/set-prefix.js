@@ -11,6 +11,8 @@ module.exports = {
   cooldown: 5,
   category: "Info",
   run: async (bot, message, args) => {
+
+    if(!args[0]) return message.reply("Please provide a argument to set prefix!")
     Prefix.findOne({
         serverId: message.guild.id,
     }, async (err, server) => {
