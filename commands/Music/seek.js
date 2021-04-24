@@ -17,12 +17,6 @@ module.exports = {
         const voice_channel = message.member.voice.channel;
         if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
 
-        let queue = bot.distube.getQueue(message);
-
-        let track = queue.songs[0];
-
-        var total = track.duration;
-
         const notPaused = new Discord.MessageEmbed()
         if (bot.distube.isPlaying(message)) {
             notPaused.setColor("#FF0000");
@@ -31,7 +25,13 @@ module.exports = {
             notPaused.setDescription(`Play something first!`);
             return message.channel.send(notPaused)
         };
+        
+        let queue = bot.distube.getQueue(message);
 
+        let track = queue.songs[0];
+
+        var total = track.duration;
+        
         const embed1 = new Discord.MessageEmbed()
         if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
             embed1.setColor("#FF0000")
