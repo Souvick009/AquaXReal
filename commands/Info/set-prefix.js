@@ -24,7 +24,7 @@ module.exports = {
             })
             await newserver.save().catch(e => console.log(e));
         } else if(server){
-          server.prefix = args[0].join(" ")
+          server.prefix = args.join(" ")
           await server.save().catch(e => console.log(e));
         }
 
