@@ -28,7 +28,7 @@ module.exports = {
           await server.save().catch(e => console.log(e));
         }
 
-        message.channel.send(`My new prefix is now **\`${args[0]}\`**`);
+        message.channel.send(`My new prefix is now **\`${args.join(" ")}\`**`);
         
 
     })
