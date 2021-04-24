@@ -12,7 +12,7 @@ module.exports = {
   category: "Info",
   run: async (bot, message, args) => {
 
-    if (!message.member.hasPermission("ADMINSTRATOR")) {
+    if (!message.member.hasPermission("ADMINISTRATOR")) {
       const embed = new Discord.MessageEmbed()
       embed.setColor(0xFF0000)
       embed.setDescription("❌ You don't have permissions to clear warns. Please contact a staff member.[Missing Permission:- Administrator]")
