@@ -23,6 +23,15 @@ module.exports = {
 
         var total = track.duration;
 
+        const notPaused = new Discord.MessageEmbed()
+        if (bot.distube.isPlaying(message)) {
+            notPaused.setColor("#FF0000");
+            notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
+            notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
+            notPaused.setDescription(`Play something first!`);
+            return message.channel.send(notPaused)
+        };
+
         const embed1 = new Discord.MessageEmbed()
         if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
             embed1.setColor("#FF0000")
