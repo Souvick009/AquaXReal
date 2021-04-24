@@ -3,7 +3,7 @@ const PREFIX = '!';
 const Prefix = require("../../models/prefix.js")
 module.exports = {
   name: "setprefix",
-  aliases: [],
+  aliases: ["prefix"],
   accessableby: "Manage Messages",
   description: "Check ping of the bot",
   usage: "=ping",
@@ -28,7 +28,7 @@ module.exports = {
           await server.save().catch(e => console.log(e));
         }
 
-        message.channel.send(`The new prefix is now **\`${args[0]}\`**`);
+        message.channel.send(`My new prefix is now **\`${args[0]}\`**`);
         
 
     })

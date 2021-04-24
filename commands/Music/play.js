@@ -25,8 +25,8 @@ module.exports = {
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) return message.channel.send('You dont have the correct permissins');
-        if (!permissions.has('SPEAK')) return message.channel.send('You dont have the correct permissins');
+        if (!permissions.has('CONNECT')) return message.channel.send('Missing connect premission');
+        if (!permissions.has('SPEAK')) return message.channel.send('Missing speak permission');
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
