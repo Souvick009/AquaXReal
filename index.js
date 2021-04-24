@@ -1,9 +1,16 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const prefix = '>>';
+var prefix = '';
 //const Commands = require("./models/commands.js")
 const fs = require('fs');
 const token = process.env.token;
+const dbUrl = "mongodb+srv://shander:shander123456@cluster0.9voow.mongodb.net/test"
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+var reply = true;
+const Prefix = require("./models/prefix")
 //const mongoose = require("mongoose");
 //const dbUrl = "mongodb+srv://Real_Warrior:Windows_10@cluster0.onf6d.mongodb.net/test"
 //mongoose.connect(dbUrl, {
@@ -184,27 +191,38 @@ bot.on('message', async message => {
     //       })
     //       await newCommand.save().catch(e => console.log(e));
     //    }
+    const list = await Prefix.findOne({
+        serverId: message.guild.id
+    }, async (err, server) => {
+        if (err) console.log(err);
+        if (!server) {
+            prefix = ">>"
+        } else if (server) {
+            prefix = server.prefix
+        }
+        if (message.mentions.has(bot.user.id)) {
+            message.channel.send("Hello! My prefix for this server is " + prefix);
+        };
+        if (!message.content.startsWith(prefix)) return;
+        const args = message.content.slice(prefix.length).trim().split(/ +/g);
+        const cmd = args.shift().toLowerCase();
 
-    if (!message.content.startsWith(prefix)) return;
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const cmd = args.shift().toLowerCase();
+        if (cmd.length === 0) return;
 
-    if (cmd.length === 0) return;
+        // Get the command
+        let command = bot.commands.get(cmd);
+        // If none is found, try to find it by alias
+        if (!command) command = bot.commands.get(bot.aliases.get(cmd));
+        // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
 
-    // Get the command
-    let command = bot.commands.get(cmd);
-    // If none is found, try to find it by alias
-    if (!command) command = bot.commands.get(bot.aliases.get(cmd));
-    // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
-
-
-
+        command.run(bot, message, args);
+    })
     //console.log(data.commands.includes(command.name))
     //if (data.commands.includes(command.name)) return
     //if (talkedRecently.has(message.author.id)) {
     //    message.reply("You are on a cooldown of 5 Seconds.");
     //} else {
-    command.run(bot, message, args);
+
 
     //    talkedRecently.add(message.author.id);
     //    setTimeout(() => {
