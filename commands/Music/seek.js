@@ -18,14 +18,14 @@ module.exports = {
         if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
 
         const notPaused = new Discord.MessageEmbed()
-        if (bot.distube.isPlaying(message)) {
+        if (!bot.distube.isPlaying(message)) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             notPaused.setDescription(`Play something first!`);
             return message.channel.send(notPaused)
         };
-        
+
         let queue = bot.distube.getQueue(message);
 
         let track = queue.songs[0];
