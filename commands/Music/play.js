@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const prefix = require("./../../index.js")
+const prefix = '>>';
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const { getTracks, getPreview } = require("spotify-url-info");
