@@ -20,11 +20,11 @@ module.exports = {
         if (!server) {
             const newserver = new Prefix({
                 serverId: message.guild.id,
-                prefix: args[0],
+                prefix: args.join(" "),
             })
             await newserver.save().catch(e => console.log(e));
         } else if(server){
-          server.prefix = args[0]
+          server.prefix = args[0].join(" ")
           await server.save().catch(e => console.log(e));
         }
 
