@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 var prefix = '';
 //const Commands = require("./models/commands.js")
 const fs = require('fs');
+const mongoose = require("mongoose")
 const token = process.env.token;
 const dbUrl = "mongodb+srv://shander:shander123456@cluster0.9voow.mongodb.net/test"
 mongoose.connect(dbUrl, {
