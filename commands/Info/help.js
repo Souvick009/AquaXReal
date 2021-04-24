@@ -32,7 +32,11 @@ async function getAll(bot, message) {
 
     }, async (err, server) => {
         if (err) console.log(err);
-        prefix = server.prefix
+        if (!server) {
+            prefix = ">>"
+        } else if (server) {
+            prefix = server.prefix
+        }
 
         const embed = new Discord.MessageEmbed().setColor("#00fff3");
 
