@@ -202,7 +202,7 @@ bot.on('message', async message => {
             prefix = server.prefix
         }
         if (message.mentions.has(bot.user.id)) {
-            message.channel.send("Hello! My prefix for this server is " + prefix);
+            message.channel.send(`**Hello! My prefix for this server is** \`${prefix}\``);
         };
         if (!message.content.startsWith(prefix)) return;
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
