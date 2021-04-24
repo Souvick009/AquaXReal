@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const { stripIndents } = require("common-tags");
 const Prefix = require("../../models/prefix.js")
+
 module.exports = {
     name: "help",
     aliases: ["h"],
