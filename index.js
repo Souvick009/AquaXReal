@@ -29,7 +29,7 @@ const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${qu
 bot.distube = new DisTube(bot, {
     searchSongs: false,
     emitNewSongOnly: true,
-    leaveOnEmpty: true,
+    leaveOnEmpty: false,
     leaveOnFinish: false,
     leaveOnStop: false,
     youtubeDL: true,
