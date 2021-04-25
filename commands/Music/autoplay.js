@@ -14,7 +14,7 @@ module.exports = {
 
 
         const notPaused = new Discord.MessageEmbed()
-        if (bot.distube.isPlaying(message)) {
+        if (!bot.distube.isPlaying(message)) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot turn on autoplay mode`);
