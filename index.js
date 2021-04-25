@@ -31,7 +31,7 @@ bot.distube = new DisTube(bot, {
     emitNewSongOnly: true,
     leaveOnEmpty: true,
     leaveOnFinish: false,
-    leaveOnStop: false,
+    leaveOnStop: true,
     youtubeDL: true,
     updateYouTubeDL: true,
     highWaterMark: 1024 * 1024 * 64,
