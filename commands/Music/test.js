@@ -41,6 +41,7 @@ module.exports = {
                 .then(function (data) {
                     console.log('Some information about this playlist', data.body["name"]);
                     console.log('Some information about this playlist', data.body.owner.display_name);
+                    console.log('Some information about this playlist', data.body.tracks.total);
                 }, function (err) {
                     console.log('Something went wrong!', err);
                 });
