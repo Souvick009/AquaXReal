@@ -17,10 +17,6 @@ module.exports = {
     category: "Music",
     run: async (bot, message, args) => {
         spotifyApi.setRefreshToken("AQDV65rh2r_vOR6SZcJVX1l4hnLz6VoIbULhT1BddklkIUSTSKAmF2DLAO-ok3muVKmkjOP-Ppb1GJOzL024TJD-2fXUcwt7zvgZTyVZtMIqLARN6-h9Z30eAChCLw2U1vQ");
-
-        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-            console.log(args.join(" "))
-        }
         
         spotifyApi.refreshAccessToken().then(
             function (data) {
