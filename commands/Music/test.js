@@ -40,7 +40,7 @@ module.exports = {
             await spotifyApi.getPlaylist('1EVz4uIsgRcYtg8QbQQzZU')
                 .then(function (data) {
                     console.log('Some information about this playlist', data.body["name"]);
-                    console.log('Some information about this playlist', data.body["owner.display_name"]);
+                    console.log('Some information about this playlist', data.body.owner.display_name);
                 }, function (err) {
                     console.log('Something went wrong!', err);
                 });
