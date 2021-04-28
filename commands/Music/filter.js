@@ -73,7 +73,7 @@ module.exports = {
             validFiltertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048))
             return message.channel.send(validFiltertype);
         }
-        bot.distube.setFilter(message, args[0]);
+        bot.distube.setFilter(message, args[0].toLowerCase());
 
         const Filterdone = new Discord.MessageEmbed()
         Filterdone.setColor("#00ff00");
