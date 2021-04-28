@@ -34,11 +34,12 @@ module.exports = {
 
         var link = args.join(" ")
         var split = link.split("/")
+        console.log(split[4].split("?")[0])
         var id = split[4]
         console.log(id)
 
         async function getStuff() {
-            await spotifyApi.getPlaylist('id')
+            await spotifyApi.getPlaylist(id)
                 .then(function (data) {
                     console.log('Some information about this playlist', data.body["name"]);
                     console.log('Some information about this playlist', data.body.owner.display_name);
