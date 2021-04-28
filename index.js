@@ -76,14 +76,14 @@ bot.distube
         Playsong.setTimestamp();
         message.channel.send(Playsong)
     })
-    .on("addSong", (message, queue, song) => {
+    // .on("addSong", (message, queue, song) => {
 
 
-        message.channel.send(
-            `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
-        )
+    //     message.channel.send(
+    //         `Added ***${song.name}*** - \`${song.formattedDuration}\` to the queue by ${song.user}`
+    //     )
 
-    })
+    // })
     .on("playList", (message, queue, playlist, song) => {
         const PlayList = new Discord.MessageEmbed();
         PlayList.setTitle("Playling Playlist")
