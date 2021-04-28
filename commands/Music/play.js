@@ -81,9 +81,10 @@ module.exports = {
             await spotifyApi.getPlaylist(id)
                 .then(function (data) {
                     const embed = new Discord.MessageEmbed();
-                    embed.setTitle("ADDED A SPOTIFY PLAYLIST TO QUEUE!");
+                    embed.setAuthor("ADDED A SPOTIFY PLAYLIST TO QUEUE!", message.author.displayAvatarURL({ dynamic: true }));
+                    embed.setTitle(data.body["name"])
                     embed.setColor("#FFFF00");
-                    embed.setDescription(data.body["name"]);
+                    // embed.setDescription();
                     embed.addField(`Playlist Owner`, data.body.owner.display_name)
                     embed.addField(`Total Tracks`, data.body.tracks.total)
                     embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
