@@ -26,7 +26,7 @@ const { getTracks, getPreview } = require("spotify-url-info");
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
-const filters = {
+var filters = {
     "clear": "dynaudnorm=f=200",
     "lowbass": "bass=g=6,dynaudnorm=f=200",
     "bassboost": "bass=g=15,dynaudnorm=f=200",
