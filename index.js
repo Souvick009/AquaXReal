@@ -57,7 +57,7 @@ bot.distube = new DisTube(bot, {
     //         "x-youtube-identity-token": "QUFFLUhqazdkR0hYM0kxS0N2U3hON24zNkpGbG94MDdBd3w\u003d",
     //     }
     // },
-    customFilters: filters.toLowerCase()
+    customFilters: filters.join(" ").toLowerCase()
 });
 
 bot.distube
