@@ -31,10 +31,12 @@ module.exports = {
                 console.log('Could not refresh access token', err);
             }
         );
-        var link = "https://open.spotify.com/playlist/1EVz4uIsgRcYtg8QbQQzZU?si=87K-o9aCTDCLoaLPPTUSPQ"
-        var split = link.split("/")
-        console.log(split[4])
-        
+
+        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
+            var link = "https://open.spotify.com/playlist/1EVz4uIsgRcYtg8QbQQzZU?si=87K-o9aCTDCLoaLPPTUSPQ"
+            var split = args.split("/")
+            console.log(split[4])
+        }
         async function getStuff() {
             await spotifyApi.getPlaylist('1EVz4uIsgRcYtg8QbQQzZU')
                 .then(function (data) {
