@@ -39,6 +39,8 @@ var filters = {
     "mcompand": "mcompand,dynaudnorm=f=200"
 }
 
+var filters1 = filters.join(" ").toLowerCase()
+
 bot.distube = new DisTube(bot, {
     searchSongs: false,
     emitNewSongOnly: true,
@@ -57,7 +59,7 @@ bot.distube = new DisTube(bot, {
     //         "x-youtube-identity-token": "QUFFLUhqazdkR0hYM0kxS0N2U3hON24zNkpGbG94MDdBd3w\u003d",
     //     }
     // },
-    customFilters: filters.join(" ").toLowerCase()
+    customFilters: filters1
 });
 
 bot.distube
