@@ -38,7 +38,7 @@ module.exports = {
         console.log(id)
 
         async function getStuff() {
-            await spotifyApi.getPlaylist('1EVz4uIsgRcYtg8QbQQzZU')
+            await spotifyApi.getPlaylist('id')
                 .then(function (data) {
                     console.log('Some information about this playlist', data.body["name"]);
                     console.log('Some information about this playlist', data.body.owner.display_name);
