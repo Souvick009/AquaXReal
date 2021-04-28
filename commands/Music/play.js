@@ -77,6 +77,7 @@ module.exports = {
         var id = split[4].split("?")[0]
         console.log(id)
 
+        let inline = true
         async function getStuff() {
             await spotifyApi.getPlaylist(id)
                 .then(function (data) {
@@ -85,8 +86,8 @@ module.exports = {
                     embed.setTitle(data.body["name"])
                     embed.setColor("#FFFF00");
                     // embed.setDescription();
-                    embed.addField(`Playlist Owner`, data.body.owner.display_name)
-                    embed.addField(`Total Tracks`, data.body.tracks.total)
+                    embed.addField(`Playlist Owner`, data.body.owner.display_name, inline)
+                    embed.addField(`Total Tracks`, data.body.tracks.total, inline)
                     embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
                     embed.setTimestamp();
                     message.channel.send(embed)
