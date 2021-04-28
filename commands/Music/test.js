@@ -37,7 +37,6 @@ module.exports = {
         var id = split[4].split("?")[0]
         console.log(id)
         
-
         async function getStuff() {
             await spotifyApi.getPlaylist(id)
                 .then(function (data) {
