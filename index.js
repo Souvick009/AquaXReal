@@ -26,6 +26,19 @@ const { getTracks, getPreview } = require("spotify-url-info");
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 
+const filters = {
+    "clear": "dynaudnorm=f=200",
+    "lowbass": "bass=g=6,dynaudnorm=f=200",
+    "bassboost": "bass=g=15,dynaudnorm=f=200",
+    "purebass": "bass=g=20,dynaudnorm=f=200,asubboost",
+    "3D": "apulsator=hz=0.08,dynaudnorm=f=200",
+    "nightcore": "aresample=48000,asetrate=48000*1.11",
+    "3D>>": "apulsator=hz=1,dynaudnorm=f=200",
+    "subboost": "asubboost,dynaudnorm=f=200",
+    "8D": "haas,bass=g=6,dynaudnorm=f=200",
+    "mcompand": "mcompand,dynaudnorm=f=200"
+}
+
 bot.distube = new DisTube(bot, {
     searchSongs: false,
     emitNewSongOnly: true,
@@ -44,18 +57,7 @@ bot.distube = new DisTube(bot, {
     //         "x-youtube-identity-token": "QUFFLUhqazdkR0hYM0kxS0N2U3hON24zNkpGbG94MDdBd3w\u003d",
     //     }
     // },
-    customFilters: {
-        "clear": "dynaudnorm=f=200",
-        "lowbass": "bass=g=6,dynaudnorm=f=200",
-        "bassboost": "bass=g=15,dynaudnorm=f=200",
-        "purebass": "bass=g=20,dynaudnorm=f=200,asubboost",
-        "3D": "apulsator=hz=0.08,dynaudnorm=f=200",
-        "nightcore": "aresample=48000,asetrate=48000*1.11",
-        "3D>>": "apulsator=hz=1,dynaudnorm=f=200",
-        "subboost": "asubboost,dynaudnorm=f=200",
-        "8D": "haas,bass=g=6,dynaudnorm=f=200",
-        "mcompand": "mcompand,dynaudnorm=f=200"
-    }
+    customFilters: filters.toLowerCase()
 });
 
 bot.distube
