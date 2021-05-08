@@ -214,6 +214,8 @@ bot.on('message', async message => {
         let command = bot.commands.get(cmd);
         // If none is found, try to find it by alias
         if (!command) command = bot.commands.get(bot.aliases.get(cmd));
+
+        if (!command) return
         // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
 
         command.run(bot, message, args);
