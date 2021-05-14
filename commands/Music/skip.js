@@ -7,7 +7,7 @@ const queue = new Map
 
 module.exports = {
     name: "skip",
-    aliases: [],
+    aliases: ["s"],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>skip",
