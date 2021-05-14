@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
-const createBar = require('string-progressbar');
+const progressbar = require('string-progressbar');
 const ms = require('ms');
 //Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
 const queue = new Map
@@ -58,7 +58,7 @@ module.exports = {
             console.log(newTotal)
             var totalperct = (newCurrent/newTotal)*100
             console.log(totalperct)
-            let bar = createBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
+            let bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
             console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
