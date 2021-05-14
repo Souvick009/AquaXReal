@@ -56,9 +56,9 @@ module.exports = {
             const newTotal = total.replace(':', "")
             const newCurrent = current.replace(':', "")
             console.log(newTotal)
-            var totalperct = (newCurrent/newTotal)*100 
+            var totalperct = (newCurrent/newTotal)*100
             console.log(totalperct)
-            let bar = progressbar.filledBar(100, totalperct, 25, "▬", "🔹"); //createBar(total, current, size, line, slider);
+            let bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
             console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
