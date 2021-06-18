@@ -50,7 +50,7 @@ module.exports = {
             embed1.setColor("#FF0000")
             embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
             embed1.setTitle(`❌ ERROR | Volume out of Range`)
-            embed1.setDescription(`Usage: \`${prefix}volume <0-150>\``)
+            embed1.setDescription(`Usage: \`${prefix}volume <0-200>\``)
             return message.channel.send(embed1)
         };
 
