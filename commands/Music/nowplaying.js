@@ -51,15 +51,17 @@ module.exports = {
             // assaign values to total and current
             var total = track.formattedDuration;
             var current = queue.formattedCurrentTime;
-            console.log("current " + current)
-            console.log("Total " + total)
+            // console.log("current " + current)
+            // console.log("Total " + total)
             const newTotal = total.replace(':', "")
             const newCurrent = current.replace(':', "")
-            console.log(newTotal)
-            var totalperct = (newCurrent/newTotal)*100
-            console.log(totalperct)
+            // console.log(newTotal)
+            // console.log(newCurrent)
+            var totalperct = (newCurrent / newTotal) * 100
+            // console.log(totalperct)
+            if (totalperct < 6) totalperct = 2
             let bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
-            console.log(bar)
+            // console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
             // There you go, now you have progress bar and percentage returned in an array as string
@@ -69,7 +71,7 @@ module.exports = {
 
             const nowplaying = new Discord.MessageEmbed()
             nowplaying.setColor("#00ff00");
-            nowplaying.setFooter(message.author.tag, message.author.displayAvatarURL());
+            nowplaying.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
             nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
             nowplaying.setURL(track.url);
             nowplaying.setTimestamp()
@@ -77,7 +79,7 @@ module.exports = {
             nowplaying.addField("Requested By: ", `${track.user}`, true);
             nowplaying.addField("Duration: ", `\`${bar[0]}\` \n\`${current} / ${total}\``, true);
             nowplaying.addField("QueueStatus", status(queue));
-            return message.channel.send(nowplaying)
+            return message.channel.send({ embeds: [nowplaying] })
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")
         };

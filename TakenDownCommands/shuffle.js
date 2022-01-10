@@ -6,12 +6,12 @@ const ytSearch = require('yt-search');
 const queue = new Map
 
 module.exports = {
-    name: "resume",
+    name: "shuffle",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>resume",
-    example: ">>resume",
+    usage: ">>shuffle",
+    example: ">>shuffle",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
@@ -34,35 +34,22 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
-        const notPaused = new Discord.MessageEmbed()
-        if (bot.distube.playing) {
-            notPaused.setColor("#FF0000");
-            notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
-            notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);
-            notPaused.setDescription(`It's not paused!`);
-            return message.channel.send({ embeds: [notPaused] })
+        let queue = await bot.distube.getQueue(message);
+
+        //let curqueue
+
+
+        if (queue) {
+
+            bot.distube.shuffle();
+
+            const resumed = new Discord.MessageEmbed()
+            resumed.setColor("#FFFF00");
+            resumed.setDescription("🔀 Shuffled the Queue");
+            return message.channel.send({ embeds: [resumed] })
+
+        } else if (!queue) {
+            return message.channel.send({ content: "Nothing is playing right now!" })
         };
-        //Function to wait some time
-        const delay = function (delayInms) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(2);
-                }, delayInms);
-            });
-        }
-
-        // bot.distube.resume(message);
-        // await delay(100);
-        // bot.distube.pause(message);
-        // await delay(100);
-        bot.distube.resume(message);
-
-        let queue = bot.distube.getQueue(message);
-        let track = queue.songs[0];
-
-        const resumed = new Discord.MessageEmbed()
-        resumed.setColor("#FFFF00");
-        resumed.setDescription(`▶ Resumed the Song: [${track.name}](${track.url})`)
-        return message.channel.send({ embeds: [resumed] })
     }
 }

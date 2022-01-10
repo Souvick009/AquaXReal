@@ -19,9 +19,9 @@ module.exports = {
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
-            vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
+            vc.setFooter({ text: "Requested by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send(vc)
+            return message.channel.send({ embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
@@ -32,44 +32,41 @@ module.exports = {
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return message.channel.send({ embeds: [samevc] })
         };
 
         const Searchterm = new Discord.MessageEmbed()
         if (!args[0]) {
             Searchterm.setColor("#FF0000")
-            Searchterm.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            Searchterm.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
             Searchterm.setDescription(`Usage: \`${prefix}play <URL / TITLE>\``)
-            return message.channel.send(Searchterm)
+            return message.channel.send({ embeds: [Searchterm] })
         };
         const search = new Discord.MessageEmbed()
-        search.setTitle(":mag: Searching!");
-        search.setDescription(args.join(" "))
+        search.setDescription(":mag: **Searching! **" + args.join(" "))
         search.setColor("#FFFF00");
-        message.channel.send(search)
+        message.channel.send({ embeds: [search] })
 
-        //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
-        if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {
-            getPreview(args.join(" ")).then(result => {
-                bot.distube.play(message, result.title);
-            })
-        }
-        else if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-            getTracks(args.join(" ")).then(result => {
-                for (const song of result)
-                    bot.distube.play(message, song.name);
-            })
-        }
-        else {
-            const music = args.join(" ");
-
-
-            bot.distube.play(message, music)
-        }
+        // //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
+        // if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {
+        //     getPreview(args.join(" ")).then(result => {
+        //         bot.distube.play(message, result.title);
+        //     })
+        // }
+        // else if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
+        //     getTracks(args.join(" ")).then(result => {
+        //         for (const song of result)
+        //             bot.distube.play(message, song.name);
+        //     })
+        // }
+        // else {
+        const music = args.join(" ");
+        bot.distube.play(message, music)
+        // }
     }
 
 }

@@ -20,7 +20,7 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setColor(0xe8fc03)
-      .setAuthor(`Information About ${bot.user.username}`, bot.user.displayAvatarURL())
+      .setAuthor({ text: `Information About ${bot.user.username}`, iconURL: bot.user.displayAvatarURL() })
       .setThumbnail(message.guild.iconURL())
       .setTimestamp()
       .setDescription(bot.user.username)
@@ -29,8 +29,8 @@ module.exports = {
       .addField(`:gear: __Version__`, "Version 2.4.1")
       .addField(`⏰ __Uptime__`, `${days} days ${hours} hrs ${minutes} mins ${seconds} secs`)
       .addField(`Want To Invite Me In Your Server?`, "Actually you can't cuz this bot is under beta testing xD")
-      .setFooter(message.author.username, message.author.displayAvatarURL())
-    message.channel.send(embed)
+      .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
+    message.channel.send({ embeds: [embed] })
   }
 
 

@@ -16,10 +16,10 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
       embed.setColor(0xFF0000)
       embed.setDescription("❌ You don't have permissions to set prefix. Please contact a staff member.[Missing Permission:- Administrator]")
-      return message.channel.send(embed);
-  }
+      return message.channel.send({ embeds: [embed] });
+    }
 
-    if (!args[0]) return message.reply("Please provide a argument to set prefix!")
+    if (!args[0]) return message.reply({ content: "Please provide a argument to set prefix!" })
     Prefix.findOne({
       serverId: message.guild.id,
     }, async (err, server) => {
@@ -35,14 +35,8 @@ module.exports = {
         await server.save().catch(e => console.log(e));
       }
 
-      message.channel.send(`My new prefix is now **\`${args.join(" ")}\`**`);
-
-
+      message.channel.send({ content: `My new prefix is now **\`${args.join(" ")}\`**` });
     })
 
-
-
   }
-
-
 }

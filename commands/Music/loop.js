@@ -19,30 +19,63 @@ module.exports = {
 
         if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
 
+        let channel = message.member.voice.channel.id;
+        const samevc = new Discord.MessageEmbed()
+        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+            samevc.setColor("#FF0000")
+            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
+            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            return message.channel.send({ embeds: [samevc] })
+        };
+
         let queue = await bot.distube.getQueue(message);
 
         if (queue) {
-            if (0 <= Number(args[0]) && Number(args[0]) <= 2) {
-                bot.distube.setRepeatMode(message, parseInt(args[0]))
+            if (args[0]) {
+                if (args[0].toLowerCase() == `off`) {
+                    bot.distube.setRepeatMode(message, 0)
+                    const Loop = new Discord.MessageEmbed();
+                    Loop.setDescription("**Loop mode set to:** OFF");
+                    Loop.setColor("#FFFF00");
+                    message.channel.send({ embeds: [Loop] })
+                } else if (args[0].toLowerCase() == `song`) {
+                    bot.distube.setRepeatMode(message, 1)
+                    const Loop = new Discord.MessageEmbed();
+                    Loop.setDescription("**Loop mode set to:** This song");
+                    Loop.setColor("#FFFF00");
+                    message.channel.send({ embeds: [Loop] })
+                } else if (args[0].toLowerCase() == `queue`) {
+                    bot.distube.setRepeatMode(message, 2)
+                    const Loop = new Discord.MessageEmbed();
+                    Loop.setDescription("**Loop mode set to:** Queue");
+                    Loop.setColor("#FFFF00");
+                    message.channel.send({ embeds: [Loop] })
+                } else {
+                    const error1 = new Discord.MessageEmbed();
+                    error1.setDescription(`:x: Invalid mode! | * *(Off: Disabled, Song: Loop the current song, Queue: Loop all the queue)**`);
+                    error1.setColor("#FF0000");
+                    error1.setTimestamp();
+                    message.channel.send({ embeds: [error1] })
+                }
+            } else {
+                bot.distube.setRepeatMode()
                 const Loop = new Discord.MessageEmbed();
-                Loop.setTitle("Repeat mode set to:");
-                Loop.setDescription(`${args[0].replace("0", "OFF").replace("1", "Repeat song").replace("2", "Repeat Queue")}`);
+                var mode;
+                if (bot.distube.repeatMode == 0) {
+                    mode = `OFF`
+                } else if (bot.distube.repeatMode == 1) {
+                    mode = `This Song`
+                } else if (bot.distube.repeatMode = 2) {
+                    mode = `Queue`
+                }
+                Loop.setDescription(`**Loop mode set to:** ${mode}`);
                 Loop.setColor("#FFFF00");
-                Loop.setFooter(bot.user.username, bot.user.displayAvatarURL());
-                Loop.setTimestamp();
-                message.channel.send(Loop)
+                message.channel.send({ embeds: [Loop] })
             }
-            else {
-                const error1 = new Discord.MessageEmbed();
-                error1.setTitle("ERROR");
-                error1.setDescription(`Please use a number between **0** and **2**   |   *(0: Disabled, 1: Repeat a song, 2: Repeat all the queue)*`);
-                error1.setColor("#FF0000");
-                error1.setFooter(bot.user.username, bot.user.displayAvatarURL());
-                error1.setTimestamp();
-                message.channel.send(error1)
-            }
+
         } else if (!queue) {
-            return message.channel.send("Nothing is playing right now!")
+            return message.channel.send({ content: "Nothing is playing right now!" })
         };
     }
 }

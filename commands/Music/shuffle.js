@@ -21,7 +21,7 @@ module.exports = {
             vc.setColor("#FF0000")
             vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send(vc)
+            return message.channel.send({ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -31,7 +31,7 @@ module.exports = {
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return message.channel.send({ embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
@@ -42,15 +42,14 @@ module.exports = {
         if (queue) {
 
             bot.distube.shuffle(message);
-            
+
             const resumed = new Discord.MessageEmbed()
             resumed.setColor("#FFFF00");
-            resumed.setFooter(`🔀 Shuffled the Queue by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
-            resumed.setTitle("🔀 Shuffled the Queue");
-            return message.channel.send(resumed)
-            
+            resumed.setDescription("🔀 Shuffled the Queue");
+            return message.channel.send({ embeds: [resumed] })
+
         } else if (!queue) {
-            return message.channel.send("Nothing is playing right now!")
+            return message.channel.send({ content: "Nothing is playing right now!" })
         };
     }
 }

@@ -11,17 +11,17 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args) => {
-        // if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
+        if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
-        // let channel = message.member.voice.channel.id;
-        // const samevc = new Discord.MessageEmbed()
-        // if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
-        //     samevc.setColor("#FF0000")
-        //     samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
-        //     samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-        //     samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-        //     return message.channel.send(samevc)
-        // };
+        let channel = message.member.voice.channel.id;
+        const samevc = new Discord.MessageEmbed()
+        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+            samevc.setColor("#FF0000")
+            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
+            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            return message.channel.send(samevc)
+        };
 
         let queue = await bot.distube.getQueue(message);
 
@@ -39,23 +39,27 @@ module.exports = {
             // embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
             // embed.setTimestamp();
 
+            let counter = 0;
             let toSend = []
             let queues = queue.songs
+            queues.shift()
             queues.forEach((song, i) => {
                 // let k = queue.songs;
                 // let songs = k.slice(i, i + 10);
-                toSend.push(`**${i + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+                toSend.push(`**${i + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\`\n`)
             })
+
+            let current = queue.songs[0];
+            toSend.unshift(`Now playing \n [${current.name}](${current.url}) \n`)
 
             let options = {
                 title: `Current Queue for: ${message.guild.name} (Total Duration: ${queue.formattedDuration})`,
                 color: "#FFFF00",
-                // args: null,
+                args: args[0],
                 buttons: true,
                 thumbnail: message.guild.iconURL(),
                 perpage: 10
             }
-
             Utils.createEmbedPages(bot, message, toSend, options)
             // for (let i = 0; i < queue.songs.length; i += 10) {
             //     if (counter >= 10) break;

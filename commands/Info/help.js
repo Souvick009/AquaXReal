@@ -52,7 +52,12 @@ async function getAll(bot, message) {
         const lines = categories.map((category, name) => "**" + category + "**" + "\n" + commands(category)
         );
         console.log(bot.categories)
-        return message.channel.send(embed.setDescription(`${lines.join("\n")} \n **Prefix** \n \`${prefix}\` \n For More Information Use **${prefix}help command** \n Example:- **${prefix}help play**`).setFooter(message.author.tag, message.author.displayAvatarURL()).setThumbnail(message.guild.iconURL()).setTimestamp().setTitle("Here are the available commands you can use:"));
+        embed.setDescription(`${lines.join("\n")} \n **Prefix** \n \`${prefix}\` \n For More Information Use **${prefix}help command** \n Example:- **${prefix}help play**`)
+        embed.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() })
+        embed.setThumbnail(message.guild.iconURL())
+        embed.setTimestamp()
+        embed.setTitle("Here are the available commands you can use:")
+        return message.channel.send({ embeds: [embed] });
     })
 }
 
@@ -68,7 +73,9 @@ function getCMD(bot, message, input) {
 
     // If no cmd is found, send not found embed
     if (!cmd) {
-        return message.channel.send(embed.setColor("RED").setDescription(info));
+        embed.setColor("RED")
+        embed.setDescription(info)
+        return message.channel.send({ embeds: [embed] });
     }
 
     // Add all cmd info to the embed
@@ -82,6 +89,7 @@ function getCMD(bot, message, input) {
         info += `\n**Usage**: ${cmd.usage}`;
         embed.setFooter(`Syntax: <> = required, [] = optional`);
     }
-
-    return message.channel.send(embed.setColor("#00fff3").setDescription(info));
+    embed.setColor("#00fff3")
+    embed.setDescription(info)
+    return message.channel.send({ embeds: [embed] });
 }

@@ -17,25 +17,48 @@ module.exports = {
     run: async (bot, message, args) => {
         const voiceChannel = message.member.voice.channel;
 
-        if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
+        if (!voiceChannel) return message.channel.send({ embeds: ['You need to be in a channel to execute this command!'] });
+
+        let channel = message.member.voice.channel.id;
+        const samevc = new Discord.MessageEmbed()
+        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+            samevc.setColor("#FF0000")
+            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
+            samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
+            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            return message.channel.send({ embeds: [samevc] })
+        };
 
         let queue = await bot.distube.getQueue(message);
 
-        let channel = message.member.voice.channel.id;
-
         if (queue) {
-            bot.distube.stop(message)
 
-            const embed = new Discord.MessageEmbed();
-            embed.setTitle("⏹ STOPPED!");
-            embed.setColor("#FF0000");
-            embed.setDescription('Successfully Disconnected!');
-            embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
-            embed.setTimestamp();
+            if (message.guild.id == "679765534950424601") {
+                if (message.guild.me.voice.channel.members >= 2) {
+                    if (message.author.roles.cache.some(r => r.id === "685843002123616256")) {
+                        stopPlayer()
+                    } else {
+                        return message.reply(`You don't have the D.J role to stop the player.`)
+                    }
+                } else {
+                    stopPlayer()
+                }
+            } else {
+                stopPlayer()
+            }
 
-            message.channel.send(embed)
+            async function stopPlayer() {
+                bot.distube.stop(message)
+
+                const embed = new Discord.MessageEmbed();
+                embed.setTitle("⏹ STOPPED!");
+                embed.setColor("#FF0000");
+                embed.setDescription('Successfully Disconnected!');
+                message.channel.send({ embeds: [embed] })
+            }
+
         } else if (!queue) {
-            return message.channel.send("Nothing is playing right now!")
+            return message.channel.send({ embeds: ["Nothing is playing right now!"] })
         };
     }
 }

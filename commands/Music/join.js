@@ -19,16 +19,34 @@ module.exports = {
 
         if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
 
-        // Join the same voice channel of the author of the message
-        if (voiceChannel) {
-            const connection = await message.member.voice.channel.join();
+        if (message.guild.me.voice.channel) {
+            if (message.guild.me.voice.channel.id) {
+                if (voiceChannel.id !== message.guild.me.voice.channel.id) {
+                    if (message.guild.me.voice.channel.members >= 1) {
+                        message.channel.send(`I'm already connected with another voice channel`)
+                    } else {
+                        bot.distube.voices.join(message.member.voice.channel)
+                        const embed = new Discord.MessageEmbed()
+                        embed.setAuthor({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
+                        embed.setDescription("I have been summoned!");
+                        embed.setColor("#00ff00");
+                        embed.setFooter({ text: "Summoned by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
+                        embed.setTimestamp()
+                        message.channel.send({ embeds: [embed] })
+                    }
+                } else {
+                    message.channel.send(`I'm already connected with your voice channel`)
+                }
+            }
+        } else {
+            bot.distube.voices.join(message.member.voice.channel)
             const embed = new Discord.MessageEmbed()
             embed.setAuthor(bot.user.username, bot.user.displayAvatarURL());
             embed.setDescription("I have been summoned!");
             embed.setColor("#00ff00");
-            embed.setFooter("Summoned by " + message.author.tag , message.author.displayAvatarURL());
+            embed.setFooter({ text: "Summoned by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
             embed.setTimestamp()
-            message.channel.send(embed)
+            message.channel.send({ embeds: [embed] })
         }
     }
 }

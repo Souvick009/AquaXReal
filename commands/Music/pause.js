@@ -21,7 +21,7 @@ module.exports = {
             vc.setColor("#FF0000")
             vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send(vc)
+            return message.channel.send({ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -31,16 +31,16 @@ module.exports = {
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return message.channel.send({ embeds: [samevc] })
         };
 
         const alreadyPaused = new Discord.MessageEmbed()
-        if (bot.distube.isPaused(message)) {
+        if (bot.distube.paused) {
             alreadyPaused.setColor("#FF0000");
             alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot pause the Song`);
             alreadyPaused.setDescription(`It's already paused!`);
-            return message.channel.send(alreadyPaused)
+            return message.channel.send({ embeds: [alreadyPaused] })
         };
 
         bot.distube.pause(message);
@@ -48,10 +48,8 @@ module.exports = {
         let queue = bot.distube.getQueue(message);
         let track = queue.songs[0];
         const paused = new Discord.MessageEmbed()
-        paused.setTitle("⏸ Paused the Song");
         paused.setColor("#FFFF00");
-        paused.setDescription(`[${track.name}](${track.url})`)
-        paused.setFooter(`Paused by: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }));
-        return message.channel.send(paused)
+        paused.setDescription(`⏸ Paused the Song: [${track.name}](${track.url})`)
+        return message.channel.send({ embeds: [paused] })
     }
 }
