@@ -84,7 +84,6 @@ module.exports = {
                 embed.setDescription(`⏭ Skipped the song!`);
                 embed.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
                 embed.setTimestamp();
-
                 message.channel.send({ embeds: [embed] })
             }
 
