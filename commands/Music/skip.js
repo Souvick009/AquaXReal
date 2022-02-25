@@ -75,7 +75,7 @@ module.exports = {
                         }
                     }
                     console.log(`total ` + parseFloat(total))
-                    bot.distube.seek(parseFloat(total))
+                    bot.distube.seek(message, parseFloat(total))
                 }
 
                 const embed = new Discord.MessageEmbed();

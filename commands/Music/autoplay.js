@@ -31,8 +31,9 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
         const notPaused = new Discord.MessageEmbed()
-        if (!bot.distube.playing) {
+        if (!queue || !queue.playing) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot turn on autoplay mode`);
@@ -55,7 +56,7 @@ module.exports = {
         }
 
         async function autoplay() {
-            let mode = bot.distube.toggleAutoplay(message);
+            let mode = queue.toggleAutoplay(message);
             const autoplay = new Discord.MessageEmbed();
             autoplay.setDescription("Autoplay Mode Set To: `" + (mode ? "On" : "Off") + "`");
             autoplay.setColor("#FFFF00");

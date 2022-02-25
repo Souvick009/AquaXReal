@@ -59,14 +59,14 @@ module.exports = {
                     message.channel.send({ embeds: [error1] })
                 }
             } else {
-                bot.distube.setRepeatMode()
+                queue.setRepeatMode()
                 const Loop = new Discord.MessageEmbed();
                 var mode;
-                if (bot.distube.repeatMode == 0) {
+                if (queue.repeatMode == 0) {
                     mode = `OFF`
-                } else if (bot.distube.repeatMode == 1) {
+                } else if (queue.repeatMode == 1) {
                     mode = `This Song`
-                } else if (bot.distube.repeatMode = 2) {
+                } else if (queue.repeatMode == 2) {
                     mode = `Queue`
                 }
                 Loop.setDescription(`**Loop mode set to:** ${mode}`);

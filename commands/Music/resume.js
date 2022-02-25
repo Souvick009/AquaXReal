@@ -34,8 +34,10 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
+
         const notPaused = new Discord.MessageEmbed()
-        if (bot.distube.playing) {
+        if (!queue || !queue.playing) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);
@@ -55,9 +57,8 @@ module.exports = {
         // await delay(100);
         // bot.distube.pause(message);
         // await delay(100);
-        bot.distube.resume(message);
+        queue.resume(message);
 
-        let queue = bot.distube.getQueue(message);
         let track = queue.songs[0];
 
         const resumed = new Discord.MessageEmbed()

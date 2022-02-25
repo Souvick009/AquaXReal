@@ -34,8 +34,10 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
+
         const alreadyPaused = new Discord.MessageEmbed()
-        if (bot.distube.paused) {
+        if (queue.paused) {
             alreadyPaused.setColor("#FF0000");
             alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot pause the Song`);
@@ -43,9 +45,8 @@ module.exports = {
             return message.channel.send({ embeds: [alreadyPaused] })
         };
 
-        bot.distube.pause(message);
+        queue.pause(message);
 
-        let queue = bot.distube.getQueue(message);
         let track = queue.songs[0];
         const paused = new Discord.MessageEmbed()
         paused.setColor("#FFFF00");

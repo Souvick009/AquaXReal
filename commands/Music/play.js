@@ -65,7 +65,11 @@ module.exports = {
         // }
         // else {
         const music = args.join(" ");
-        bot.distube.play(message, music)
+        bot.distube.play(message.member.voice.channel, music, {
+            member: message.member,
+            textChannel: message.channel,
+            message
+        })
         // }
     }
 

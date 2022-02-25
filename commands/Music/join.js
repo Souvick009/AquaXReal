@@ -27,7 +27,7 @@ module.exports = {
                     } else {
                         bot.distube.voices.join(message.member.voice.channel)
                         const embed = new Discord.MessageEmbed()
-                        embed.setAuthor({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
+                        embed.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() });
                         embed.setDescription("I have been summoned!");
                         embed.setColor("#00ff00");
                         embed.setFooter({ text: "Summoned by " + message.author.tag, iconURL: message.author.displayAvatarURL() });

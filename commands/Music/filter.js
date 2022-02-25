@@ -54,8 +54,9 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
         const notPlaying = new Discord.MessageEmbed()
-        if (!bot.distube.playing) {
+        if (!queue || !queue.playing) {
             notPlaying.setColor("#FF0000");
             notPlaying.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPlaying.setTitle(`❌ ERROR | Can't Filter the song`);
@@ -77,34 +78,44 @@ module.exports = {
             filteR()
         }
 
-        const Filtertype = new Discord.MessageEmbed()
-        if (!args[0]) {
-            Filtertype.setColor("#FF0000");
-            Filtertype.setFooter(bot.user.username, bot.user.displayAvatarURL());
-            Filtertype.setTitle(`❌ ERROR | Please add a Filtertype`);
-            Filtertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048));
-            return message.channel.send({ embeds: [Filtertype] });
-        };
 
-        const validFiltertype = new Discord.MessageEmbed()
-        if (!filters.join(" ").toLowerCase().split(" ").includes(args[0].toLowerCase())) {
-            validFiltertype.setColor("#FF0000")
-            validFiltertype.setFooter(bot.user.username, bot.user.displayAvatarURL())
-            validFiltertype.setTitle(`❌ ERROR | Not a valid Filtertype`)
-            validFiltertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048))
-            return message.channel.send({ embeds: [validFiltertype] });
-        }
 
         async function filteR() {
-            bot.distube.setFilter(message, args[0]);
-            const Filterdone = new Discord.MessageEmbed()
-            Filterdone.setColor("#00ff00");
-            Filterdone.setFooter(message.author.tag, message.author.displayAvatarURL());
-            Filterdone.setTitle(`✅ Successfully set Filter to: \`${args[0]}\``);
-            return message.channel.send({ embeds: [Filterdone] });
+            const Filtertype = new Discord.MessageEmbed()
+            if (!args[0]) {
+                Filtertype.setColor("#FF0000");
+                Filtertype.setFooter(bot.user.username, bot.user.displayAvatarURL());
+                Filtertype.setTitle(`❌ ERROR | Please add a Filtertype`);
+                Filtertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048));
+                return message.channel.send({ embeds: [Filtertype] });
+            };
+
+            const validFiltertype = new Discord.MessageEmbed()
+            if (!filters.join(" ").toLowerCase().split(" ").includes(args[0].toLowerCase())) {
+                validFiltertype.setColor("#FF0000")
+                validFiltertype.setFooter(bot.user.username, bot.user.displayAvatarURL())
+                validFiltertype.setTitle(`❌ ERROR | Not a valid Filtertype`)
+                validFiltertype.setDescription(`Usage: \`${prefix}filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048))
+                return message.channel.send({ embeds: [validFiltertype] });
+            }
+            const currentFilters = queue.filters
+            if (currentFilters.includes(args[0].toLowerCase())) {
+                queue.setFilter(args[0].toLowerCase());
+                const Filterdone = new Discord.MessageEmbed()
+                Filterdone.setColor("#00ff00");
+                Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
+                Filterdone.setTitle({ name: `✅ Successfully removed \`${args[0].toLowerCase()}\` filter` });
+                return message.channel.send({ embeds: [Filterdone] });
+            } else {
+                queue.setFilter(args[0].toLowerCase());
+                const Filterdone = new Discord.MessageEmbed()
+                Filterdone.setColor("#00ff00");
+                Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
+                Filterdone.setTitle({ name: `✅ Successfully set Filter to: \`${args[0].toLowerCase()}\`` });
+                return message.channel.send({ embeds: [Filterdone] });
+            }
         }
     }
-
 }
 
 

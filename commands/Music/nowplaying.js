@@ -67,8 +67,7 @@ module.exports = {
             // There you go, now you have progress bar and percentage returned in an array as string
 
             // Queue status template
-            const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
-
+            const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filters || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
             const nowplaying = new Discord.MessageEmbed()
             nowplaying.setColor("#00ff00");
             nowplaying.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
