@@ -104,14 +104,14 @@ module.exports = {
                 const Filterdone = new Discord.MessageEmbed()
                 Filterdone.setColor("#00ff00");
                 Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
-                Filterdone.setTitle({ name: `✅ Successfully removed \`${args[0].toLowerCase()}\` filter` });
+                Filterdone.setTitle(`✅ Successfully removed \`${args[0].toLowerCase()}\` filter`);
                 return message.channel.send({ embeds: [Filterdone] });
             } else {
                 queue.setFilter(args[0].toLowerCase());
                 const Filterdone = new Discord.MessageEmbed()
                 Filterdone.setColor("#00ff00");
                 Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
-                Filterdone.setTitle({ name: `✅ Successfully set Filter to: \`${args[0].toLowerCase()}\`` });
+                Filterdone.setTitle(`✅ Successfully set Filter to: \`${args[0].toLowerCase()}\``);
                 return message.channel.send({ embeds: [Filterdone] });
             }
         }
