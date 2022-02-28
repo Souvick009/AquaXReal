@@ -60,7 +60,13 @@ module.exports = {
             var totalperct = (newCurrent / newTotal) * 100
             // console.log(totalperct)
             if (totalperct < 6) totalperct = 2
-            let bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
+            let bar;
+            try {
+                bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
+            } catch (error) {
+               return console.log(totalperct)
+            }
+
             // console.log(bar)
             // Call the createBar method, first two arguments are mandatory
             // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
