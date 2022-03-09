@@ -24,16 +24,16 @@ module.exports = {
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return message.channel.send({ embeds: [samevc] })
         };
-        
+
         const notPaused = new Discord.MessageEmbed()
         if (!bot.distube.playing) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             notPaused.setDescription(`Play something first!`);
-            return message.channel.send(notPaused)
+            return message.channel.send({ embeds: [notPaused] })
         };
 
         let queue = bot.distube.getQueue(message);
@@ -41,13 +41,13 @@ module.exports = {
         let track = queue.songs[0];
 
         var total = track.duration;
-        
+
         const embed1 = new Discord.MessageEmbed()
         if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
             embed1.setColor("#FF0000")
             embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
             embed1.setTitle(`❌ ERROR | Seeking out of Range`)
-            return message.channel.send(embed1)
+            return message.channel.send({ embeds: [embed1] })
         }
 
         const alreadyPaused = new Discord.MessageEmbed()
@@ -56,7 +56,7 @@ module.exports = {
             alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             alreadyPaused.setDescription(`First resume the song then try to seek!`);
-            return message.channel.send(alreadyPaused)
+            return message.channel.send({ embeds: [alreadyPaused] })
         };
 
         const seek = new Discord.MessageEmbed()
