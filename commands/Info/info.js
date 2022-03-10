@@ -9,7 +9,7 @@ module.exports = {
   category: "Info",
   run: async (bot, message, args) => {
 
-    if (!message.guild.me.hasPermission(["EMBED_LINKS"])) return message.channel.send("❌ I don't have Embed Links permission!")
+    if (!message.guild.me.permissions.has(["EMBED_LINKS"])) return message.channel.send("❌ I don't have Embed Links permission!")
 
     let days = Math.floor(bot.uptime / 86400000);
     let hours = Math.floor(bot.uptime / 3600000) % 24;
