@@ -22,7 +22,7 @@ module.exports = {
             vc.setColor("#FF0000")
             vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send(vc)
+            return message.channel.send({ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -32,7 +32,7 @@ module.exports = {
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return message.channel.send({ embeds: [samevc] })
         };
 
         //function for creating a bar
@@ -43,29 +43,36 @@ module.exports = {
         // }
 
         let queue = bot.distube.getQueue(message);
-
         if (queue) {
 
             let track = queue.songs[0];
+            var duration;
+            if (track.isLive) {
+                duration = "`🔴 LIVE`"
+            } else {
 
-            // assaign values to total and current
-            var total = track.formattedDuration;
-            var current = queue.formattedCurrentTime;
-            // console.log("current " + current)
-            // console.log("Total " + total)
-            const newTotal = total.replace(':', "")
-            const newCurrent = current.replace(':', "")
-            // console.log(newTotal)
-            // console.log(newCurrent)
-            var totalperct = (newCurrent / newTotal) * 100
-            // console.log(totalperct)
-            if (totalperct < 6) totalperct = 2
-            let bar;
-            try {
-                bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
-            } catch (error) {
-               return console.log(totalperct)
+                // assaign values to total and current
+                var total = track.formattedDuration;
+                var current = queue.formattedCurrentTime;
+                // console.log("current " + current)
+                // console.log("Total " + total)
+                const newTotal = total.replace(':', "")
+                const newCurrent = current.replace(':', "")
+                // console.log(newTotal)
+                // console.log(newCurrent)
+                var totalperct = (newCurrent / newTotal) * 100
+                // console.log(totalperct)
+                if (totalperct < 6) totalperct = 2
+                let bar;
+                try {
+                    bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
+                } catch (error) {
+                    return console.log(totalperct, total)
+                }
+                duration = `\`${bar[0]}\` \n\`${current} / ${total}\``
             }
+
+
 
             // console.log(bar)
             // Call the createBar method, first two arguments are mandatory
@@ -82,7 +89,7 @@ module.exports = {
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addField("Requested By: ", `${track.user}`, true);
-            nowplaying.addField("Duration: ", `\`${bar[0]}\` \n\`${current} / ${total}\``, true);
+            nowplaying.addField("Duration: ", duration, true);
             nowplaying.addField("QueueStatus", status(queue));
             return message.channel.send({ embeds: [nowplaying] })
         } else if (!queue) {

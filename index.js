@@ -35,7 +35,7 @@ bot.distube = new DisTube(bot, {
     leaveOnEmpty: true,
     leaveOnFinish: false,
     leaveOnStop: true,
-    youtubeDL: true,
+    youtubeDL: false,
     updateYouTubeDL: true,
     youtubeCookie: "VISITOR_INFO1_LIVE=tyIc2nrju6k; PREF=tz=Asia.Calcutta&f6=40000000; CONSENT=PENDING+660; YSC=ntlk9R2SXIE; SID=FgjzkguCcxP48fgn8Y7mJXgNzwDYECBq7rinbiEfk_8o2U8MIIE55tSiUly4kfk9q-JCYg.; __Secure-1PSID=FgjzkguCcxP48fgn8Y7mJXgNzwDYECBq7rinbiEfk_8o2U8MaxypQxo2aU1PLR_XiFdaOg.; __Secure-3PSID=FgjzkguCcxP48fgn8Y7mJXgNzwDYECBq7rinbiEfk_8o2U8Mfj0W0x1Jvy7uLmhu8jEqxw.; HSID=Am4Th-4Zm2SldcfFL; SSID=AjvQytqan0HDH27pk; APISID=jkM8aJyBcY4-E1G1/AEvhDyNdLrFL_0kfp; SAPISID=TriuzN6VICF7n3LS/Alt9JiF2s7CpCnL1p; __Secure-1PAPISID=TriuzN6VICF7n3LS/Alt9JiF2s7CpCnL1p; __Secure-3PAPISID=TriuzN6VICF7n3LS/Alt9JiF2s7CpCnL1p; LOGIN_INFO=AFmmF2swRAIgP2RnzI5T_yqC7DKnWtn9UAaQ6d1qsf_QFpuL0dC8jwQCIFN7IXYn0kpK0CAlrIagcmooBJSykv4Sh2LuYAIMUAqx:QUQ3MjNmeEM1blBfZ1dYN21jUlJiU0tDY0pYLWtTTzdoN294bVJyUDRnN1I2NUVmUXVVTHM5V2tZMTdKOU96bXlNYVNpQnBCalY1d1FRc2g3Y0piMDk2OXB6ZGVrci1UV0ItVGRtNXFWNFZCYkdVTzUzS29QbnhaU1lQNGJoZVdHdE9XZ1B1VngtbWpka1pyTUMyblpYMTY5UGNITGFkTFZR; CONSISTENCY=AGDxDeMdr6Ko2l3fszmI9XCylCe_bZHJVBKuz85p3PgqrDY0bdZ9ADJn4kiBeMOvgoQi9jgDMKPCS7U_0G_52AbHxH3Uy2v9DIjy2dPBHvhmLNaMpc3zlryceofBYvsZzYOvUCVWHHn11EwBxhPRdp_zogzgUnlW-TduzxC3Xpd0bYv32-4SGdLPm228F4uIqP3PZYWWwIuhIToM1_hlAFvfCJs; SIDCC=AJi4QfFEIKkAEF069SBQRpE79B0CRIIeOR14rMOfLa0SOiuZEvxIcjbXWOq5aKsjwjuyja_UEQ; __Secure-3PSIDCC=AJi4QfEt8Em-5bFeuMOGovBKObsDX8llYeXzp3Q6yRXHVZa_kMk9MwJy1P_PkNu1BGG7PlmhwS4",
     //"VISITOR_INFO1_LIVE=iXsfex80Su8; CONSENT=YES+IN.en-GB+201907; HSID=AZwdfuZ7tBeSv2raS; SSID=AvHu2TSA2dMD9vqxF; APISID=FwdjNOOzvO7NH90P/AYkfvvrTq-yb5UGKn; SAPISID=Zb3hc-deJxg6BfiZ/AWiHLSaKLzF7w7iBs; Secure-3PAPISID=Zb3hc-deJxg6BfiZ/AWiHLSaKLzF7w7iBs; PREF=volume=100&tz=Asia.Calcutta&al=en-GB&f5=30030&f4=4000000; SID=8weszRtqt2xf4Mb2LJ3f5eUjmCWvt5B5wTgdMMsDLL45Gxt_SiBLg2bhq0h94inR7XDNtQ.; Secure-3PSID=8weszRtqt2xf4Mb2LJ3f5eUjmCWvt5B5wTgdMMsDLL45Gxt_5tY0iEY3Deu-BfqmkXeJEQ.; YSC=9s8rdsbS5G0; LOGIN_INFO=AFmmF2swRQIgROwX9QR5zXC5W9EY2IZj4jeW7wrN9aNXUPTKGboUQW0CIQCF1dYZsgl46ifUGo5dsc2CSYTTZ487xubqHVvFXAhD0Q:QUQ3MjNmd1JibmdxVnNBLUFCZlR2RHlNeUJkWklvTXpWckNZa2dGNG1Id3VOVWxVcW1SdmJKRVhwZFRlT1ZzYkROejZFWVFiNkFFTGNIaEt3WmZVTmRxMG0zUjA5YjNteTg3aHZGZC1KR0p1UHdSRkNDN2VjeWNtQmdyTzNwRndQNXV2WXBZN0dMZ0JGRDFsTHNCVjN5eGprUTljXzF1Z0VsLWp3TkowY0dYOVZsaDJWZXRVaXFTb2picGdoN0lCdF9BYm9DVVN3Q2xW; SIDCC=AJi4QfHyUANh5IanSTU7LKMmau72Gw5oz-MKZR2M3PFuDZe0rGcmMroCP7MMt7vEVVAwXnYIkAM; __Secure-3PSIDCC=AJi4QfHuJoTBBl6U9cPQtF-N7DcO0XWFtkMNYO0npFWiqMiKqsuG4PFgG7FsTFZlVWNjpuYPJA",
@@ -222,25 +222,33 @@ bot.on('messageCreate', async message => {
         } else if (server) {
             prefix = server.prefix
         }
-        if (message.mentions.has(bot.user.id)) {
-            if (message.content.includes("@here") || message.content.includes("@everyone")) return
-            message.reply(`**Hello! My prefix for this server is** \`${prefix}\``);
-        };
-        if (!message.content.startsWith(prefix)) return;
-        const args = message.content.slice(prefix.length).trim().split(/ +/g);
-        const cmd = args.shift().toLowerCase();
 
-        if (cmd.length === 0) return;
+        if (message.content.startsWith(prefix) || message.content.startsWith("<@!815171627095556106>")) {
+            //declaring args variable
+            var args;
+            //added this condition to customize arg according to prefix
+            if (message.content.startsWith("<@!815171627095556106>")) { //remember to replace this id with your bot's id
+                //22letters will be removed from arg if message starts with bot ping
+                args = message.content.slice(22).trim().split(/ +/g);
+            } else {
+                //length of prefix will be removed from arg if message doesnt starts with bot ping
+                args = message.content.slice(prefix.length).trim().split(/ +/g);
+            }
 
-        // Get the command
-        let command = bot.commands.get(cmd);
-        // If none is found, try to find it by alias
-        if (!command) command = bot.commands.get(bot.aliases.get(cmd));
+            const cmd = args.shift().toLowerCase();
 
-        if (!command) return
-        // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
+            if (cmd.length === 0) return;
 
-        command.run(bot, message, args);
+            // Get the command
+            let command = bot.commands.get(cmd);
+            // If none is found, try to find it by alias
+            if (!command) command = bot.commands.get(bot.aliases.get(cmd));
+
+            if (!command) return
+            // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
+
+            command.run(bot, message, args);
+        }
     })
     //console.log(data.commands.includes(command.name))
     //if (data.commands.includes(command.name)) return

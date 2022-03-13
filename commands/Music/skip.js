@@ -45,38 +45,38 @@ module.exports = {
             }
 
             async function skipSong() {
-                if (queue.songs.length >= 2) {
-                    console.log(queue.songs.length)
+                // if (queue.songs.length >= 2) {
+                //     console.log(queue.songs.length)
                     bot.distube.skip(message)
-                } else {
-                    const track = queue.songs[0]
-                    var total2 = track.formattedDuration;
-                    var total;
-                    if (total2.includes(`:`)) {
-                        let total1 = total2.split(`:`)
-                        console.log(total1)
-                        if (total1.length == 2) { // 1:30  // Minutes to Secs
-                            let min1 = `${total1[0]}m`
-                            let sec = total1[1]
-                            let min = ms(min1)
-                            console.log(`min1 ` + min)
-                            // let sec = ms(sec1)
-                            total = min + sec
-                            console.log(`tota69 ` + total)
-                        } else if (total1.length == 3) { // 1:20:30  //Hours to Secs
-                            let hou1 = `${total1[0]}h`
-                            let min1 = `${total1[1]}m`
-                            let sec = `${total1[2]}s`
-                            let hou = ms(hou1)
-                            let min = ms(min1)
-                            total = hou + min + sec
-                        } else {
-                            total = total1
-                        }
-                    }
-                    console.log(`total ` + parseFloat(total))
-                    bot.distube.seek(message, parseFloat(total))
-                }
+                // } else {
+                //     const track = queue.songs[0]
+                //     var total2 = track.formattedDuration;
+                //     var total;
+                //     if (total2.includes(`:`)) {
+                //         let total1 = total2.split(`:`)
+                //         console.log(total1)
+                //         if (total1.length == 2) { // 1:30  // Minutes to Secs
+                //             let min1 = `${total1[0]}m`
+                //             let sec = total1[1]
+                //             let min = ms(min1)
+                //             console.log(`min1 ` + min)
+                //             // let sec = ms(sec1)
+                //             total = min + sec
+                //             console.log(`tota69 ` + total)
+                //         } else if (total1.length == 3) { // 1:20:30  //Hours to Secs
+                //             let hou1 = `${total1[0]}h`
+                //             let min1 = `${total1[1]}m`
+                //             let sec = `${total1[2]}s`
+                //             let hou = ms(hou1)
+                //             let min = ms(min1)
+                //             total = hou + min + sec
+                //         } else {
+                //             total = total1
+                //         }
+                //     }
+                //     console.log(`total ` + parseFloat(total))
+                //     bot.distube.seek(message, parseFloat(total))
+                // }
 
                 const embed = new Discord.MessageEmbed();
                 embed.setTitle(":track_next: SKIPPED!");
