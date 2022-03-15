@@ -56,12 +56,17 @@ module.exports = {
                 var current = queue.formattedCurrentTime;
                 // console.log("current " + current)
                 // console.log("Total " + total)
-                const newTotal = total.replace(':', "")
-                const newCurrent = current.replace(':', "")
+                var newTotal = total.replace(':', "")
+                var newCurrent = current.replace(':', "")
+                if (newTotal.includes(":")) {
+                    newTotal = newTotal.replace(':', "")
+                }
+                if (newCurrent.includes(":")) {
+                    newCurrent = newCurrent.replace(':', "")
+                }
                 // console.log(newTotal)
                 // console.log(newCurrent)
                 var totalperct = (newCurrent / newTotal) * 100
-                // console.log(totalperct)
                 if (totalperct < 6) totalperct = 2
                 let bar;
                 try {
