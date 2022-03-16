@@ -48,9 +48,10 @@ module.exports = {
 
             async function removeSong() {
                 if (isNaN(parseInt(args[0])) || !args[0]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
-                let remove = args[0] - 1
+                let remove = args[0]
                 let arr = queue.songs;
                 if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
+                remove = args[0] - 1
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Song Removed:`)
                     .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
@@ -60,7 +61,7 @@ module.exports = {
                     .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
                 message.channel.send({ embeds: [embed] })
                 if (remove === 0) {
-                    skip.execute(message, agrs)
+                    skip.execute(message, args)
                 }
                 else {
                     arr.splice(remove, 1)

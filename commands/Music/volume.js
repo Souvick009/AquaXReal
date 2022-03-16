@@ -68,6 +68,15 @@ module.exports = {
                 return message.channel.send({ embeds: [embed1] })
             };
 
+            var queue = bot.distube.getQueue(message)
+            const notPaused = new Discord.MessageEmbed()
+            if (!queue || !queue.playing) {
+                notPaused.setColor("#FF0000");
+                notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
+                notPaused.setTitle(`❌ ERROR | Cannot change my volume`);
+                notPaused.setDescription(`Play something first!`);
+                return message.channel.send({ embeds: [notPaused] })
+            };
             bot.distube.setVolume(message, Number(args[0]));
 
             const embed3 = new Discord.MessageEmbed()
