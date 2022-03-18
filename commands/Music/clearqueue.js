@@ -7,7 +7,7 @@ const skip = require("./skip")
 const queue = new Map
 
 module.exports = {
-    name: "remove",
+    name: "clearqueue",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
@@ -47,25 +47,18 @@ module.exports = {
             }
 
             async function removeSong() {
-                if (isNaN(parseInt(args[0])) || !args[0]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
-                let remove = args[0]
                 let arr = queue.songs;
-                if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
-                remove = args[0]
+                if (arr.length >= 1) {
+                    arr.splice(1, arr.length)
+                }
+                if (arr.length <= 1) {
+                    bot.distube.skip(message)
+                }
                 const embed = new Discord.MessageEmbed()
-                    .setTitle(`Song Removed:`)
-                    .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
+                    .setDescription(`Cleared the queue`)
                     .setColor('#FFFF00')
-                    .addField('Song Removed by:-', message.author.username)
-                    .setTimestamp()
-                    .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
                 message.channel.send({ embeds: [embed] })
-                if (remove === 0) {
-                    skip.execute(message, args)
-                }
-                else {
-                    arr.splice(remove, 1)
-                }
+
             }
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")

@@ -44,16 +44,18 @@ module.exports = {
             queues.forEach((song, i) => {
                 // let k = queue.songs;
                 // let songs = k.slice(i, i + 10);
-                toSend.push(`**${i + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+                if (i >= 1) {
+                    toSend.push(`**${i}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+                }
             })
-
+            toSend.unshift(`**Now Playing:**\n [${queues[0].name}](${queues[0].url}) - \`${queues[0].formattedDuration}\``)
             let options = {
                 title: `Current Queue for: ${message.guild.name} (Total Duration: ${queue.formattedDuration})`,
                 color: "#FFFF00",
                 // args: null,
                 buttons: true,
                 thumbnail: message.guild.iconURL(),
-                perpage: 10
+                perpage: 11
             }
 
             Utils.createEmbedPages(bot, message, toSend, options)

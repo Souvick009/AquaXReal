@@ -96,6 +96,8 @@ bot.distube
         embed.setThumbnail(song.thumbnail)
         embed.addField(`Channel`, song.uploader.name, true)
         embed.addField(`Duration`, song.formattedDuration, true)
+        var position = queue.songs.length - 1
+        embed.addField(`Position In The Queue`, position.toString(), true)
         queue.textChannel.send({ embeds: [embed] })
 
     })
@@ -202,6 +204,7 @@ bot.on("guildDelete", guild => {
 });
 bot.on('messageCreate', async message => {
     if (message.channel.type === "dm") return;
+    if (!message.guild || !message.guild.available) return
     if (message.guild.id == "679765534950424601" && message.channel.id !== "927891270624497734") return
     //  getdisabledcommand-
     //Commands.findOne({

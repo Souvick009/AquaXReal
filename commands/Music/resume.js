@@ -37,7 +37,7 @@ module.exports = {
         let queue = bot.distube.getQueue(message);
 
         const notPaused = new Discord.MessageEmbed()
-        if (!queue || !queue.playing) {
+        if (queue.playing) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);

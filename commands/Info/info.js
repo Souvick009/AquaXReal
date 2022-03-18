@@ -20,7 +20,7 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setColor(0xe8fc03)
-      .setAuthor({ text: `Information About ${bot.user.username}`, iconURL: bot.user.displayAvatarURL() })
+      .setAuthor({ name: `Information About ${bot.user.username}`, iconURL: bot.user.displayAvatarURL() })
       .setThumbnail(message.guild.iconURL())
       .setTimestamp()
       .setDescription(bot.user.username)

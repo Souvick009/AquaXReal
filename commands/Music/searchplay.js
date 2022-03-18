@@ -5,8 +5,8 @@ const ytSearch = require('yt-search');
 const { getTracks, getPreview } = require("spotify-url-info");
 
 module.exports = {
-    name: "play",
-    aliases: ['p'],
+    name: "searchplay",
+    aliases: ['sp'],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>play",
@@ -65,16 +65,42 @@ module.exports = {
         // }
         // else {
         const music = args.join(" ");
-        bot.distube.play(message.member.voice.channel, music, {
-            member: message.member,
-            textChannel: message.channel,
-            message: message
+        let results = await bot.distube.search(music, {
+            type: "video",
+            limit: 10
+        })
+        if (!results) {
+            return message.reply(`No result found for ${music}!`)
+        }
+        let searchResult = "";
+        for (i = 0; i < 10; i++) {
+            try {
+                searchResult += `**${i + 1}** [${results[i].name}](${results[1].url}) - \`${results[i].formattedDuration}\`\n`
+            }
+            catch (error) {
+                searchResult = "\n";
+            }
+        }
+        const embed = new Discord.MessageEmbed()
+        embed.setTitle(`SearchResults for: ${music}`.substring(0, 256))
+        embed.setColor(0x00FFFF)
+        embed.setDescription(searchResult.substring(0, 2048))
+        embed.setFooter("Enter anything else or wait 60 seconds to cancel")
+        message.channel.send({ embeds: [embed] })
+        const filter = m => m.author.id === message.author.id
+        const collector = new Discord.MessageCollector(message.channel, { filter, max: 1, time: 60000, errors: ["time"] })
+        collector.on("collect", (message) => {
+            let userinput = message.content;
+            if (Number(userinput) <= 0 || Number(userinput) > 10) {
+                return message.reply("You answered an invalid number!");
+            }
+            bot.distube.play(message.member.voice.channel, results[userinput - 1].url, {
+                member: message.member,
+                textChannel: message.channel,
+                message: message,
+            })
         })
         // }
     }
 
 }
-
-
-
-

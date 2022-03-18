@@ -1,13 +1,7 @@
 const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-const skip = require("./skip")
-
-//Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
-const queue = new Map
 
 module.exports = {
-    name: "remove",
+    name: "move",
     aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
@@ -51,21 +45,15 @@ module.exports = {
                 let remove = args[0]
                 let arr = queue.songs;
                 if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
-                remove = args[0]
+                var add = args[1]
+                if (isNaN(parseInt(args[1])) || !args[1]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
+                var removed = arr[remove]
+                arr.splice(remove, 1)
+                arr.splice(add, 0, removed)
                 const embed = new Discord.MessageEmbed()
-                    .setTitle(`Song Removed:`)
-                    .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
-                    .setColor('#FFFF00')
-                    .addField('Song Removed by:-', message.author.username)
-                    .setTimestamp()
-                    .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
+                    .setDescription(`✅ Moved [${arr[remove].name}](${arr[remove].url}) from ${remove} to ${add}`)
+                    .setColor('#00ff00')
                 message.channel.send({ embeds: [embed] })
-                if (remove === 0) {
-                    skip.execute(message, args)
-                }
-                else {
-                    arr.splice(remove, 1)
-                }
             }
         } else if (!queue) {
             return message.channel.send("Nothing is playing right now!")

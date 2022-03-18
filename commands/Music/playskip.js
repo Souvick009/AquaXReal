@@ -1,12 +1,8 @@
 const Discord = require("discord.js");
-const prefix = '>>';
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-const { getTracks, getPreview } = require("spotify-url-info");
 
 module.exports = {
-    name: "play",
-    aliases: ['p'],
+    name: "playskip",
+    aliases: [],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
     usage: ">>play",
@@ -43,7 +39,7 @@ module.exports = {
             Searchterm.setColor("#FF0000")
             Searchterm.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
-            Searchterm.setDescription(`Usage: \`${prefix}play <URL / TITLE>\``)
+            Searchterm.setDescription(`Usage: \`>>play <URL / TITLE>\``)
             return message.channel.send({ embeds: [Searchterm] })
         };
         const search = new Discord.MessageEmbed()
@@ -68,7 +64,8 @@ module.exports = {
         bot.distube.play(message.member.voice.channel, music, {
             member: message.member,
             textChannel: message.channel,
-            message: message
+            message: message,
+            skip: true
         })
         // }
     }

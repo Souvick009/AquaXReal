@@ -79,11 +79,8 @@ module.exports = {
                 // }
 
                 const embed = new Discord.MessageEmbed();
-                embed.setTitle(":track_next: SKIPPED!");
                 embed.setColor("#FFFF00");
-                embed.setDescription(`⏭ Skipped the song!`);
-                embed.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
-                embed.setTimestamp();
+                embed.setDescription(`⏭ Skipped the song!`)
                 message.channel.send({ embeds: [embed] })
             }
 
