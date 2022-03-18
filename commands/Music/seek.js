@@ -109,7 +109,6 @@ module.exports = {
             return message.channel.send({ embeds: [seek] })
         } else if (args[0].includes("s".toLowerCase()) || args[0].includes("sec".toLowerCase()) || args[0].includes("secs".toLowerCase()) || args[0].includes("second".toLowerCase()) || args[0].includes("seconds".toLowerCase())) {
             var sec = ms(args[0])
-            console.log(args[0], sec, Number(sec) > total)
             const embed1 = new Discord.MessageEmbed()
             if (Number(sec) > total) {
                 embed1.setColor("#FF0000")
@@ -123,7 +122,6 @@ module.exports = {
             return message.channel.send({ embeds: [seek] })
         } else {
             var sec = ms(args[0])
-            console.log(args[0], sec, Number(sec) > total)
             if (sec == undefined) {
                 return message.reply("Invalid Format!")
             }
