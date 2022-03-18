@@ -91,7 +91,7 @@ module.exports = {
         const collector = new Discord.MessageCollector(message.channel, { filter, max: 1, time: 60000, errors: ["time"] })
         collector.on("collect", (message) => {
             let userinput = message.content;
-            if (Number(userinput) <= 0 || Number(userinput) > 10) {
+            if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
                 return message.reply("You answered an invalid number!");
             }
             bot.distube.play(message.member.voice.channel, results[userinput - 1].url, {

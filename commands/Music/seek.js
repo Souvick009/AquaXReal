@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const ms = require("ms")
 // const Song = require("distube/typings/Song");
 
 module.exports = {
@@ -27,8 +28,10 @@ module.exports = {
             return message.channel.send({ embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
+
         const notPaused = new Discord.MessageEmbed()
-        if (!bot.distube.playing) {
+        if (!queue) {
             notPaused.setColor("#FF0000");
             notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
@@ -36,22 +39,12 @@ module.exports = {
             return message.channel.send({ embeds: [notPaused] })
         };
 
-        let queue = bot.distube.getQueue(message);
-
         let track = queue.songs[0];
 
         var total = track.duration;
 
-        const embed1 = new Discord.MessageEmbed()
-        if (!(0 <= Number(args[0]) && Number(args[0]) <= total)) {
-            embed1.setColor("#FF0000")
-            embed1.setFooter(bot.user.username, bot.user.displayAvatarURL())
-            embed1.setTitle(`❌ ERROR | Seeking out of Range`)
-            return message.channel.send({ embeds: [embed1] })
-        }
-
         const alreadyPaused = new Discord.MessageEmbed()
-        if (bot.distube.paused) {
+        if (queue.paused) {
             alreadyPaused.setColor("#FF0000");
             alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
@@ -59,12 +52,94 @@ module.exports = {
             return message.channel.send({ embeds: [alreadyPaused] })
         };
 
-        const seek = new Discord.MessageEmbed()
-        seek.setTitle(":fast_forward: Seeked!");
-        seek.setDescription(`Seeked the song for \`${args[0]} seconds\``)
-        seek.setColor("#00ff00");
-        message.channel.send(seek)
-        return bot.distube.seek(message, Number(args[0] * 1000));
+        if (args[0].includes(":")) {
+            var time = args[0].split(":")
+            if (time.length == 2) {
+                var min1 = `${time[0]}m`
+                var sec1 = `${time[1]}s`
+                var min = ms(min1)
+                var sec = ms(sec1)
+                var final1 = min + sec
+                var final = final1 / 1000
+                const embed1 = new Discord.MessageEmbed()
+                if (Number(final) > total) {
+                    embed1.setColor("#FF0000")
+                    embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                    return message.channel.send({ embeds: [embed1] })
+                }
+                bot.distube.seek(message, Number(final));
+                const seek = new Discord.MessageEmbed()
+                seek.setDescription(`Seeked the song for \`${ms((final * 1000), { long: true })}\``)
+                seek.setColor("#00ff00");
+                return message.channel.send({ embeds: [seek] })
+            } else if (time.length === 3) {
+                var hour1 = `${time[0]}h`
+                var min1 = `${time[1]}m`
+                var sec1 = `${time[2]}s`
+                var hour = ms(hour1)
+                var min = ms(min1)
+                var sec = ms(sec1)
+                var final1 = hour + min + sec
+                var final = final1 / 1000
+                const embed1 = new Discord.MessageEmbed()
+                if (Number(final) > total) {
+                    embed1.setColor("#FF0000")
+                    embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                    return message.channel.send({ embeds: [embed1] })
+                }
+                bot.distube.seek(message, Number(final));
+                const seek = new Discord.MessageEmbed()
+                seek.setDescription(`Seeked the song for \`${ms((final * 1000), { long: true })}\``)
+                seek.setColor("#00ff00");
+                return message.channel.send({ embeds: [seek] })
+            }
+
+        } else if (args[0].includes("m".toLowerCase()) || args[0].includes("min".toLowerCase()) || args[0].includes("mins".toLowerCase()) || args[0].includes("minute".toLowerCase()) || args[0].includes("minutes".toLowerCase())) {
+            var min = ms(args[0])
+            const embed1 = new Discord.MessageEmbed()
+            if (Number(min) > total) {
+                embed1.setColor("#FF0000")
+                embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                return message.channel.send({ embeds: [embed1] })
+            }
+            bot.distube.seek(message, Number(min / 1000));
+            const seek = new Discord.MessageEmbed()
+            seek.setDescription(`Seeked the song for \`${ms(min, { long: true })}\``)
+            seek.setColor("#00ff00");
+            return message.channel.send({ embeds: [seek] })
+        } else if (args[0].includes("s".toLowerCase()) || args[0].includes("sec".toLowerCase()) || args[0].includes("secs".toLowerCase()) || args[0].includes("second".toLowerCase()) || args[0].includes("seconds".toLowerCase())) {
+            var sec = ms(args[0])
+            console.log(args[0], sec, Number(sec) > total)
+            const embed1 = new Discord.MessageEmbed()
+            if (Number(sec) > total) {
+                embed1.setColor("#FF0000")
+                embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                return message.channel.send({ embeds: [embed1] })
+            }
+            bot.distube.seek(message, Number(sec));
+            const seek = new Discord.MessageEmbed()
+            seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
+            seek.setColor("#00ff00");
+            return message.channel.send({ embeds: [seek] })
+        } else {
+            var sec = ms(args[0])
+            console.log(args[0], sec, Number(sec) > total)
+            if (sec == undefined) {
+                return message.reply("Invalid Format!")
+            }
+            const embed1 = new Discord.MessageEmbed()
+            if (Number(sec) > total) {
+                embed1.setColor("#FF0000")
+                embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                return message.channel.send({ embeds: [embed1] })
+            }
+            bot.distube.seek(message, Number(sec));
+            const seek = new Discord.MessageEmbed()
+            seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
+            seek.setColor("#00ff00");
+            return message.channel.send({ embeds: [seek] })
+        }
+
     }
 
 
