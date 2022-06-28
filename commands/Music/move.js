@@ -50,10 +50,8 @@ module.exports = {
                 var removed = arr[remove]
                 arr.splice(remove, 1)
                 arr.splice(add, 0, removed)
-                console.log(removed)
-                console.log(removed.name + "  " +  removed.url)
                 const embed = new Discord.MessageEmbed()
-                    .setDescription(`✅ Moved [${arr[remove].name}](${arr[remove].url}) from ${remove} to ${add}`)
+                    .setDescription(`✅ Moved [${removed.name}](${removed.url}) from ${remove} to ${add}`)
                     .setColor('#00ff00')
                 message.channel.send({ embeds: [embed] })
             }
