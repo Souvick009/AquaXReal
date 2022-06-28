@@ -50,7 +50,7 @@ module.exports = {
                 if (isNaN(parseInt(args[0])) || !args[0]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
                 let remove = args[0]
                 let arr = queue.songs;
-                if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
+                if (remove > (arr.length - 1) || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
                 remove = args[0]
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Song Removed:`)
