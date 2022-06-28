@@ -42,7 +42,7 @@ module.exports = {
 
             async function removeSong() {
                 if (isNaN(parseInt(args[0])) || !args[0]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
-                let remove = args[0] //5
+                let remove = args[0] //4
                 let arr = queue.songs;
                 if (remove > arr.length || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
                 var add = args[1] //1
@@ -50,7 +50,7 @@ module.exports = {
                 var removed = arr[remove]
                 arr.splice(remove, 1)
                 arr.splice(add, 0, removed)
-                console.log(arr[remove])
+                console.log(arr)
                 const embed = new Discord.MessageEmbed()
                     .setDescription(`✅ Moved [${arr[remove].name}](${arr[remove].url}) from ${remove} to ${add}`)
                     .setColor('#00ff00')
