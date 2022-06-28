@@ -69,7 +69,8 @@ module.exports = {
                 }
                 bot.distube.seek(message, Number(final));
                 const seek = new Discord.MessageEmbed()
-                seek.setDescription(`Seeked the song for \`${ms((final * 1000), { long: true })}\``)
+                console.log(ms((final * 1000)))
+                seek.setDescription(`Seeked the song for \`${ms((final * 1000))}\``)
                 seek.setColor("#00ff00");
                 return message.channel.send({ embeds: [seek] })
             } else if (time.length === 3) {
