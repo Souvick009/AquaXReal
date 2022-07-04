@@ -80,7 +80,7 @@ module.exports = {
                         second = "second"
                     }
                     send = `Seeked the song for \`${time[0]} ${minute} & ${time[1]} ${second}\``
-                } else if (time[0] < 1) {
+                } else if (time[0] = 1 || time[0] < 1) {
                     minute = "minute"
                     if (time[1] > 1) {
                         second = "seconds"
