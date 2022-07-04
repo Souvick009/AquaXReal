@@ -180,7 +180,7 @@ module.exports = {
             }
             bot.distube.seek(message, Number((sec / 1000)));
             const seek = new Discord.MessageEmbed()
-            seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
+            seek.setDescription(`Seeked the song for \`${ms((sec / 1000), { long: true })}\``)
             seek.setColor("#00ff00");
             return message.channel.send({ embeds: [seek] })
         } else {
@@ -196,7 +196,7 @@ module.exports = {
             }
             bot.distube.seek(message, Number((sec / 1000)));
             const seek = new Discord.MessageEmbed()
-            seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
+            seek.setDescription(`Seeked the song for \`${ms((sec / 1000), { long: true })}\``)
             seek.setColor("#00ff00");
             return message.channel.send({ embeds: [seek] })
         }
