@@ -188,6 +188,7 @@ module.exports = {
             if (sec == undefined) {
                 return message.reply("Invalid Format!")
             }
+            console.log(sec + " " + total)
             const embed1 = new Discord.MessageEmbed()
             if (Number(sec) > total) {
                 embed1.setColor("#FF0000")
