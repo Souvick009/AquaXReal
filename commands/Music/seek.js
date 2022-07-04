@@ -69,8 +69,28 @@ module.exports = {
                 }
                 bot.distube.seek(message, Number(final));
                 const seek = new Discord.MessageEmbed()
-                console.log(ms((final * 1000)))
-                seek.setDescription(`Seeked the song for \`${ms((final * 1000))}\``)
+                var minute;
+                var second;
+                var send;
+                if (time[0] > 1) {
+                    minute = "minutes"
+                    if (time[1] > 1) {
+                        second = "seconds"
+                    } else {
+                        second = "second"
+                    }
+                    send = `Seeked the song for \`${time[0]} ${minute} & ${time[1]} ${second}\``
+                } else if (time[0] < 1) {
+                    minute = "minute"
+                    if (time[1] > 1) {
+                        second = "seconds"
+                    } else {
+                        second = "second"
+                    }
+                    send = `Seeked the song for \`${time[0]} ${minute} & ${time[1]} ${second}\``
+                }
+
+                seek.setDescription(send)
                 seek.setColor("#00ff00");
                 return message.channel.send({ embeds: [seek] })
             } else if (time.length === 3) {
@@ -90,7 +110,49 @@ module.exports = {
                 }
                 bot.distube.seek(message, Number(final));
                 const seek = new Discord.MessageEmbed()
-                seek.setDescription(`Seeked the song for \`${ms((final * 1000), { long: true })}\``)
+                var sendHour;
+                var minute;
+                var second;
+                var send;
+                if (time[0] > 1) {
+                    sendHour = "hours"
+                    if (time[1] > 1) {
+                        minute = "minutes"
+                        if (time[2] > 1) {
+                            second = "seconds"
+                        } else {
+                            second = "second"
+                        }
+                    } else {
+                        minute = "minute"
+                        if (time[2] > 1) {
+                            second = "seconds"
+                        } else {
+                            second = "second"
+                        }
+                    }
+                    send = `Seeked the song for \`${time[0]} ${sendHour}, ${time[1]} ${minute} & ${time[2]} ${second}\``
+                } else if (time[0] = 1 || time[0] < 1) {
+                    sendHour = "hour"
+                    if (time[1] > 1) {
+                        minute = "minutes"
+                        if (time[2] > 1) {
+                            second = "seconds"
+                        } else {
+                            second = "second"
+                        }
+                    } else {
+                        minute = "minute"
+                        if (time[2] > 1) {
+                            second = "seconds"
+                        } else {
+                            second = "second"
+                        }
+                    }
+                    send = `Seeked the song for \`${time[0]} ${sendHour}, ${time[1]} ${minute} & ${time[2]} ${second}\``
+                }
+
+                seek.setDescription(send)
                 seek.setColor("#00ff00");
                 return message.channel.send({ embeds: [seek] })
             }
@@ -122,7 +184,7 @@ module.exports = {
             seek.setColor("#00ff00");
             return message.channel.send({ embeds: [seek] })
         } else {
-            var sec = ms(args[0])
+            var sec = ms(args[0] + "s")
             if (sec == undefined) {
                 return message.reply("Invalid Format!")
             }
