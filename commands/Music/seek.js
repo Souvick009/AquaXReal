@@ -173,7 +173,7 @@ module.exports = {
         } else if (args[0].includes("s".toLowerCase()) || args[0].includes("sec".toLowerCase()) || args[0].includes("secs".toLowerCase()) || args[0].includes("second".toLowerCase()) || args[0].includes("seconds".toLowerCase())) {
             var sec = ms(args[0])
             const embed1 = new Discord.MessageEmbed()
-            if (Number((sec * 1000)) > total) {
+            if (Number((sec / 1000)) > total) {
                 embed1.setColor("#FF0000")
                 embed1.setDescription(`❌ ERROR | Seeking out of Range`)
                 return message.channel.send({ embeds: [embed1] })
@@ -189,7 +189,7 @@ module.exports = {
                 return message.reply("Invalid Format!")
             }
             const embed1 = new Discord.MessageEmbed()
-            if (Number((sec * 1000)) > total) {
+            if (Number((sec / 1000)) > total) {
                 embed1.setColor("#FF0000")
                 embed1.setDescription(`❌ ERROR | Seeking out of Range`)
                 return message.channel.send({ embeds: [embed1] })
