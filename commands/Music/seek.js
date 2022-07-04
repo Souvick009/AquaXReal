@@ -178,7 +178,7 @@ module.exports = {
                 embed1.setDescription(`❌ ERROR | Seeking out of Range`)
                 return message.channel.send({ embeds: [embed1] })
             }
-            bot.distube.seek(message, Number(sec));
+            bot.distube.seek(message, Number((sec / 1000)));
             const seek = new Discord.MessageEmbed()
             seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
             seek.setColor("#00ff00");
@@ -194,7 +194,7 @@ module.exports = {
                 embed1.setDescription(`❌ ERROR | Seeking out of Range`)
                 return message.channel.send({ embeds: [embed1] })
             }
-            bot.distube.seek(message, Number(sec));
+            bot.distube.seek(message, Number((sec / 1000)));
             const seek = new Discord.MessageEmbed()
             seek.setDescription(`Seeked the song for \`${ms((sec * 1000), { long: true })}\``)
             seek.setColor("#00ff00");
