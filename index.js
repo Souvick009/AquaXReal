@@ -11,7 +11,6 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const bot = new Discord.Client({
     intents: [
-        Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.GUILD_VOICE_STATES
