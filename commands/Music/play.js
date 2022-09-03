@@ -32,7 +32,7 @@ module.exports = {
         if (!permissions.has('CONNECT')) return send('Missing connect premission');
         if (!permissions.has('SPEAK')) return send(message, { content: 'Missing speak permission' });
 
-        let channel = author.voice.channel.id;
+        let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
@@ -48,8 +48,8 @@ module.exports = {
         send(message, { embeds: [search] })
 
         const music = options[0];
-        bot.distube.play(author.voice.channel, music, {
-            member: author,
+        bot.distube.play(message.member.voice.channel, music, {
+            member: message.member,
             textChannel: message.channel,
             message: message
         })
