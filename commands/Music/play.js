@@ -11,8 +11,8 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     options: [{
-        name: "user",
-        description: "For which user avatar should be sent? Defaults to author",
+        name: "song",
+        description: "The song which you want to play",
         required: false,
         type: 6, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"

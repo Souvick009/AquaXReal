@@ -19,8 +19,6 @@ const bot = new Discord.Client({
 const fs = require('fs');
 const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GZ_mxI.GlRNTK6ZStGxoaGdR1Nl8kF9DqqwLWUBqt81z0";
 
-
-
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
 
