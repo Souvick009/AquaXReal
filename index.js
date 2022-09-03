@@ -1,28 +1,29 @@
 const Discord = require('discord.js');
 const Intents = Discord.Intents
+const { readdirSync } = require("fs");
+
+const ascii = require("ascii-table");
+
+// Create a new Ascii table
+let table = new ascii("Commands");
+table.setHeading("Command", "Load status");
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 const bot = new Discord.Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
+    intents: [
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_BANS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.DIRECT_MESSAGES
+    ]
 })
-var prefix = '';
-//const Commands = require("./models/commands.js")
 const fs = require('fs');
-const mongoose = require("mongoose")
-const token = "ODE1MTcxNjI3MDk1NTU2MTA2.YDohvQ.dS1mGxe14QkHESK-PiRg0JHsWnk" || process.env.token;
-const dbUrl = "mongodb+srv://shander:shander123456@cluster0.9voow.mongodb.net/test"
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-var reply = true;
-const Prefix = require("./models/prefix")
-//const mongoose = require("mongoose");
-//const dbUrl = "mongodb+srv://Real_Warrior:Windows_10@cluster0.onf6d.mongodb.net/test"
-//mongoose.connect(dbUrl, {
-//    useNewUrlParser: true,
-//    useUnifiedTopology: true
-//})
-//const talkedRecently = new Set();
-// const cooldown = new Discord.Collection();
+const token = "NzIxNDYwODc3MDA1NDIyNjM0.XuU2zQ.bGbyuhmyUsMQTaGeIYLb_8TXsQ8";
+
+
+
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
 
@@ -158,117 +159,8 @@ bot.distube
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.categories = fs.readdirSync("./commands/");
-["command"].forEach(handler => {
-    require(`./handler/${handler}`)(bot);
+["command", "event"].forEach(handler => {
+    require(`./handlers/${handler}`)(bot, Discord);
 });
-//let blacklisted = []
-
-bot.on('ready', () => {
-    console.log(`${bot.user.username} is Online!`);
-    bot.guilds.cache.forEach(guild => {
-        console.log(`${guild.name} | ${guild.id}`);
-    })
-    bot.user.setPresence({
-        activity: {
-            name: `>>help`,
-            type: 'PLAYING'
-        },
-        status: 'idle'
-    })
-});
-bot.on("guildCreate", guild => {
-    // This event triggers when the bot joins a guild.
-    console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-    bot.user.setPresence({
-        activity: {
-            name: `>>help`,
-            type: 'PLAYING'
-        },
-        status: 'idle'
-    })
-        .catch(console.error);
-
-});
-
-bot.on("guildDelete", guild => {
-    // this event triggers when the bot is removed from a guild.
-    console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-    bot.user.setPresence({
-        activity: {
-            name: `>>help`,
-            type: 'PLAYING'
-        },
-        status: 'idle'
-    })
-        .catch(console.error);
-});
-bot.on('messageCreate', async message => {
-    if (message.channel.type === "dm") return;
-    if (!message.guild || !message.guild.available) return
-    if (message.guild.id == "679765534950424601" && message.channel.id !== "927891270624497734") return
-    //  getdisabledcommand-
-    //Commands.findOne({
-    //    serverID: message.guild.id,
-    //}, async (err, data) => {
-    //    if (!data) {
-    //        const newCommand = new Commands({
-    //            serverID: message.guild.id,
-    //       })
-    //       await newCommand.save().catch(e => console.log(e));
-    //    }
-    const list = await Prefix.findOne({
-        serverId: message.guild.id
-    }, async (err, server) => {
-        if (err) console.log(err);
-        if (!server) {
-            prefix = ">>"
-        } else if (server) {
-            prefix = server.prefix
-        }
-
-        if (message.content.startsWith(prefix) || message.content.startsWith("<@!815171627095556106>")) {
-            //declaring args variable
-            var args;
-            //added this condition to customize arg according to prefix
-            if (message.content.startsWith("<@!815171627095556106>")) { //remember to replace this id with your bot's id
-                //22letters will be removed from arg if message starts with bot ping
-                args = message.content.slice(22).trim().split(/ +/g);
-            } else {
-                //length of prefix will be removed from arg if message doesnt starts with bot ping
-                args = message.content.slice(prefix.length).trim().split(/ +/g);
-            }
-
-            const cmd = args.shift().toLowerCase();
-
-            if (cmd.length === 0) return;
-
-            // Get the command
-            let command = bot.commands.get(cmd);
-            // If none is found, try to find it by alias
-            if (!command) command = bot.commands.get(bot.aliases.get(cmd));
-
-            if (!command) return
-            // if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("❌ I don't have Embed Links Permission.");
-
-            command.run(bot, message, args);
-        }
-    })
-    //console.log(data.commands.includes(command.name))
-    //if (data.commands.includes(command.name)) return
-    //if (talkedRecently.has(message.author.id)) {
-    //    message.reply("You are on a cooldown of 5 Seconds.");
-    //} else {
-
-
-    //    talkedRecently.add(message.author.id);
-    //    setTimeout(() => {
-    // Removes the user from the set after 5 seconds
-    //   talkedRecently.delete(message.author.id);
-    // }, 5000);
-    // }
-});
-
-
-
 
 bot.login(token)
