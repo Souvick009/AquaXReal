@@ -78,7 +78,7 @@ module.exports = {
             //currentqueue.setTimestamp();
             //message.channel.send(currentqueue)
         } else if (!queue) {
-            return message.channel.send("Nothing is playing right now!")
+            return send(message, { content: "Nothing is playing right now!" })
         };
 
     }
