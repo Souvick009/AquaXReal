@@ -13,10 +13,9 @@ const bot = new Discord.Client({
     intents: [
         Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_BANS,
         Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGES
+        Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.GUILD_VOICE_STATES
     ]
 })
 const fs = require('fs');
@@ -160,7 +159,7 @@ bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.categories = fs.readdirSync("./commands/");
 ["command", "event"].forEach(handler => {
-    require(`./handlers/${handler}`)(bot, Discord);
+    require(`./handler/${handler}`)(bot, Discord);
 });
 
 bot.login(token)
