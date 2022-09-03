@@ -14,7 +14,7 @@ module.exports = {
     example: ">>loop",
     cooldown: 5,
     category: "Music",
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
         const voiceChannel = message.member.voice.channel;
 
         if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');

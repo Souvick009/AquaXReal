@@ -14,7 +14,7 @@ module.exports = {
     example: ">>shuffle",
     cooldown: 5,
     category: "Music",
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {

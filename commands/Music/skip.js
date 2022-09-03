@@ -14,7 +14,7 @@ module.exports = {
     example: ">>skip",
     cooldown: 5,
     category: "Music",
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
         if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
         let channel = message.member.voice.channel.id;

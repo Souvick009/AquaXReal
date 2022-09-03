@@ -21,7 +21,7 @@ module.exports = {
     example: ">>filter",
     cooldown: 5,
     category: "Music",
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.MessageEmbed()
