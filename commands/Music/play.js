@@ -19,7 +19,7 @@ module.exports = {
     }],
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
-        const voice_channel = author.voice.channel;
+        const voice_channel = message.member.voice.channel;
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
