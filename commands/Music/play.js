@@ -14,7 +14,7 @@ module.exports = {
         name: "song",
         description: "The song which you want to play",
         required: false,
-        type: 6, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
