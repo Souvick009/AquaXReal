@@ -9,6 +9,13 @@ module.exports = {
     example: "/play ",
     cooldown: 5,
     category: "Music",
+    options: [{
+        name: "song",
+        description: "The song which you want to play",
+        required: true,
+        type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user"
+    }],
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
@@ -33,14 +40,14 @@ module.exports = {
         };
 
         const Searchterm = new Discord.MessageEmbed()
-        if (!args[0]) {
+        if (!options[0]) {
             Searchterm.setColor("#FF0000")
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
             return send(message, { embeds: [Searchterm] })
         };
         const search = new Discord.MessageEmbed()
-        search.setDescription(":mag: **Searching! **" + args.join(" "))
+        search.setDescription(":mag: **Searching! **" + options[0])
         search.setColor("#FFFF00");
         send(message, { embeds: [search] })
 
@@ -57,7 +64,7 @@ module.exports = {
         //     })
         // }
         // else {
-        const music = args.join(" ");
+        const music = options[0]
         bot.distube.play(message.member.voice.channel, music, {
             member: message.member,
             textChannel: message.channel,

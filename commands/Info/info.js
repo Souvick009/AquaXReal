@@ -30,7 +30,7 @@ module.exports = {
       .addField(`:gear: __Version__`, "Version 2.4.1")
       .addField(`⏰ __Uptime__`, `${days} days ${hours} hrs ${minutes} mins ${seconds} secs`)
       .addField(`Want To Invite Me In Your Server?`, "Actually you can't cuz this bot is under beta testing xD")
-      .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
+      .setFooter({ text: author.username, iconURL: author.displayAvatarURL() })
     send(message, { embeds: [embed] })
   }
 
