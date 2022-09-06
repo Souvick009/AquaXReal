@@ -20,7 +20,7 @@ module.exports = {
         // If there's an args found
         // Send the info of that command found
         // If no info found, return not found embed.
-        if (this.options[0]) {
+        if (options[0]) {
             return getCMD(bot, message, options[0]);
         } else {
             // Otherwise send all the commands available
