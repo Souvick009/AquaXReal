@@ -16,6 +16,12 @@ module.exports = {
         required: true,
         type: 6, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
+    }, {
+        name: "message",
+        description: "Something ou want to say the user while suggesting the song",
+        required: false,
+        type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user"
     }],
     run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
@@ -39,11 +45,12 @@ module.exports = {
         let queue = bot.distube.getQueue(message);
         if (queue) {
             // var mentionedUser = options[0]
-            var mentionedUser = await getMember(bot, args, options, message, author, false, true, 0, false)
+            var mentionedUser = await getMember(bot, args, options, message, false, false, true, 0, false)
+            console.log(mentionedUser)
             const dmEmbed = new Discord.MessageEmbed()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser}(${mentionedUser.tag})`)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser}(${mentionedUser.user.username}#${mentionedUser.user.discriminator}) \n Message - ${options[1]} `)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
