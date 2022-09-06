@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
+const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "playskip",
-    aliases: [],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>play",
-    example: ">>play ",
+    accessableby: "Everyone",
+    description: "Skips the current song and plays the new song",
+    usage: "/play",
+    example: "/play ",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
@@ -15,9 +15,8 @@ module.exports = {
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
-            vc.setFooter({ text: "Requested by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send({ embeds: [vc] })
+            return send(message, { embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
@@ -28,24 +27,22 @@ module.exports = {
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return send(message, { embeds: [samevc] })
         };
 
         const Searchterm = new Discord.MessageEmbed()
         if (!args[0]) {
             Searchterm.setColor("#FF0000")
-            Searchterm.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
-            Searchterm.setDescription(`Usage: \`>>play <URL / TITLE>\``)
-            return message.channel.send({ embeds: [Searchterm] })
+            Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
+            return send(message, { embeds: [Searchterm] })
         };
         const search = new Discord.MessageEmbed()
         search.setDescription(":mag: **Searching! **" + args.join(" "))
         search.setColor("#FFFF00");
-        message.channel.send({ embeds: [search] })
+        send(message, { embeds: [search] })
 
         // //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
         // if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {

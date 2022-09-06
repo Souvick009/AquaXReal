@@ -1,10 +1,6 @@
 const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
 const skip = require("./skip")
 
-//Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
-const queue = new Map
 
 module.exports = {
     name: "remove",
@@ -15,8 +11,15 @@ module.exports = {
     example: ">>remove",
     cooldown: 5,
     category: "Music",
+    options: [{
+        name: "song_number",
+        description: "the number of the song you want to remove",
+        required: true,
+        type: 4, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user"
+    }],
     run: async (bot, message, args, options, author) => {
-        if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
+        if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
@@ -25,32 +28,23 @@ module.exports = {
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return send(message, { embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
 
         if (queue) {
 
-            if (message.guild.id == "679765534950424601") {
-                if (message.guild.me.voice.channel.members >= 2) {
-                    if (message.author.roles.cache.some(r => r.id === "685843002123616256")) {
-                        removeSong()
-                    } else {
-                        return message.reply(`You don't have the D.J role to remove a song.`)
-                    }
-                } else {
-                    removeSong()
-                }
-            } else {
-                removeSong()
-            }
+            removeSong()
 
             async function removeSong() {
-                if (isNaN(parseInt(args[0])) || !args[0]) return message.reply('Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.') // If Number Is Not A Number or Not A Valid Number.
+                if (isNaN(parseInt(args[0])) || !args[0]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
                 let remove = args[0]
                 let arr = queue.songs;
-                if (remove > (arr.length - 1) || remove < 0) { return message.reply('Thats Not A Valid Number.') } // If Number Is Not Their In Queue
+                if (remove > (arr.length - 1) || remove < 0) {
+                    // If Number Is Not Their In Queue
+                    return send(message, { content: 'Thats Not A Valid Number.' })
+                }
                 remove = args[0]
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Song Removed:`)
@@ -59,7 +53,7 @@ module.exports = {
                     .addField('Song Removed by:-', message.author.username)
                     .setTimestamp()
                     .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
-                message.channel.send({ embeds: [embed] })
+                send(message, { embeds: [embed] })
                 if (remove === 0) {
                     skip.execute(message, args)
                 }
@@ -68,7 +62,7 @@ module.exports = {
                 }
             }
         } else if (!queue) {
-            return message.channel.send("Nothing is playing right now!")
+            return send(message, { content: "Nothing is playing right now!" })
         };
     }
 

@@ -1,19 +1,16 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
-//Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
-const queue = new Map
 
 module.exports = {
     name: "skip",
-    aliases: ["s"],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>skip",
-    example: ">>skip",
+    accessableby: "Everyone",
+    description: "Skips the current song",
+    usage: "/skip",
+    example: "/skip",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        if (!author.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
+        if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
         let channel = author.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
@@ -26,6 +23,10 @@ module.exports = {
         };
 
         let queue = await bot.distube.getQueue(message);
+
+        if(!queue) {
+            send(message, {content: "The Queue is Empty"})
+        }
 
         skipSong()
 

@@ -1,17 +1,12 @@
 const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-
-//Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queue_constructor{} }
-const queue = new Map
+const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "pause",
-    aliases: [],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>pause",
-    example: ">>pause",
+    accessableby: "Everyone",
+    description: "Pauses the current song",
+    usage: "/pause",
+    example: "/pause",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
@@ -19,19 +14,17 @@ module.exports = {
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
-            vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send({ embeds: [vc] })
+            return send(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return send(message, { embeds: [samevc] })
         };
 
         let queue = bot.distube.getQueue(message);
@@ -39,10 +32,9 @@ module.exports = {
         const alreadyPaused = new Discord.MessageEmbed()
         if (queue.paused) {
             alreadyPaused.setColor("#FF0000");
-            alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot pause the Song`);
             alreadyPaused.setDescription(`It's already paused!`);
-            return message.channel.send({ embeds: [alreadyPaused] })
+            return send(message, { embeds: [alreadyPaused] })
         };
 
         queue.pause(message);
@@ -51,6 +43,6 @@ module.exports = {
         const paused = new Discord.MessageEmbed()
         paused.setColor("#FFFF00");
         paused.setDescription(`⏸ Paused the Song: [${track.name}](${track.url})`)
-        return message.channel.send({ embeds: [paused] })
+        return send(message, { embeds: [paused] })
     }
 }

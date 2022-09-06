@@ -1,8 +1,6 @@
 const Discord = require("discord.js");
-const prefix = '>>';
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-const { getTracks, getPreview } = require("spotify-url-info");
+const Discord = require("discord.js");
+const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "searchplay",
@@ -13,6 +11,13 @@ module.exports = {
     example: ">>play ",
     cooldown: 5,
     category: "Music",
+    options: [{
+        name: "song",
+        description: "The song which you want to play",
+        required: true,
+        type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user"
+    }],
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
@@ -21,35 +26,33 @@ module.exports = {
             vc.setColor("#FF0000")
             vc.setFooter({ text: "Requested by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return message.channel.send({ embeds: [vc] })
+            return send(message, { embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) return message.channel.send('Missing connect premission');
-        if (!permissions.has('SPEAK')) return message.channel.send('Missing speak permission');
+        if (!permissions.has('CONNECT')) return send(message, { content: 'Missing connect premission' });
+        if (!permissions.has('SPEAK')) return send(message, { content: 'Missing speak permission' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return send(message, { embeds: [samevc] })
         };
 
         const Searchterm = new Discord.MessageEmbed()
         if (!args[0]) {
             Searchterm.setColor("#FF0000")
-            Searchterm.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
-            Searchterm.setDescription(`Usage: \`${prefix}play <URL / TITLE>\``)
-            return message.channel.send({ embeds: [Searchterm] })
+            Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
+            return send(message, { embeds: [Searchterm] })
         };
         const search = new Discord.MessageEmbed()
         search.setDescription(":mag: **Searching! **" + args.join(" "))
         search.setColor("#FFFF00");
-        message.channel.send({ embeds: [search] })
+        send(message, { embeds: [search] })
 
         // //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
         // if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {
@@ -70,7 +73,7 @@ module.exports = {
             limit: 10
         })
         if (!results) {
-            return message.reply(`No result found for ${music}!`)
+            return send(message, { content: `No result found for ${music}!` })
         }
         let searchResult = "";
         for (i = 0; i < 10; i++) {
@@ -85,22 +88,19 @@ module.exports = {
         embed.setTitle(`SearchResults for: ${music}`.substring(0, 256))
         embed.setColor(0x00FFFF)
         embed.setDescription(searchResult.substring(0, 2048))
-        embed.setFooter("Enter anything else or wait 60 seconds to cancel")
+        embed.setFooter({ text: "Enter anything else or wait 60 seconds to cancel" })
         message.channel.send({ embeds: [embed] })
         const filter = m => m.author.id === message.author.id
         const collector = new Discord.MessageCollector(message.channel, { filter, max: 1, time: 60000, errors: ["time"] })
         collector.on("collect", (message) => {
             let userinput = message.content;
             if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
-                return message.reply("You answered an invalid number!");
+                return send(message, { content: "You answered an invalid number!" });
             }
             bot.distube.play(message.member.voice.channel, results[userinput - 1].url, {
                 member: message.member,
                 textChannel: message.channel,
-                message: message,
             })
         })
-        // }
     }
-
 }

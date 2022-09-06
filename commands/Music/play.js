@@ -3,9 +3,8 @@ const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "play",
-    aliases: ['p'],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
+    accessableby: "Everyone",
+    description: "Plays the song",
     usage: "/play",
     example: "/play ",
     cooldown: 5,
@@ -13,7 +12,7 @@ module.exports = {
     options: [{
         name: "song",
         description: "The song which you want to play",
-        required: false,
+        required: true,
         type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
     }],
@@ -23,7 +22,6 @@ module.exports = {
         const vc = new Discord.MessageEmbed()
         if (!voice_channel) {
             vc.setColor("#FF0000")
-            vc.setFooter({ text: "Requested by " + author.tag, iconURL: author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
             return send(message, { embeds: [vc] })
         };
@@ -36,7 +34,6 @@ module.exports = {
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${author.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
@@ -49,9 +46,8 @@ module.exports = {
 
         const music = options[0];
         bot.distube.play(message.member.voice.channel, music, {
-            member: message.member,
             textChannel: message.channel,
-            message: message
+            member: message.member
         })
         // }
     }

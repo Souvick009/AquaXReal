@@ -7,56 +7,69 @@ const queue = new Map
 
 module.exports = {
     name: "loop",
-    aliases: ["repeat"],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
+    accessableby: "Everyone",
+    description: "For Switching the loop mode",
     usage: ">>loop",
     example: ">>loop",
     cooldown: 5,
     category: "Music",
+    options: [{
+        name: "mode",
+        description: "The loop mode on which you want to set",
+        required: false,
+        type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user",
+        choices: [
+            {
+                name: "OFF",
+                value: "OFF"
+            },
+            {
+                name: "This Song",
+                value: "This Song"
+            },
+            {
+                name: "Queue",
+                value: "Queue"
+            },
+        ]
+    }],
     run: async (bot, message, args, options, author) => {
         const voiceChannel = message.member.voice.channel;
 
-        if (!voiceChannel) return message.channel.send('You need to be in a channel to execute this command!');
+        if (!voiceChannel) return send(message, { content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return send(message, { embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
 
         if (queue) {
-            if (args[0]) {
-                if (args[0].toLowerCase() == `off`) {
+            if (options[0]) {
+                if (options[0] == `OFF`) {
                     bot.distube.setRepeatMode(message, 0)
                     const Loop = new Discord.MessageEmbed();
                     Loop.setDescription("**Loop mode set to:** OFF");
                     Loop.setColor("#FFFF00");
-                    message.channel.send({ embeds: [Loop] })
-                } else if (args[0].toLowerCase() == `song`) {
+                    send(message, { embeds: [Loop] })
+                } else if (options[0] == `This Song`) {
                     bot.distube.setRepeatMode(message, 1)
                     const Loop = new Discord.MessageEmbed();
                     Loop.setDescription("**Loop mode set to:** This song");
                     Loop.setColor("#FFFF00");
-                    message.channel.send({ embeds: [Loop] })
-                } else if (args[0].toLowerCase() == `queue`) {
+                    send(message, { embeds: [Loop] })
+                } else if (options[0] == `Queue`) {
                     bot.distube.setRepeatMode(message, 2)
                     const Loop = new Discord.MessageEmbed();
                     Loop.setDescription("**Loop mode set to:** Queue");
                     Loop.setColor("#FFFF00");
-                    message.channel.send({ embeds: [Loop] })
-                } else {
-                    const error1 = new Discord.MessageEmbed();
-                    error1.setDescription(`:x: Invalid mode! | * *(Off: Disabled, Song: Loop the current song, Queue: Loop all the queue)**`);
-                    error1.setColor("#FF0000");
-                    error1.setTimestamp();
-                    message.channel.send({ embeds: [error1] })
+                    send(message, { embeds: [Loop] })
                 }
             } else {
                 queue.setRepeatMode()
@@ -71,11 +84,11 @@ module.exports = {
                 }
                 Loop.setDescription(`**Loop mode set to:** ${mode}`);
                 Loop.setColor("#FFFF00");
-                message.channel.send({ embeds: [Loop] })
+                send(message, { embeds: [Loop] })
             }
 
         } else if (!queue) {
-            return message.channel.send({ content: "Nothing is playing right now!" })
+            return send(message, { content: "Nothing is playing right now!" })
         };
     }
 }

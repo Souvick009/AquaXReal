@@ -52,11 +52,12 @@ module.exports = (client) => {
         try {
             console.log('Started refreshing application (/) commands.');
             console.log(commandss)
+
             await rest.put(
-                Routes.applicationGuildCommands("815171627095556106", "782913800114143233"), {
-                body: commandss
-            },
-            );
+                Routes.applicationCommands("815171627095556106"), {
+                    body: commandss
+                },
+            ).catch(err => console.log(err));
             // await rest.put(
             //     Routes.applicationCommands("626038642288099338"), {
             //         body: []
