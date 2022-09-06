@@ -44,7 +44,7 @@ async function getAll(bot, message) {
     const lines = categories.map((category, name) => "**" + category + "**" + "\n" + commands(category)
     );
     console.log(bot.categories)
-    embed.setDescription(`${lines.join("\n")} \n **Prefix** \n \`${prefix}\` \n For More Information Use **${prefix}help command** \n Example:- **${prefix}help play**`)
+    embed.setDescription(`${lines.join("\n")} For More Information Use **/help command** \n Example:- **/help play**`)
     embed.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() })
     embed.setThumbnail(message.guild.iconURL())
     embed.setTimestamp()

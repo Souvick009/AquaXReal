@@ -39,18 +39,18 @@ module.exports = {
         async function setVolume() {
 
             const embed = new Discord.MessageEmbed()
-            if (!args[0]) {
+            if (!options[0]) {
                 embed.setColor("#FF0000")
                 embed.setTitle(`❌ ERROR | You didn't provided a vaild volume number`)
-                embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`${prefix}volume <0-200>\``)
+                embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`/volume <0-200>\``)
                 return send(message, { embeds: [embed] })
             };
 
             const embed1 = new Discord.MessageEmbed()
-            if (!(0 <= Number(args[0]) && Number(args[0]) <= 200)) {
+            if (!(0 <= Number(options[0]) && Number(options[0]) <= 200)) {
                 embed1.setColor("#FF0000")
                 embed1.setTitle(`❌ ERROR | Volume out of Range`)
-                embed1.setDescription(`Usage: \`${prefix}volume <0-200>\``)
+                embed1.setDescription(`Usage: \`/volume <0-200>\``)
                 return send(message, { embeds: [embed1] })
             };
 
@@ -62,12 +62,12 @@ module.exports = {
                 notPaused.setDescription(`Play something first!`);
                 return send(message, { embeds: [notPaused] })
             };
-            bot.distube.setVolume(message, Number(args[0]));
+            bot.distube.setVolume(message, Number(options[0]));
 
             const embed3 = new Discord.MessageEmbed()
             embed3.setColor("#FFFF00")
             embed3.setTimestamp();
-            embed3.setDescription(`🔊 Changed the Volume to: \`${args[0]}%\``)
+            embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
             return send(message, { embeds: [embed3] })
         }
 

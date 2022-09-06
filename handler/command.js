@@ -51,8 +51,7 @@ module.exports = (client) => {
     (async () => {
         try {
             console.log('Started refreshing application (/) commands.');
-            console.log(commandss)
-
+            
             await rest.put(
                 Routes.applicationCommands("815171627095556106"), {
                     body: commandss
