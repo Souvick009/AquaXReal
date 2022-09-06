@@ -31,15 +31,14 @@ module.exports = {
             return send(message, { embeds: [samevc] })
         };
 
+        let queue = bot.distube.getQueue(message);
         const notPaused = new Discord.MessageEmbed()
-        if (!bot.distube.isPlaying(message)) {
+        if (queue.isPlaying) {
             notPaused.setColor("#FF0000");
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             notPaused.setDescription(`Play something first!`);
             return send(message, { embeds: [notPaused] })
         };
-
-        let queue = bot.distube.getQueue(message);
 
         let track = queue.songs[0];
 
