@@ -9,8 +9,8 @@ module.exports = {
     name: "loop",
     accessableby: "Everyone",
     description: "For Switching the loop mode",
-    usage: ">>loop",
-    example: ">>loop",
+    usage: "/loop",
+    example: "/loop",
     cooldown: 5,
     category: "Music",
     options: [{

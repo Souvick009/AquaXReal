@@ -1,15 +1,16 @@
 const Discord = require("discord.js");
+const send = require("../../utils/sendMessage.js")
+
 module.exports = {
   name: "info",
-  aliases: ["botinfo"],
   description: "Returns info about Aqua X Real bot",
-  usage: "<command | alias>",
-  example: ">>info",
+  usage: "<command>",
+  example: "/info",
   accessableby: "None",
   category: "Info",
   run: async (bot, message, args) => {
 
-    if (!message.guild.me.permissions.has(["EMBED_LINKS"])) return message.channel.send("❌ I don't have Embed Links permission!")
+    if (!message.guild.me.permissions.has(["EMBED_LINKS"])) return send(message, { content: "❌ I don't have Embed Links permission!" })
 
     let days = Math.floor(bot.uptime / 86400000);
     let hours = Math.floor(bot.uptime / 3600000) % 24;
@@ -30,7 +31,7 @@ module.exports = {
       .addField(`⏰ __Uptime__`, `${days} days ${hours} hrs ${minutes} mins ${seconds} secs`)
       .addField(`Want To Invite Me In Your Server?`, "Actually you can't cuz this bot is under beta testing xD")
       .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
-    message.channel.send({ embeds: [embed] })
+    send(message, { embeds: [embed] })
   }
 
 

@@ -3,11 +3,10 @@ const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "move",
-    aliases: [],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>remove",
-    example: ">>remove",
+    accessableby: "Everyone",
+    description: "Moves the song from one position to another",
+    usage: "/remove",
+    example: "/remove",
     cooldown: 5,
     category: "Music",
     options: [{

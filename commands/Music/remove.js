@@ -4,11 +4,10 @@ const skip = require("./skip")
 
 module.exports = {
     name: "remove",
-    aliases: [],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>remove",
-    example: ">>remove",
+    accessableby: "Everyone",
+    description: "Removes a song from the queue",
+    usage: "/remove",
+    example: "/remove",
     cooldown: 5,
     category: "Music",
     options: [{
