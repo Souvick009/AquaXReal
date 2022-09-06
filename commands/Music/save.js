@@ -30,7 +30,7 @@ module.exports = {
 
         let queue = bot.distube.getQueue(message);
         if (queue) {
-            var mentionedUser = message.author
+            var mentionedUser = author
 
 
             const dmEmbed = new Discord.MessageEmbed()
