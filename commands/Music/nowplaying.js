@@ -82,7 +82,7 @@ module.exports = {
             const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filters || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
             const nowplaying = new Discord.MessageEmbed()
             nowplaying.setColor("#00ff00");
-            nowplaying.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
+            nowplaying.setFooter({ text: author.tag, iconURL: author.displayAvatarURL() });
             nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
             nowplaying.setURL(track.url);
             nowplaying.setTimestamp()
