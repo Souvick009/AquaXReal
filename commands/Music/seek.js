@@ -63,7 +63,7 @@ module.exports = {
         }
         // console.log(`total ` + total)
         let time;
-        let input2 = args[0]
+        let input2 = options[0]
         if (input2.includes(`:`)) {
             let input = input2.split(`:`)
             console.log(input)
