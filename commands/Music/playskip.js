@@ -68,7 +68,6 @@ module.exports = {
         bot.distube.play(message.member.voice.channel, music, {
             member: message.member,
             textChannel: message.channel,
-            message: message,
             skip: true
         })
         // }
