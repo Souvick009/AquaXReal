@@ -46,11 +46,10 @@ module.exports = {
         if (queue) {
             // var mentionedUser = options[0]
             var mentionedUser = await getMember(bot, args, options, message, false, false, true, 0, false)
-            console.log(mentionedUser)
             const dmEmbed = new Discord.MessageEmbed()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser} (${mentionedUser.user.username}#${mentionedUser.user.discriminator}) \n Message - ${options[1]} `)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser} (${mentionedUser.user.username}#${mentionedUser.user.discriminator}) \n\n Message - ${options[1]} `)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
