@@ -12,7 +12,7 @@ module.exports = {
     run: async (bot, message, args, options, author) => {
         if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
-        let channel = author.voice.channel.id;
+        let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
