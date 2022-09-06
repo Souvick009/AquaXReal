@@ -4,8 +4,8 @@ const send = require("../../utils/sendMessage.js")
 module.exports = {
     name: "seek",
     aliases: ['seek'],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
+    accessableby: "Everyone",
+    description: "Seeks the time of the song",
     usage: "/seek",
     example: "/seek ",
     cooldown: 5,
