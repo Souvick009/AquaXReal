@@ -1,39 +1,42 @@
 const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-// const Song = require("distube/typings/Song");
-const ms = require("ms")
+const send = require("../../utils/sendMessage.js")
+
 module.exports = {
     name: "seek",
     aliases: ['seek'],
     accessableby: "Manage Messages",
     description: "Check ping of the bot",
-    usage: ">>seek",
-    example: ">>seek ",
+    usage: "/seek",
+    example: "/seek ",
     cooldown: 5,
     category: "Music",
+    options: [{
+        name: "time",
+        description: "the timestamp on which you want to seek the song",
+        required: true,
+        type: 4, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        req: "user"
+    }],
     run: async (bot, message, args) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
-        if (!voice_channel) return message.channel.send('You need to be in a channel to execute this command!');
+        if (!voice_channel) return send(message, { content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.MessageEmbed()
         if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
-            return message.channel.send(samevc)
+            return send(message, { embeds: [samevc] })
         };
 
         const notPaused = new Discord.MessageEmbed()
         if (!bot.distube.isPlaying(message)) {
             notPaused.setColor("#FF0000");
-            notPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             notPaused.setDescription(`Play something first!`);
-            return message.channel.send(notPaused)
+            return send(message, { embeds: [notPaused] })
         };
 
         let queue = bot.distube.getQueue(message);
@@ -59,7 +62,7 @@ module.exports = {
                 total = total1
             }
         }
-        console.log(`total ` + total)
+        // console.log(`total ` + total)
         let time;
         let input2 = args[0]
         if (input2.includes(`:`)) {
@@ -79,7 +82,8 @@ module.exports = {
                 time = input
             }
         }
-        console.log(time)
+        // console.log(time)
+
         // const embed1 = new Discord.MessageEmbed()
         // if (time < 0 || time > total) {
         //     embed1.setColor("#FF0000")
@@ -91,10 +95,9 @@ module.exports = {
         const alreadyPaused = new Discord.MessageEmbed()
         if (bot.distube.isPaused(message)) {
             alreadyPaused.setColor("#FF0000");
-            alreadyPaused.setFooter(bot.user.username, bot.user.displayAvatarURL());
             alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
             alreadyPaused.setDescription(`First resume the song then try to seek!`);
-            return message.channel.send(alreadyPaused)
+            return send(message, { embeds: [alreadyPaused] })
         };
 
         bot.distube.seek(message, Number(time * 1000));
@@ -102,7 +105,7 @@ module.exports = {
         seek.setTitle(":fast_forward: Seeked!");
         seek.setDescription(`Seeked the song for \`${time}\``)
         seek.setColor("#00ff00");
-        return message.channel.send(seek)
+        return send(message, { embeds: [seek] })
 
     }
 
