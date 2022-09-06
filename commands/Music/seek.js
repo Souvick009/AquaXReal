@@ -17,7 +17,7 @@ module.exports = {
         type: 4, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
     }],
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         if (!voice_channel) return send(message, { content: 'You need to be in a channel to execute this command!' });
