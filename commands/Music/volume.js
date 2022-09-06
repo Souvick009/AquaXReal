@@ -66,7 +66,6 @@ module.exports = {
 
             const embed3 = new Discord.MessageEmbed()
             embed3.setColor("#FFFF00")
-            embed3.setTimestamp();
             embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
             return send(message, { embeds: [embed3] })
         }
