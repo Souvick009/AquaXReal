@@ -43,7 +43,7 @@ module.exports = {
             const dmEmbed = new Discord.MessageEmbed()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser}`)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser}(${mentionedUser.tag})`)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
@@ -65,7 +65,7 @@ module.exports = {
                 } else {
                     const save = new Discord.MessageEmbed()
                     save.setColor("#00ff00");
-                    save.setDescription(`✅ Sent the name of the current track in your dms`)
+                    save.setDescription(`✅ Suggested the current track to the mentioned user`)
                     return send(message, { embeds: [save] })
                 }
             })
