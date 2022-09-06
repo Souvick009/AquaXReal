@@ -49,7 +49,7 @@ module.exports = {
             const dmEmbed = new Discord.MessageEmbed()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by ${mentionedUser} (${mentionedUser.user.username}#${mentionedUser.user.discriminator}) \n\n Message - ${options[1]} `)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by <@${author.id}> (${author.tag}) \n\n Message - ${options[1]} `)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
