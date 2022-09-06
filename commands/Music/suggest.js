@@ -11,7 +11,7 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     options: [{
-        name: "User",
+        name: "user",
         description: "The user to whom you want to suggest",
         required: true,
         type: 6, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
