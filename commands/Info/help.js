@@ -15,7 +15,7 @@ module.exports = {
         type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
     }],
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, options, author) => {
 
         // If there's an args found
         // Send the info of that command found

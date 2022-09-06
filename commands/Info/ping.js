@@ -9,7 +9,7 @@ module.exports = {
   example: "/ping ",
   cooldown: 5,
   category: "Info",
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, options, author) => {
 
     var m = await message.reply({ content: "Loading.....", fetchReply: true })
     await message.editReply(`🏓Latency is \`${Math.round(bot.ws.ping)}ms\`.`)

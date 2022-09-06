@@ -8,7 +8,7 @@ module.exports = {
   example: "/info",
   accessableby: "None",
   category: "Info",
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, options, author) => {
 
     if (!message.guild.me.permissions.has(["EMBED_LINKS"])) return send(message, { content: "❌ I don't have Embed Links permission!" })
 
