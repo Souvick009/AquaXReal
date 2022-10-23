@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const skip = require("./skip")
-
+const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "remove",
@@ -37,19 +37,19 @@ module.exports = {
             removeSong()
 
             async function removeSong() {
-                if (isNaN(parseInt(args[0])) || !args[0]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
-                let remove = args[0]
+                if (isNaN(parseInt(options[0])) || !options[0]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
+                let remove = options[0]
                 let arr = queue.songs;
                 if (remove > (arr.length - 1) || remove < 0) {
                     // If Number Is Not Their In Queue
                     return send(message, { content: 'Thats Not A Valid Number.' })
                 }
-                remove = args[0]
+                remove = options[0]
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Song Removed:`)
                     .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
                     .setColor('#FFFF00')
-                    .addField('Song Removed by:-', message.author.username)
+                    .addField('Song Removed by:-', author.username)
                     .setTimestamp()
                     .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
                 send(message, { embeds: [embed] })
