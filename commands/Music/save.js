@@ -11,7 +11,7 @@ module.exports = {
     category: "Music",
     run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -19,11 +19,11 @@ module.exports = {
         };
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -33,7 +33,7 @@ module.exports = {
             var mentionedUser = author
 
 
-            const dmEmbed = new Discord.MessageEmbed()
+            const dmEmbed = new Discord.EmbedBuilder()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
                 .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url})`)
@@ -49,14 +49,14 @@ module.exports = {
                 }
             }).finally(async () => {
                 if (blocked) {
-                    const errEmbed = new Discord.MessageEmbed();
+                    const errEmbed = new Discord.EmbedBuilder();
                     errEmbed.setColor(0xFF0000)
                     errEmbed.setDescription(`❌ Your dm is closed! `);
                     return send(message, {
                         embeds: [errEmbed]
                     }, false);
                 } else {
-                    const save = new Discord.MessageEmbed()
+                    const save = new Discord.EmbedBuilder()
                     save.setColor("#00ff00");
                     save.setDescription(`✅ Sent the name of the current track in your dms`)
                     return send(message, { embeds: [save] })

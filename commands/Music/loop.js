@@ -36,11 +36,11 @@ module.exports = {
         if (!voiceChannel) return send(message, { content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -50,26 +50,26 @@ module.exports = {
             if (options[0]) {
                 if (options[0] == `OFF`) {
                     bot.distube.setRepeatMode(message, 0)
-                    const Loop = new Discord.MessageEmbed();
+                    const Loop = new Discord.EmbedBuilder();
                     Loop.setDescription("**Loop mode set to:** OFF");
                     Loop.setColor("#FFFF00");
                     send(message, { embeds: [Loop] })
                 } else if (options[0] == `This Song`) {
                     bot.distube.setRepeatMode(message, 1)
-                    const Loop = new Discord.MessageEmbed();
+                    const Loop = new Discord.EmbedBuilder();
                     Loop.setDescription("**Loop mode set to:** This song");
                     Loop.setColor("#FFFF00");
                     send(message, { embeds: [Loop] })
                 } else if (options[0] == `Queue`) {
                     bot.distube.setRepeatMode(message, 2)
-                    const Loop = new Discord.MessageEmbed();
+                    const Loop = new Discord.EmbedBuilder();
                     Loop.setDescription("**Loop mode set to:** Queue");
                     Loop.setColor("#FFFF00");
                     send(message, { embeds: [Loop] })
                 }
             } else {
                 queue.setRepeatMode()
-                const Loop = new Discord.MessageEmbed();
+                const Loop = new Discord.EmbedBuilder();
                 var mode;
                 if (queue.repeatMode == 0) {
                     mode = `OFF`

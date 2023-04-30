@@ -11,8 +11,9 @@ module.exports = {
   category: "Info",
   run: async (bot, message, args, options, author) => {
 
-    var m = await message.reply({ content: "Loading.....", fetchReply: true })
-    await message.editReply(`🏓Latency is \`${Math.round(bot.ws.ping)}ms\`.`)
+    var m = await send(message, { content: "Loading....."})
+    // console.log(m);
+    await m.editReply(`🏓Latency is \`${Math.round(bot.ws.ping)}ms\`.`)
 
   }
 

@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
-
+const { ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBits } = require('discord.js');
 module.exports = {
     name: "skip",
     accessableby: "Everyone",
@@ -13,12 +13,12 @@ module.exports = {
         if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embdes: [samevc] })
         };
 
@@ -64,7 +64,7 @@ module.exports = {
             //     bot.distube.seek(message, parseFloat(total))
             // }
 
-            const embed = new Discord.MessageEmbed();
+            const embed = new Discord.EmbedBuilder();
             embed.setColor("#FFFF00");
             embed.setDescription(`⏭ Skipped the song!`)
             send(message, { embeds: [embed] })

@@ -21,12 +21,12 @@ module.exports = {
         if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -45,7 +45,7 @@ module.exports = {
                     return send(message, { content: 'Thats Not A Valid Number.' })
                 }
                 remove = options[0]
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setTitle(`Song Removed:`)
                     .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
                     .setColor('#FFFF00')

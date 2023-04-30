@@ -14,14 +14,14 @@ module.exports = {
 
         if (!voiceChannel) return send(message, { content: 'You need to be in a channel to execute this command!' });
 
-        if (message.guild.me.voice.channel) {
-            if (message.guild.me.voice.channel.id) {
-                if (voiceChannel.id !== message.guild.me.voice.channel.id) {
-                    if (message.guild.me.voice.channel.members >= 1) {
+        if (message.guild.members.me.voice.channel) {
+            if (message.guild.members.me.voice.channel.id) {
+                if (voiceChannel.id !== message.guild.members.me.voice.channel.id) {
+                    if (message.guild.members.me.voice.channel.members >= 1) {
                         send(message, { content: `I'm already connected with another voice channel` })
                     } else {
                         bot.distube.voices.join(message.member.voice.channel)
-                        const embed = new Discord.MessageEmbed()
+                        const embed = new Discord.EmbedBuilder()
                         embed.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() });
                         embed.setDescription("I have been summoned!");
                         embed.setColor("#00ff00");
@@ -35,7 +35,7 @@ module.exports = {
             }
         } else {
             bot.distube.voices.join(message.member.voice.channel)
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
             embed.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() });
             embed.setDescription("I have been summoned!");
             embed.setColor("#00ff00");

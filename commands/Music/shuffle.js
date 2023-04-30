@@ -11,7 +11,7 @@ module.exports = {
     category: "Music",
     run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -19,11 +19,11 @@ module.exports = {
         };
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -36,10 +36,10 @@ module.exports = {
 
             bot.distube.shuffle(message);
 
-            const resumed = new Discord.MessageEmbed()
+            const resumed = new Discord.EmbedBuilder()
             resumed.setColor("#FFFF00");
             resumed.setDescription("🔀 Shuffled the Queue");
-            return message.channel.send({ embeds: [resumed] })
+            return send(message, { embeds: [resumed] })
 
         } else if (!queue) {
             return send(message, { content: "Nothing is playing right now!" })

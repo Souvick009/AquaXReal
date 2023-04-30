@@ -18,7 +18,7 @@ module.exports = {
     }],
     run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -26,11 +26,11 @@ module.exports = {
         };
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -38,7 +38,7 @@ module.exports = {
 
         async function setVolume() {
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
             if (!options[0]) {
                 embed.setColor("#FF0000")
                 embed.setTitle(`❌ ERROR | You didn't provided a vaild volume number`)
@@ -46,7 +46,7 @@ module.exports = {
                 return send(message, { embeds: [embed] })
             };
 
-            const embed1 = new Discord.MessageEmbed()
+            const embed1 = new Discord.EmbedBuilder()
             if (!(0 <= Number(options[0]) && Number(options[0]) <= 200)) {
                 embed1.setColor("#FF0000")
                 embed1.setTitle(`❌ ERROR | Volume out of Range`)
@@ -55,7 +55,7 @@ module.exports = {
             };
 
             var queue = bot.distube.getQueue(message)
-            const notPaused = new Discord.MessageEmbed()
+            const notPaused = new Discord.EmbedBuilder()
             if (!queue || !queue.playing) {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot change my volume`);
@@ -64,7 +64,7 @@ module.exports = {
             };
             bot.distube.setVolume(message, Number(options[0]));
 
-            const embed3 = new Discord.MessageEmbed()
+            const embed3 = new Discord.EmbedBuilder()
             embed3.setColor("#FFFF00")
             embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
             return send(message, { embeds: [embed3] })

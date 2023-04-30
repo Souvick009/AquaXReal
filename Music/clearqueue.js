@@ -19,12 +19,12 @@ module.exports = {
         if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return message.channel.send({ embeds: [samevc] })
         };
 
@@ -33,7 +33,7 @@ module.exports = {
         if (queue) {
 
             if (message.guild.id == "679765534950424601") {
-                if (message.guild.me.voice.channel.members >= 2) {
+                if (message.guild.members.me.voice.channel.members >= 2) {
                     if (message.author.roles.cache.some(r => r.id === "685843002123616256")) {
                         removeSong()
                     } else {
@@ -54,7 +54,7 @@ module.exports = {
                 if (arr.length <= 1) {
                     bot.distube.skip(message)
                 }
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setDescription(`Cleared the queue`)
                     .setColor('#FFFF00')
                 message.channel.send({ embeds: [embed] })

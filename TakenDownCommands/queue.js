@@ -14,12 +14,12 @@ module.exports = {
         if (!message.member.voice.channel) return message.channel.send('You must be in a voice channel to use this command.');
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return message.channel.send(samevc)
         };
 
@@ -33,7 +33,7 @@ module.exports = {
             //    `**${id + 1}**. ***${song.name}*** - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
             //).slice(0, 10).join("\n");
 
-            // let embed = new Discord.MessageEmbed()
+            // let embed = new Discord.EmbedBuilder()
             // embed.setTitle(`Current Queue for: ${message.guild.name} (Total Duration: ${queue.formattedDuration})`);
             // embed.setColor("#FFFF00");
             // embed.setFooter(bot.user.username, bot.user.displayAvatarURL());
@@ -72,7 +72,7 @@ module.exports = {
             //     message.channel.send(embed)
             //     counter++;
             // }
-            //const currentqueue = new Discord.MessageEmbed();
+            //const currentqueue = new Discord.EmbedBuilder();
             //currentqueue.setTitle("Current Queue!");
             //currentqueue.setDescription(curqueue);
             //currentqueue.setColor("#FFFF00");

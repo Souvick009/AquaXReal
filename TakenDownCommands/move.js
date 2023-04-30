@@ -17,7 +17,7 @@ module.exports = {
     category: "Music",
     run: async (bot, message, args) => {
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setFooter("Requested by " + message.author.tag, message.author.displayAvatarURL());
@@ -26,12 +26,12 @@ module.exports = {
         };
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setFooter(bot.user.username, bot.user.displayAvatarURL())
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
             return message.channel.send(samevc)
         };
 
@@ -39,7 +39,7 @@ module.exports = {
 
         if (queue) {
             if (!args.length) {
-                const usage0 = new Discord.MessageEmbed();
+                const usage0 = new Discord.EmbedBuilder();
                 usage0.setTitle("ERROR");
                 usage0.setDescription(`Usage : >>move <old positon> <new position>`);
                 usage0.setColor("#FF0000");
@@ -48,7 +48,7 @@ module.exports = {
                 return message.channel.send(usage0);
             }
             if (isNaN(args[0]) || args[0] <= 1) {
-                const usage1 = new Discord.MessageEmbed();
+                const usage1 = new Discord.EmbedBuilder();
                 usage1.setTitle("ERROR");
                 usage1.setDescription(`Usage : >>move <old positon> <new position>`);
                 usage1.setColor("#FF0000");

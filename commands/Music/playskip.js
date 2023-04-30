@@ -19,7 +19,7 @@ module.exports = {
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -31,22 +31,22 @@ module.exports = {
         if (!permissions.has('SPEAK')) return message.channel.send('Missing speak permission');
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
-        const Searchterm = new Discord.MessageEmbed()
+        const Searchterm = new Discord.EmbedBuilder()
         if (!options[0]) {
             Searchterm.setColor("#FF0000")
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
             return send(message, { embeds: [Searchterm] })
         };
-        const search = new Discord.MessageEmbed()
+        const search = new Discord.EmbedBuilder()
         search.setDescription(":mag: **Searching! **" + options[0])
         search.setColor("#FFFF00");
         send(message, { embeds: [search] })

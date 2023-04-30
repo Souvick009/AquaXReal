@@ -13,7 +13,7 @@ module.exports = {
     category: "Music",
     run: async (bot, message, args, options, author) => {
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -21,11 +21,11 @@ module.exports = {
         };
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
-            samevc.setDescription(`Channelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
             return message.channel.send({ embeds: [samevc] })
         };
 
@@ -80,16 +80,18 @@ module.exports = {
 
             // Queue status template
             const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filters || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
-            const nowplaying = new Discord.MessageEmbed()
+            const nowplaying = new Discord.EmbedBuilder()
             nowplaying.setColor("#00ff00");
             nowplaying.setFooter({ text: author.tag, iconURL: author.displayAvatarURL() });
             nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
             nowplaying.setURL(track.url);
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
-            nowplaying.addField("Requested By: ", `${track.user}`, true);
-            nowplaying.addField("Duration: ", duration, true);
-            nowplaying.addField("QueueStatus", status(queue));
+            nowplaying.addFields([
+                { name: "Requested By: ", value: track.user.username, inline: true },
+                { name: "Duration: ", value: duration, inline: true },
+                { name: "QueueStatus", value: status(queue), inline: false }
+            ])
             return send(message, { embeds: [nowplaying] })
         } else if (!queue) {
             return send(message, { content: "Nothing is playing right now!" })

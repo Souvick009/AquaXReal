@@ -52,7 +52,7 @@ module.exports = {
 
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
-        const vc = new Discord.MessageEmbed()
+        const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
@@ -64,23 +64,23 @@ module.exports = {
         if (!permissions.has('SPEAK')) return send(message, { content: 'I don\'t have SPEAK permission in that voice channel' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
-            samevc.setDescription(`❌ ERROR | Please join **my** voice channel first\nChannelname: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`❌ ERROR | Please join **my** voice channel first\nChannelname: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] });
         };
 
         let queue = await bot.distube.getQueue(message);
 
-        const notPlaying = new Discord.MessageEmbed()
+        const notPlaying = new Discord.EmbedBuilder()
         if (!queue.playing) {
             notPlaying.setColor("#FF0000");
             notPlaying.setDescription(`❌ ERROR | Can't Filter the song\nI'm not playing anything!`);
             return send(message, { embeds: [notPlaying] });
         };
 
-        const Filtertype = new Discord.MessageEmbed()
+        const Filtertype = new Discord.EmbedBuilder()
         if (!options[0]) {
             Filtertype.setColor("#FF0000");
             Filtertype.setTitle(`❌ ERROR | Please add a Filtertype`);
@@ -88,7 +88,7 @@ module.exports = {
             return send(message, { embeds: [Filtertype] });
         };
         let input;
-        const validFiltertype = new Discord.MessageEmbed()
+        const validFiltertype = new Discord.EmbedBuilder()
         if (!filters.join(" ").toLowerCase().split(" ").includes(options[0].toLowerCase())) {
             validFiltertype.setColor("#FF0000")
             validFiltertype.setTitle(`❌ ERROR | Not a valid Filtertype`)
@@ -102,13 +102,13 @@ module.exports = {
         } else {
             if (queue.filters.includes(input)) {
                 bot.distube.setFilter(message, input);
-                const Filterdone = new Discord.MessageEmbed()
+                const Filterdone = new Discord.EmbedBuilder()
                 Filterdone.setColor("#00ff00");
                 Filterdone.setTitle(`✅ Successfully removed filter : \`${options[0]}\``);
                 return send(message, { embeds: [Filterdone] });
             } else {
                 bot.distube.setFilter(message, input);
-                const Filterdone = new Discord.MessageEmbed()
+                const Filterdone = new Discord.EmbedBuilder()
                 Filterdone.setColor("#00ff00");
                 Filterdone.setTitle(`✅ Successfully set filter to: \`${options[0]}\``);
                 return send(message, { embeds: [Filterdone] });
@@ -119,21 +119,21 @@ module.exports = {
         //     console.log(input)
         //     queue.filters.add(input);
 
-        //     const Filterdone = new Discord.MessageEmbed()
+        //     const Filterdone = new Discord.EmbedBuilder()
         //     Filterdone.setColor("#00ff00");
         //     Filterdone.setTitle(`✅ Successfully set Filter to: \`${options[1]}\``);
         //     return send(message, { embeds: [Filterdone] });
 
         // } else if (options[0] == "remove") {
         //     if (!queue.filters.has(input)) {
-        //         let embedError = new Discord.MessageEmbed();
+        //         let embedError = new Discord.EmbedBuilder();
         //         embedError.setDescription(`The filter \`${options[1]}\` is not present in the filters queue`);
         //         embedError.setColor("#FF0000")
         //         return send(message, { embeds: [embedError] });
         //     }
         //     queue.filters.remove(input);
 
-        //     const Filterdone = new Discord.MessageEmbed()
+        //     const Filterdone = new Discord.EmbedBuilder()
         //     Filterdone.setColor("#00ff00");
         //     Filterdone.setTitle(`✅ Successfully removed the filter : \`${options[1]}\``);
         //     return send(message, { embeds: [Filterdone] });
@@ -141,7 +141,7 @@ module.exports = {
         // } else if (options[0] == "clear") {
         //     queue.filters.add(input);
 
-        //     const Filterdone = new Discord.MessageEmbed()
+        //     const Filterdone = new Discord.EmbedBuilder()
         //     Filterdone.setColor("#00ff00");
         //     Filterdone.setTitle(`✅ Successfully cleared filters`);
         //     return send(message, { embeds: [Filterdone] });

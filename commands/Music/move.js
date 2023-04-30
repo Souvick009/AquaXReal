@@ -26,11 +26,11 @@ module.exports = {
         if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
@@ -50,7 +50,7 @@ module.exports = {
                 var removed = arr[remove]
                 arr.splice(remove, 1)
                 arr.splice(add, 0, removed)
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setDescription(`✅ Moved [${removed.name}](${removed.url}) from ${remove} to ${add}`)
                     .setColor('#00ff00')
                 send(message, { embeds: [embed] })

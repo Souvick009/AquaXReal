@@ -13,7 +13,7 @@ module.exports = {
   run: async (bot, message, args) => {
 
     if (!message.member.permission.has("ADMINISTRATOR")) {
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
       embed.setColor(0xFF0000)
       embed.setDescription("❌ You don't have permissions to set prefix. Please contact a staff member.[Missing Permission:- Administrator]")
       return message.channel.send({ embeds: [embed] });

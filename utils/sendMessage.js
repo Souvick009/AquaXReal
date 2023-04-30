@@ -1,6 +1,6 @@
 module.exports = async (message, toSend, reply, ephemeral) => {
     var m;
-    if (message.type == "APPLICATION_COMMAND") {
+    if (message.type == 2) {
         if (!toSend.ephemeral) {
             if (toSend.embeds && !toSend.components) {
                 m = await message.reply({
@@ -9,7 +9,7 @@ module.exports = async (message, toSend, reply, ephemeral) => {
                 })
             }
             if (!toSend.embeds) {
-                m =  await message.reply({
+                m = await message.reply({
                     content: toSend.content,
                     fetchReply: true
                 })

@@ -25,13 +25,13 @@ module.exports = {
         } else {
             // Otherwise send all the commands available
             // Without the cmd info
-            return getAll(bot, message);
+            return getAll(bot, message, author);
         }
     },
 };
 
-async function getAll(bot, message) {
-    const embed = new Discord.MessageEmbed().setColor("#00fff3");
+async function getAll(bot, message, author) {
+    const embed = new Discord.EmbedBuilder().setColor("#00fff3");
 
     // Map all the commands
     // with the specific category
@@ -43,9 +43,9 @@ async function getAll(bot, message) {
     // Map all the categories
     const lines = categories.map((category, name) => "**" + category + "**" + "\n" + commands(category)
     );
-    console.log(bot.categories)
-    embed.setDescription(`${lines.join("\n")} For More Information Use **/help command** \n Example:- **/help play**`)
-    embed.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() })
+    // console.log(bot.categories)
+    embed.setDescription(`${lines.join("\n")} \n For More Information Use **/help command** \n Example:- **/help play**`)
+    embed.setFooter({ text: author.tag, iconURL: author.displayAvatarURL() })
     embed.setThumbnail(message.guild.iconURL())
     embed.setTimestamp()
     embed.setTitle("Here are the available commands you can use:")
@@ -53,7 +53,7 @@ async function getAll(bot, message) {
 }
 
 function getCMD(bot, message, input) {
-    const embed = new Discord.MessageEmbed();
+    const embed = new Discord.EmbedBuilder();
 
     // Get the cmd by the name
     const cmd =

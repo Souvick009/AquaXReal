@@ -24,16 +24,16 @@ module.exports = {
         if (!voice_channel) return send(message, { content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
-        const samevc = new Discord.MessageEmbed()
-        if (bot.distube.getQueue(message) && channel !== message.guild.me.voice.channel.id) {
+        const samevc = new Discord.EmbedBuilder()
+        if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
-            samevc.setDescription(`Channel Name: \`${message.guild.me.voice.channel.name}\``)
+            samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
             return send(message, { embeds: [samevc] })
         };
 
         let queue = bot.distube.getQueue(message);
-        const notPaused = new Discord.MessageEmbed()
+        const notPaused = new Discord.EmbedBuilder()
         if (queue.isPlaying) {
             notPaused.setColor("#FF0000");
             notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
@@ -89,7 +89,7 @@ module.exports = {
             time = parseInt(input2)
         }
 
-        const embed1 = new Discord.MessageEmbed()
+        const embed1 = new Discord.EmbedBuilder()
         // console.log(`Time : ` + time + `\nTotal : ` + total)
         if (time < 0 || time > total) {
             embed1.setColor("#FF0000")
@@ -97,7 +97,7 @@ module.exports = {
             return send(message, { embeds: [embed1] })
         }
 
-        const alreadyPaused = new Discord.MessageEmbed()
+        const alreadyPaused = new Discord.EmbedBuilder()
         if (queue.paused) {
             alreadyPaused.setColor("#FF0000");
             alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
@@ -106,7 +106,7 @@ module.exports = {
         };
 
         bot.distube.seek(message, Number(time));
-        const seek = new Discord.MessageEmbed()
+        const seek = new Discord.EmbedBuilder()
         seek.setTitle(":fast_forward: Seeked!");
         seek.setDescription(`Seeked the song for \`${ms((time * 1000), { long: true })}\``)
         seek.setColor("#00ff00");
