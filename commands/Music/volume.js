@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "volume",
@@ -34,7 +35,18 @@ module.exports = {
             return send(message, { embeds: [samevc] })
         };
 
-        setVolume()
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                setVolume();
+            } else {
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
+            }
+        } else {
+            setVolume();
+        }
 
         async function setVolume() {
 
@@ -65,7 +77,7 @@ module.exports = {
             bot.distube.setVolume(message, Number(options[0]));
 
             const embed3 = new Discord.EmbedBuilder()
-            embed3.setColor("#FFFF00")
+            embed3.setColor(message.guild.members.me.displayHexColor)
             embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
             return send(message, { embeds: [embed3] })
         }

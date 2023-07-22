@@ -18,7 +18,7 @@ module.exports = {
     // message.channel.send(`__Uptime:__\n${days}d ${hours}h ${minutes}m ${seconds}s`);
 
     const embed = new Discord.EmbedBuilder()
-      .setColor(0xe8fc03)
+      .setColor(message.guild.members.me.displayHexColor)
       .setAuthor({ name: `Information About ${bot.user.username}`, iconURL: bot.user.displayAvatarURL() })
       .setThumbnail(message.guild.iconURL())
       .setTimestamp()

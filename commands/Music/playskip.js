@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "playskip",
@@ -39,38 +40,40 @@ module.exports = {
             return send(message, { embeds: [samevc] })
         };
 
-        const Searchterm = new Discord.EmbedBuilder()
-        if (!options[0]) {
-            Searchterm.setColor("#FF0000")
-            Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
-            Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
-            return send(message, { embeds: [Searchterm] })
-        };
-        const search = new Discord.EmbedBuilder()
-        search.setDescription(":mag: **Searching! **" + options[0])
-        search.setColor("#FFFF00");
-        send(message, { embeds: [search] })
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                playskip();
+            } else {
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
+            }
+        } else {
+            playskip();
+        }
+        
+        async function playskip() {
+            const Searchterm = new Discord.EmbedBuilder()
+            if (!options[0]) {
+                Searchterm.setColor("#FF0000")
+                Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
+                Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
+                return send(message, { embeds: [Searchterm] })
+            };
 
-        // //https://open.spotify.com/track/5nTtCOCds6I0PHMNtqelas
-        // if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("track")) {
-        //     getPreview(args.join(" ")).then(result => {
-        //         bot.distube.play(message, result.title);
-        //     })
-        // }
-        // else if (args.join(" ").toLowerCase().includes("spotify") && args.join(" ").toLowerCase().includes("playlist")) {
-        //     getTracks(args.join(" ")).then(result => {
-        //         for (const song of result)
-        //             bot.distube.play(message, song.name);
-        //     })
-        // }
-        // else {
-        const music = options[0]
-        bot.distube.play(message.member.voice.channel, music, {
-            member: message.member,
-            textChannel: message.channel,
-            skip: true
-        })
-        // }
+            const search = new Discord.EmbedBuilder()
+            search.setDescription(":mag: **Searching! **" + options[0])
+            search.setColor("#FFFF00");
+            send(message, { embeds: [search] })
+
+            const music = options[0]
+            bot.distube.play(message.member.voice.channel, music, {
+                member: message.member,
+                textChannel: message.channel,
+                skip: true
+            })
+        }
     }
 
 }

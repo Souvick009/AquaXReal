@@ -29,7 +29,7 @@ module.exports = {
             toSend.unshift(`**Now Playing:**\n [${queues[0].name}](${queues[0].url}) - \`${queues[0].formattedDuration}\``)
             let options = {
                 title: `Current Queue for: ${message.guild.name} (Total Duration: ${queue.formattedDuration})`,
-                color: "#FFFF00",
+                color: message.guild.members.me.displayHexColor,
                 // args: null,
                 buttons: true,
                 thumbnail: message.guild.iconURL(),

@@ -102,14 +102,14 @@ module.exports = {
             if (currentFilters.includes(args[0].toLowerCase())) {
                 queue.setFilter(args[0].toLowerCase());
                 const Filterdone = new Discord.EmbedBuilder()
-                Filterdone.setColor("#00ff00");
+                Filterdone.setColor(message.guild.members.me.displayHexColor);
                 Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
                 Filterdone.setTitle(`✅ Successfully removed \`${args[0].toLowerCase()}\` filter`);
                 return message.channel.send({ embeds: [Filterdone] });
             } else {
                 queue.setFilter(args[0].toLowerCase());
                 const Filterdone = new Discord.EmbedBuilder()
-                Filterdone.setColor("#00ff00");
+                Filterdone.setColor(message.guild.members.me.displayHexColor);
                 Filterdone.setFooter({ text: message.author.tag, iconURL: message.author.displayAvatarURL() });
                 Filterdone.setTitle(`✅ Successfully set Filter to: \`${args[0].toLowerCase()}\``);
                 return message.channel.send({ embeds: [Filterdone] });

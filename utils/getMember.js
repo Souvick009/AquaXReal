@@ -3,7 +3,7 @@ module.exports = async (bot, args, options, message, author, self, botUsersFetch
 
     var member;
     //if there are slash commands
-    if (message.type == "APPLICATION_COMMAND") {
+    if (message.type == 2) {
         //if options are specified
         if (options[num] !== undefined) {
 

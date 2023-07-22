@@ -46,10 +46,15 @@ module.exports = {
         if (queue) {
             // var mentionedUser = options[0]
             var mentionedUser = await getMember(bot, args, options, message, false, false, true, 0, false)
+            if (!options[1])
+                var msg = "Not Provided"
+            else
+                msg = options[1]
+
             const dmEmbed = new Discord.EmbedBuilder()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by <@${author.id}> (${author.tag}) \n\n Message - ${options[1]} `)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by <@${author.id}> (${author.tag}) \n\n Message - ${msg} `)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
@@ -70,7 +75,7 @@ module.exports = {
                     }, false);
                 } else {
                     const save = new Discord.EmbedBuilder()
-                    save.setColor("#00ff00");
+                    save.setColor(message.guild.members.me.displayHexColor);
                     save.setDescription(`✅ Suggested the current track to the mentioned user`)
                     return send(message, { embeds: [save] })
                 }

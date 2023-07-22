@@ -1,4 +1,4 @@
-module.exports = async (message, toSend, reply, ephemeral) => {
+module.exports = async (message, toSend, ephemeral, channel) => {
     var m;
     if (message.type == 2) {
         if (!toSend.ephemeral) {
@@ -7,19 +7,30 @@ module.exports = async (message, toSend, reply, ephemeral) => {
                     embeds: toSend.embeds,
                     fetchReply: true
                 })
+                return m;
             }
             if (!toSend.embeds) {
                 m = await message.reply({
                     content: toSend.content,
                     fetchReply: true
                 })
+                return m;
             }
             if (toSend.components && toSend.embeds) {
-                m = await message.reply({
-                    components: toSend.components,
-                    embeds: toSend.embeds,
-                    fetchReply: true
-                })
+                if (channel) {
+                    m = await message.channel.send({
+                        components: toSend.components,
+                        embeds: toSend.embeds,
+                        fetchReply: true
+                    })
+                } else {
+                    m = await message.reply({
+                        components: toSend.components,
+                        embeds: toSend.embeds,
+                        fetchReply: true
+                    })
+                }
+                return m;
             }
         } else {
             if (toSend.embeds && !toSend.components) {
@@ -27,68 +38,60 @@ module.exports = async (message, toSend, reply, ephemeral) => {
                     embeds: toSend.embeds,
                     ephemeral: true
                 })
-
+                return m;
             }
             if (!toSend.embeds) {
                 m = await message.reply({
                     content: toSend.content,
                     ephemeral: true
-
                 })
+                return m;
             }
             if (toSend.components && toSend.embeds) {
-                m = await message.reply({
-                    components: toSend.components,
-                    embeds: toSend.embeds,
-                    ephemeral: true
-
-                })
+                if (channel) {
+                    m = await message.channel.send({
+                        components: toSend.components,
+                        embeds: toSend.embeds,
+                        ephemeral: true,
+                        fetchReply: true
+                    })
+                } else {
+                    m = await message.reply({
+                        components: toSend.components,
+                        embeds: toSend.embeds,
+                        ephemeral: true,
+                        fetchReply: true
+                    })
+                }
+                return m;
             }
         }
     } else {
         if (toSend.embeds && !toSend.components) {
-            if (reply) {
-                m = await message.reply({
-                    embeds: toSend.embeds,
-                    fetchReply: true
-                })
 
-            } else {
-                m = await message.channel.send({
-                    embeds: toSend.embeds,
-                    fetchReply: true
-                })
-                // console.log(m)
+            m = await message.reply({
+                embeds: toSend.embeds,
+                fetchReply: true
+            })
+            return m;
 
-            }
         }
         if (!toSend.embeds) {
-            if (reply) {
-                m = await message.reply(toSend.content)
-            } else {
-                m = await message.channel.send(toSend.content)
-            }
+
+            m = await message.reply(toSend.content)
+
+            return m;
         }
         if (toSend.components && toSend.embeds) {
             // console.log(toSend.components[0].components)
 
-            if (reply) {
+            m = await message.reply({
+                components: toSend.components,
+                embeds: toSend.embeds
+            })
+            return m;
 
-                m = await message.reply({
-                    components: toSend.components,
-                    embeds: toSend.embeds
-                })
-
-
-            } else {
-
-                m = await message.channel.send({
-                    components: toSend.components,
-                    embeds: toSend.embeds
-                })
-                // console.log(m)
-            }
         }
     }
-    return m;
+    //return m;
 }

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "disconnect",
@@ -37,12 +38,23 @@ module.exports = {
             return send(message, { embeds: [samevc] })
         };
 
-        dc()
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                dc();
+            } else {
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
+            }
+        } else {
+            dc();
+        }
 
         async function dc() {
             bot.distube.voices.leave(message.guild)
             const embed1 = new Discord.EmbedBuilder();
-            embed1.setColor("#FF0000");
+            embed1.setColor(message.guild.members.me.displayHexColor);
             embed1.setDescription('Successfully Disconnected!');
             return send(message, { embeds: [embed1] })
         }

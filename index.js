@@ -24,8 +24,8 @@ const { Routes } = require('discord-api-types/v9');
 //     ]
 // })
 const fs = require('fs');
-const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GZ_mxI.GlRNTK6ZStGxoaGdR1Nl8kF9DqqwLWUBqt81z0";
-
+const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboPo7Fwo";
+module.exports = { token: token };
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
 
@@ -41,16 +41,14 @@ bot.distube = new DisTube(bot, {
     leaveOnEmpty: true,
     leaveOnFinish: false,
     leaveOnStop: true,
-    youtubeCookie: "VISITOR_INFO1_LIVE=-kFUti0Lqi0; PREF=tz=Asia.Calcutta&f6=40000000&f7=100; DEVICE_INFO=ChxOekU0TURNek1qTTNNRE0xTXpRNU5EVXhNUT09ENmO7p8GGL/Ulp0G; GPS=1; YSC=X-SzGVHSA8o; CONSISTENCY=ACeCFAU29ycdkMV_s8JWJPNixXu35WFHhHqdcyaGUq5vN7TVOeagTKSTag4x4en3TJgez3mcx47z6WfxnxCenU0hU0ShsTfr4EHzTg91ZjNH5sAkmEXArSvErYK-ViH21N9Jbiwc4hhPS9L-y5YbFnQ; HSID=A0m_EONbaDIm3sEII; SSID=A6lbl4htow9qS0zE5; APISID=31vdCAx9ae1P1_GH/Abd-WDAdVKjiN7JKs; SAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; __Secure-1PAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; __Secure-3PAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; SID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINW9h1Y0F9thdb-2MLMvx5RQ.; __Secure-1PSID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINWNPT7jfw99H14Ng7bvf_yQ.; __Secure-3PSID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINaBkKJNivgsb1ZTfGSeFhFQ.; LOGIN_INFO=AFmmF2swRgIhAN0Myrjwdc1uoO7Fe0Hk-yQIsDoxtKd3sn-XwBaHFfC7AiEAy_JyTZCwyrKqW4LySdLCMYUFJ5ZYbLlFjBszytN03yA:QUQ3MjNmeUxTRS1pSkxsSmVHM1pXNkRRNFZMV29lOXk3LXhwU2FreDlEbTVuZ0x3RWtYTnNpbHEzSG1ldlRwa1czUEs1MU92bmZjbmFvdGl5Umo3RjJFOE1lSzJtRExRb2pXZ1BRQlZLUnFDakt6eGZaNm5IaHNuMWRGRmZyUXJYa3dPQTlRQ3lZRDRvbWtMYWhzeHNldzBuclBMRUVBRVd3; wide=1; SIDCC=AP8dLtwWO7o3QcYNTsUibmSAsCmElfIEdbeI9nImU2qlB0yjo08k6OTQp-BehB8IxmtArWJO; __Secure-1PSIDCC=AP8dLtx0xaT7HVvN5UnuxrwRFnBtMxXtAKlie_0l-T19oYbOaKh-L6C28IfNCYuB9dx8J-cYEA; __Secure-3PSIDCC=AP8dLtw9Wn-_8TZWidkyLdXH-Vc7nbddSYkMfiL0RpHj1UQIL2ULm88dnFi1i4SCmH50RPUqNg",
+    youtubeCookie: "VISITOR_INFO1_LIVE=4J2KGuWcH2Q; HSID=ADRAfaiTHkXfmjvTM; SSID=AgEul6FL5TQSa_TXk; APISID=8j1tge2V8zSfa9FC/AvXq34xGFPx2qspUz; SAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; __Secure-1PAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; __Secure-3PAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; PREF=f4=4000000&tz=Asia.Calcutta&f7=150&f6=40000000&f5=30000; SID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BrL1TPLaWF4YHfwWcnpUsAA.; __Secure-1PSID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BRuI_hzbrDa9ekcSMfFEBrg.; __Secure-3PSID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BA9T03fjUCQHKmVDK2QzHyA.; YSC=CaCY73asiBI; LOGIN_INFO=AFmmF2swRgIhAKHXjeoxPXYZMwMK9194TPvXPcdAEN34kXE0tqdHP8SWAiEAsmyLo6PsHuMr5knVq141X2-cm7Sc6D6Rpj-pknpAavY:QUQ3MjNmeDdzbXFfYXd3dmx2OUVwV3VsbTlxanF3bERKR1llOWNJUGVTbUwxN1RhYS1NVU55SXM5NzBEdk03ZjRRUXUtdU1RQzF1X293YWpxUHZwTUxvN1M3aDlQY1lkQzVCNkpjUVRFV0R0b0p0MmU1ZDlaNk1Pa1duakQyYUlHa2NRV3ZZckd6bk55TkljWWtJQW9oQjRiZXJRU3lFYkZ3; SIDCC=APoG2W-m8h9b_RLbdgt5huPHSy4WHaN7ekoGY7oOJDG1O1xF-TDrgfQUBU4J946fz2ABitCwDk8; __Secure-1PSIDCC=APoG2W-2mqEDqyW2TYRkpHeolYF8hWhz32tdbJ1Ia11K5i3znKrnBy8M39acMjLqJgFir5uM0y0; __Secure-3PSIDCC=APoG2W-SgfYtOtfPV3NXbXsKbIkWLnuy5N4VvVDgBx3V5gMeNm26QNzRbn8YAe0DXlRwnST3S5c",
     youtubeIdentityToken: "QUFFLUhqazdkR0hYM0kxS0N2U3hON24zNkpGbG94MDdBd3w\u003d",
     nsfw: true,
     emitAddListWhenCreatingQueue: false,
     emitAddSongWhenCreatingQueue: false,
     // requestOptions: {
     //     headers: {
-    //         Latest cookie : "GPS=1; YSC=MQlFEmUv-lk; VISITOR_INFO1_LIVE=AsY4dk7YPzc; PREF=tz=Asia.Calcutta&f6=40000000; CONSISTENCY=AGXVzq-L7u7l-Ek57zjFSZAzQ6l1yYYDnCCWG3So5hdmvdG33lKKbmz2HIShJ8s1YUcOM1xAAHNy3ZnSA0qWKZqgemD54dEatbnCr-jCYgZiApJcAZFLd_71JcywvHa5eVa5nUljGKstiRWGyv3P5YU; SID=OAh8UnvWeJ4vbcGAC1xgIzrOpZlNMk7h0Uq_IBfK6k5HOpAOssK5z477NlKJDK2wlvN9Fg.; __Secure-1PSID=OAh8UnvWeJ4vbcGAC1xgIzrOpZlNMk7h0Uq_IBfK6k5HOpAOjvoQV59zUsBRRFyWZnL6yg.; __Secure-3PSID=OAh8UnvWeJ4vbcGAC1xgIzrOpZlNMk7h0Uq_IBfK6k5HOpAOWmVDanNFqUl6Qcbx-Qlz2Q.; HSID=AuRmfAz11seMFQiIp; SSID=A6foUKqKmfV8OeTbH; APISID=1BMkYdfnWFvzYNhs/AOn_pzKqAYDcIGtg4; SAPISID=OLdpXnBPejOoTucB/AyEEJcQAPfTAmt0_F; __Secure-1PAPISID=OLdpXnBPejOoTucB/AyEEJcQAPfTAmt0_F; __Secure-3PAPISID=OLdpXnBPejOoTucB/AyEEJcQAPfTAmt0_F; LOGIN_INFO=AFmmF2swRgIhALk_sMtl0rkhwZYA5fqNZ9hP7Vtnp1AgcREljO6W9Ue_AiEA_yu0_JqXGnZMeXqOkunEI2AEUnS2-6t4zabO_gbpZmg:QUQ3MjNmeFptbHdjaG15aHdmNThOUDM2Z1FoUDdockhIMGJDc2tLdXBrVy12YXJZSVNKTzJVUjZaamhqVmR4cXJjbnNhNGJuelFpeV9tbGMyTHNTajNsV1Q4WEd3b3ZPWTRKemhTTmxZX180dWpZSTROalBabGZya2d3aGUxc3lQNXdpUGtraTBUWXpLMHp1SGFpUkxYZm1qVUZERl9XLVhB; SIDCC=AEf-XMSJrAu-IfwwiVwqEdfm6Fx1DANeqwKAe1D4WIOlMoApT7BJ7Zr-oBlexjAv2c7XHOYmxA; __Secure-1PSIDCC=AEf-XMS6UV_c0K4UKHKDt5ZRa_h9rjQheIWzYWTAgPsbHuxaoQT6Snjyn8HFGQkqpdqng7nGBw; __Secure-3PSIDCC=AEf-XMT0ySMo8dqjB2PpPFDatydi6WdtYLJ7kCTB189oZtevagiKO6Aesaq2_bTNAcV4s-eYFw"
-    //         cookie: "CONSENT=YES+IN.en-GB+20170910-09-0; VISITOR_INFO1_LIVE=WLPZi_oUxhQ; _gcl_au=1.1.1854864866.1613229250; PREF=volume=100&cvdm=grid&tz=Asia.Calcutta&al=en-GB&f5=30000&f6=40000000; HSID=AqgCzmypvT-mbfPL9; SSID=AZ8KQkbdECI8-tQaY; APISID=qRQ990KycP7KyGwG/AydSydPFdf2RiulD-; SAPISID=Sp5dF8Xl4HucNVwj/AChGLGfRLC6o6cXL4; __Secure-3PAPISID=Sp5dF8Xl4HucNVwj/AChGLGfRLC6o6cXL4; YSC=XiCKEEG3qVQ; LOGIN_INFO=AFmmF2swRAIgKDYDV63aI3xarfWziLm_99N-kaNuVsYMWEGYC_Cat8wCIAsRmnvRbLDujt4hlCegtEq1mzhiXvqDlnPYPTEHnqRp:QUQ3MjNmeXdTWVRTOTVvZzRjNmZleUM3Sk1veTU4WVZnYW1Tc19McU1ET0J6bkplUmR6aEZkSFotRlRRVVJJMVlBSko3UW5sUVVnZzgxc2haSks1TXh1VjBvMmZka2Rac05yS2ZTa2hRdnE2QzNRZ3YwNnhMaFRYRklMUWVWSDJnRHF2NEZYalNTM21PT1RqNzZEYzBLWkItRlhibzR4eXRnTFg0R2lzV0d0SlRURm5XQzdwZ2hxODhtdzNpbDEySWI1STMweVI1OHZB; SID=7gfzkkVrhBfD8evqeqURxNeXGDAyGhbcba1-94vclsP_Wu29oxDHWGkGTn0vkiPpmvJQeQ.; __Secure-3PSID=7gfzkkVrhBfD8evqeqURxNeXGDAyGhbcba1-94vclsP_Wu29eMJWnkRgqHg08WNkxqI0cg.; wide=1; SIDCC=AJi4QfHilcp5a7zbdf4Yw2Wff1EDpfoO5aeBRCQSfS9ZaaW211CntxeF7B69HzQtAxUlF6qDws_f; __Secure-3PSIDCC=AJi4QfFwU8zDYTuTjfwz5Hw3VAEiWhkfevfmBdkoFZJsCMt69RqK_vMtZVU8gwAzF7dtCOjyxc8",
-    //         "x-youtube-identity-token": "QUFFLUhqazdkR0hYM0kxS0N2U3hON24zNkpGbG94MDdBd3w\u003d",
+    //         Latest cookie : "VISITOR_INFO1_LIVE=-kFUti0Lqi0; PREF=tz=Asia.Calcutta&f6=40000000&f7=100; DEVICE_INFO=ChxOekU0TURNek1qTTNNRE0xTXpRNU5EVXhNUT09ENmO7p8GGL/Ulp0G; GPS=1; YSC=X-SzGVHSA8o; CONSISTENCY=ACeCFAU29ycdkMV_s8JWJPNixXu35WFHhHqdcyaGUq5vN7TVOeagTKSTag4x4en3TJgez3mcx47z6WfxnxCenU0hU0ShsTfr4EHzTg91ZjNH5sAkmEXArSvErYK-ViH21N9Jbiwc4hhPS9L-y5YbFnQ; HSID=A0m_EONbaDIm3sEII; SSID=A6lbl4htow9qS0zE5; APISID=31vdCAx9ae1P1_GH/Abd-WDAdVKjiN7JKs; SAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; __Secure-1PAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; __Secure-3PAPISID=ibuMZI_FaWoH1W8b/APzkJwIVLPQsmPuEc; SID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINW9h1Y0F9thdb-2MLMvx5RQ.; __Secure-1PSID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINWNPT7jfw99H14Ng7bvf_yQ.; __Secure-3PSID=WAh8UqL5kO0mS-mEnOR60kRLpIDyGiMCGfiSQjmfXs9qzHINaBkKJNivgsb1ZTfGSeFhFQ.; LOGIN_INFO=AFmmF2swRgIhAN0Myrjwdc1uoO7Fe0Hk-yQIsDoxtKd3sn-XwBaHFfC7AiEAy_JyTZCwyrKqW4LySdLCMYUFJ5ZYbLlFjBszytN03yA:QUQ3MjNmeUxTRS1pSkxsSmVHM1pXNkRRNFZMV29lOXk3LXhwU2FreDlEbTVuZ0x3RWtYTnNpbHEzSG1ldlRwa1czUEs1MU92bmZjbmFvdGl5Umo3RjJFOE1lSzJtRExRb2pXZ1BRQlZLUnFDakt6eGZaNm5IaHNuMWRGRmZyUXJYa3dPQTlRQ3lZRDRvbWtMYWhzeHNldzBuclBMRUVBRVd3; wide=1; SIDCC=AP8dLtwWO7o3QcYNTsUibmSAsCmElfIEdbeI9nImU2qlB0yjo08k6OTQp-BehB8IxmtArWJO; __Secure-1PSIDCC=AP8dLtx0xaT7HVvN5UnuxrwRFnBtMxXtAKlie_0l-T19oYbOaKh-L6C28IfNCYuB9dx8J-cYEA; __Secure-3PSIDCC=AP8dLtw9Wn-_8TZWidkyLdXH-Vc7nbddSYkMfiL0RpHj1UQIL2ULm88dnFi1i4SCmH50RPUqNg",
     //     }
     // },
     customFilters: {
@@ -79,22 +77,13 @@ bot.distube
     .on("playSong", (queue, song) => {
         const Playsong = new Discord.EmbedBuilder();
         Playsong.setDescription(`Now playing [${song.name}](${song.url})`)
-        // Playsong.setURL(song.url)
+        Playsong.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
         return queue.textChannel.send({ embeds: [Playsong] })
-        // const Playsong = new Discord.EmbedBuilder();
-        // Playsong.setTitle("Playing :notes: " + song.name)
-        // Playsong.setURL(song.url)
-        // Playsong.addField("Duration", `\`${song.formattedDuration}\``)
-        // Playsong.addField("QueueStatus", status(queue))
-        // Playsong.setColor("#00ff00");
-        // Playsong.setThumbnail(song.thumbnail)
-        // Playsong.setFooter(`Requested by: ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
-        // Playsong.setTimestamp();
-        // message.channel.send(Playsong)
     })
     .on("addSong", (queue, song) => {
         const embed = new Discord.EmbedBuilder()
         embed.setAuthor({ name: `Added To The Queue`, iconURL: bot.user.displayAvatarURL() })
+        embed.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
         embed.setDescription(`[${song.name}](${song.url})`)
         embed.setThumbnail(song.thumbnail)
         var position = queue.songs.length - 1
@@ -103,9 +92,39 @@ bot.distube
             { name: "Duration", value: song.formattedDuration, inline: true },
             { name: "Position In The Queue", value: position.toString(), inline: true },
         )
-        queue.textChannel.send({ embeds: [embed] })
+        return queue.textChannel.send({ embeds: [embed] })
 
     })
+    //     .on("playSong", (queue, song) => {
+    //         const Playsong = new Discord.EmbedBuilder();
+    //         Playsong.setDescription(`Now playing [${song.name}](${song.url})`)
+    //         // Playsong.setURL(song.url)
+    //         return queue.textChannel.send({ embeds: [Playsong] })
+    //         // const Playsong = new Discord.EmbedBuilder();
+    //         // Playsong.setTitle("Playing :notes: " + song.name)
+    //         // Playsong.setURL(song.url)
+    //         // Playsong.addField("Duration", `\`${song.formattedDuration}\``)
+    //         // Playsong.addField("QueueStatus", status(queue))
+    //         // Playsong.setColor("#00ff00");
+    //         // Playsong.setThumbnail(song.thumbnail)
+    //         // Playsong.setFooter(`Requested by: ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
+    //         // Playsong.setTimestamp();
+    //         // message.channel.send(Playsong)
+    //     })
+    //     .on("addSong", (queue, song) => {
+    //         const embed = new Discord.EmbedBuilder()
+    //         embed.setAuthor({ name: `Added To The Queue`, iconURL: bot.user.displayAvatarURL() })
+    //         embed.setDescription(`[${song.name}](${song.url})`)
+    //         embed.setThumbnail(song.thumbnail)
+    //         var position = queue.songs.length - 1
+    //         embed.addFields(
+    //             { name: "Channel", value: song.uploader.name, inline: true },
+    //             { name: "Duration", value: song.formattedDuration, inline: true },
+    //             { name: "Position In The Queue", value: position.toString(), inline: true },
+    //         )
+    //         queue.textChannel.send({ embeds: [embed] })
+
+    //     })
     .on("addList", (queue, playlist) => {
         const AddList = new Discord.EmbedBuilder();
         // console.log(playlist.properties)

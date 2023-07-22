@@ -77,7 +77,7 @@ function getCMD(bot, message, input) {
         info += `\n**Usage**: ${cmd.usage}`;
         embed.setFooter({ text: `Syntax: <> = required, [] = optional` });
     }
-    embed.setColor("#00fff3")
+    embed.setColor(message.guild.members.me.displayHexColor)
     embed.setDescription(info)
     return send(message, { embeds: [embed] });
 }

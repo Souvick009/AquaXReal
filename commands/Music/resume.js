@@ -29,33 +29,48 @@ module.exports = {
 
         let queue = bot.distube.getQueue(message);
 
-        const notPaused = new Discord.EmbedBuilder()
-        if (queue.playing) {
-            notPaused.setColor("#FF0000");
-            notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);
-            notPaused.setDescription(`It's not paused!`);
-            return send(message, { embeds: [notPaused] })
-        };
-        //Function to wait some time
-        const delay = function (delayInms) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(2);
-                }, delayInms);
-            });
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                resume();
+            } else {
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
+            }
+        } else {
+            resume();
         }
 
-        // bot.distube.resume(message);
-        // await delay(100);
-        // bot.distube.pause(message);
-        // await delay(100);
-        queue.resume(message);
+        function resume() {
+            const notPaused = new Discord.EmbedBuilder()
+            if (queue.playing) {
+                notPaused.setColor("#FF0000");
+                notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);
+                notPaused.setDescription(`It's not paused!`);
+                return send(message, { embeds: [notPaused] })
+            };
+            //Function to wait some time
+            const delay = function (delayInms) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(2);
+                    }, delayInms);
+                });
+            }
 
-        let track = queue.songs[0];
+            // bot.distube.resume(message);
+            // await delay(100);
+            // bot.distube.pause(message);
+            // await delay(100);
+            queue.resume(message);
 
-        const resumed = new Discord.EmbedBuilder()
-        resumed.setColor("#FFFF00");
-        resumed.setDescription(`▶ Resumed the Song: [${track.name}](${track.url})`)
-        return send(message, { embeds: [resumed] })
+            let track = queue.songs[0];
+
+            const resumed = new Discord.EmbedBuilder()
+            resumed.setColor(message.guild.members.me.displayHexColor);
+            resumed.setDescription(`▶ Resumed the Song: [${track.name}](${track.url})`)
+            return send(message, { embeds: [resumed] })
+        }
     }
 }

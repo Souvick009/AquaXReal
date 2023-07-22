@@ -24,7 +24,7 @@ module.exports = {
                         const embed = new Discord.EmbedBuilder()
                         embed.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() });
                         embed.setDescription("I have been summoned!");
-                        embed.setColor("#00ff00");
+                        embed.setColor(message.guild.members.me.displayHexColor);
                         embed.setFooter({ text: "Summoned by " + author.tag, iconURL: author.displayAvatarURL() });
                         embed.setTimestamp()
                         send(message, { embeds: [embed] })
@@ -38,8 +38,8 @@ module.exports = {
             const embed = new Discord.EmbedBuilder()
             embed.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() });
             embed.setDescription("I have been summoned!");
-            embed.setColor("#00ff00");
-            embed.setFooter({ text: "Summoned by " + message.author.tag, iconURL: message.author.displayAvatarURL() });
+            embed.setColor(message.guild.members.me.displayHexColor);
+            embed.setFooter({ text: "Summoned by " + author.tag, iconURL: author.displayAvatarURL() });
             embed.setTimestamp()
             send(message, { embeds: [embed] })
         }

@@ -13,6 +13,8 @@ const {
     Routes
 } = require('discord-api-types/v9');
 
+const { token } = require("../index.js");
+
 module.exports = (client) => {
     const commandss = []
 
@@ -46,16 +48,16 @@ module.exports = (client) => {
 
     const rest = new REST({
         version: '9'
-    }).setToken("ODE1MTcxNjI3MDk1NTU2MTA2.GZ_mxI.GlRNTK6ZStGxoaGdR1Nl8kF9DqqwLWUBqt81z0");
+    }).setToken(token);
 
     (async () => {
         try {
             console.log('Started refreshing application (/) commands.');
-            
+
             await rest.put(
                 Routes.applicationCommands("815171627095556106"), {
-                    body: commandss
-                },
+                body: commandss
+            },
             ).catch(err => console.log(err));
             // await rest.put(
             //     Routes.applicationCommands("626038642288099338"), {

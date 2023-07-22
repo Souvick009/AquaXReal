@@ -34,7 +34,18 @@ module.exports = {
 
         if (queue) {
 
-            removeSong()
+            if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+                if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                    removeSong();
+                } else {
+                    const samevc = new Discord.EmbedBuilder()
+                    samevc.setColor("#FF0000")
+                    samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                    return send(message, { embeds: [samevc] })
+                }
+            } else {
+                removeSong();
+            }
 
             async function removeSong() {
                 if (isNaN(parseInt(options[0])) || !options[0]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
@@ -48,8 +59,8 @@ module.exports = {
                 const embed = new Discord.EmbedBuilder()
                     .setTitle(`Song Removed:`)
                     .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
-                    .setColor('#FFFF00')
-                    .addField('Song Removed by:-', author.username)
+                    .setColor(message.guild.members.me.displayHexColor)
+                    .addFields({ name: 'Song Removed by:-', value: author.username })
                     .setTimestamp()
                     .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
                 send(message, { embeds: [embed] })

@@ -64,11 +64,20 @@ module.exports = {
                 if (totalperct < 6) totalperct = 2
                 let bar;
                 try {
-                    bar = progressbar.splitBar(100, totalperct, 25); //createBar(total, current, size, line, slider);
+                    bar = progressbar.splitBar(100, totalperct, 10); //createBar(total, current, size, line, slider);
                 } catch (error) {
                     return console.log(totalperct, total)
                 }
-                duration = `\`${bar[0]}\` \n\`${current} / ${total}\``
+                // console.log(bar, bar[0] + '\n')
+                var split = bar[0].split("🔘");
+                // console.log(split[0] + '\n' + split[1])
+                var bar1;
+                if (split[1] == undefined) {
+                    bar1 = `🔘${bar[0]}`
+                } else {
+                    bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
+                }
+                duration = `${bar1}\n${current} / ${total}`
             }
 
 
@@ -81,15 +90,15 @@ module.exports = {
             // Queue status template
             const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filters || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
             const nowplaying = new Discord.EmbedBuilder()
-            nowplaying.setColor("#00ff00");
-            nowplaying.setFooter({ text: author.tag, iconURL: author.displayAvatarURL() });
-            nowplaying.setTitle(`Now playing :notes: ${track.name}`.substr(0, 256));
-            nowplaying.setURL(track.url);
+            nowplaying.setColor(message.guild.members.me.displayHexColor);
+            nowplaying.setDescription(`[:notes: ${track.name}](${track.url})`)
+            nowplaying.setFooter({ text: `Requested By: ${track.user.username}`, iconURL: track.user.displayAvatarURL() });
+            // nowplaying.setTitle(`Now playing`);
+            nowplaying.setAuthor({ iconURL: bot.user.displayAvatarURL(), name: "Now Playing" })
             nowplaying.setTimestamp()
             nowplaying.setThumbnail(track.thumbnail);
             nowplaying.addFields([
-                { name: "Requested By: ", value: track.user.username, inline: true },
-                { name: "Duration: ", value: duration, inline: true },
+                { name: "Duration: ", value: duration, inline: false },
                 { name: "QueueStatus", value: status(queue), inline: false }
             ])
             return send(message, { embeds: [nowplaying] })

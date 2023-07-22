@@ -57,7 +57,7 @@ module.exports = {
                     }, false);
                 } else {
                     const save = new Discord.EmbedBuilder()
-                    save.setColor("#00ff00");
+                    save.setColor(message.guild.members.me.displayHexColor);
                     save.setDescription(`✅ Sent the name of the current track in your dms`)
                     return send(message, { embeds: [save] })
                 }

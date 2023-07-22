@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const send = require("../../utils/sendMessage.js")
+const send = require("../../utils/sendMessage.js");
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "loop",
@@ -47,42 +48,57 @@ module.exports = {
         let queue = await bot.distube.getQueue(message);
 
         if (queue) {
-            if (options[0]) {
-                if (options[0] == `OFF`) {
-                    bot.distube.setRepeatMode(message, 0)
-                    const Loop = new Discord.EmbedBuilder();
-                    Loop.setDescription("**Loop mode set to:** OFF");
-                    Loop.setColor("#FFFF00");
-                    send(message, { embeds: [Loop] })
-                } else if (options[0] == `This Song`) {
-                    bot.distube.setRepeatMode(message, 1)
-                    const Loop = new Discord.EmbedBuilder();
-                    Loop.setDescription("**Loop mode set to:** This song");
-                    Loop.setColor("#FFFF00");
-                    send(message, { embeds: [Loop] })
-                } else if (options[0] == `Queue`) {
-                    bot.distube.setRepeatMode(message, 2)
-                    const Loop = new Discord.EmbedBuilder();
-                    Loop.setDescription("**Loop mode set to:** Queue");
-                    Loop.setColor("#FFFF00");
-                    send(message, { embeds: [Loop] })
+
+            if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+                if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                    loop();
+                } else {
+                    const samevc = new Discord.EmbedBuilder()
+                    samevc.setColor("#FF0000")
+                    samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                    return send(message, { embeds: [samevc] })
                 }
             } else {
-                queue.setRepeatMode()
-                const Loop = new Discord.EmbedBuilder();
-                var mode;
-                if (queue.repeatMode == 0) {
-                    mode = `OFF`
-                } else if (queue.repeatMode == 1) {
-                    mode = `This Song`
-                } else if (queue.repeatMode == 2) {
-                    mode = `Queue`
-                }
-                Loop.setDescription(`**Loop mode set to:** ${mode}`);
-                Loop.setColor("#FFFF00");
-                send(message, { embeds: [Loop] })
+                loop();
             }
 
+            async function loop() {
+                if (options[0]) {
+                    if (options[0] == `OFF`) {
+                        bot.distube.setRepeatMode(message, 0)
+                        const Loop = new Discord.EmbedBuilder();
+                        Loop.setDescription("**Loop mode set to:** OFF");
+                        Loop.setColor(message.guild.members.me.displayHexColor);
+                        send(message, { embeds: [Loop] })
+                    } else if (options[0] == `This Song`) {
+                        bot.distube.setRepeatMode(message, 1)
+                        const Loop = new Discord.EmbedBuilder();
+                        Loop.setDescription("**Loop mode set to:** This song");
+                        Loop.setColor(message.guild.members.me.displayHexColor);
+                        send(message, { embeds: [Loop] })
+                    } else if (options[0] == `Queue`) {
+                        bot.distube.setRepeatMode(message, 2)
+                        const Loop = new Discord.EmbedBuilder();
+                        Loop.setDescription("**Loop mode set to:** Queue");
+                        Loop.setColor(message.guild.members.me.displayHexColor);
+                        send(message, { embeds: [Loop] })
+                    }
+                } else {
+                    queue.setRepeatMode()
+                    const Loop = new Discord.EmbedBuilder();
+                    var mode;
+                    if (queue.repeatMode == 0) {
+                        mode = `OFF`
+                    } else if (queue.repeatMode == 1) {
+                        mode = `This Song`
+                    } else if (queue.repeatMode == 2) {
+                        mode = `Queue`
+                    }
+                    Loop.setDescription(`**Loop mode set to:** ${mode}`);
+                    Loop.setColor(message.guild.members.me.displayHexColor);
+                    send(message, { embeds: [Loop] })
+                }
+            }
         } else if (!queue) {
             return send(message, { content: "Nothing is playing right now!" })
         };

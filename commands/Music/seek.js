@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
 const ms = require("ms");
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "seek",
@@ -32,86 +33,102 @@ module.exports = {
             return send(message, { embeds: [samevc] })
         };
 
-        let queue = bot.distube.getQueue(message);
-        const notPaused = new Discord.EmbedBuilder()
-        if (queue.isPlaying) {
-            notPaused.setColor("#FF0000");
-            notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
-            notPaused.setDescription(`Play something first!`);
-            return send(message, { embeds: [notPaused] })
-        };
-
-        let track = queue.songs[0];
-
-        var total2 = track.formattedDuration;
-        var total;
-        if (total2.includes(`:`)) {
-            let total1 = total2.split(`:`)
-            if (total1.length == 2) { // 1:30  // Minutes to Secs
-                let min = total1[0] * 60 // 60 sec
-                let sec = total1[1] // 30
-                total = parseInt(min) + parseInt(sec)
-            } else if (total1.length == 3) { // 1:20:30  //Hours to Secs
-                let hou = total1[0] * 60 * 60 // 3600 sec
-                let min = total1[1] * 60 // 60 sec
-                let sec = total1[2] // 30
-                total = parseInt(hou) + parseInt(min) + parseInt(sec)
+        // Calling the seek function after checking the requirements of DJ role
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                seekk();
             } else {
-                total = parseInt(total1)
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
             }
-        }
-        // console.log(`total ` + total)
-        let time;
-        let input2 = options[0]
-        if (input2.includes(`:`)) {
-            let input = input2.split(`:`)
-            if (input.length >= 2) { // 1:30  // Minutes to Secs
-                let min = input[0] * 60 // 60 sec
-                let sec = input[1] // 30
-                time = parseInt(min) + parseInt(sec)
-            } else if (input.length >= 3) { // 1:20:30  //Hours to Secs
-                let hou = input[0] * 60 * 60 // 3600 sec
-                let min = input[1] * 60 // 60 sec
-                let sec = input[2] // 30
-                time = parseInt(hou) + parseInt(min) + parseInt(sec)
-            } else {
-                time = parseInt(input)
-            }
-        } else if (input2.includes('m')) {
-            let input = input2.split(`m`)
-            let min = input[0] * 60 // 60 sec
-            time = parseInt(min)
-        } else if (input2.includes('h')) {
-            let input = input2.split(`m`)
-            let hour = input[0] * 60 * 60 // 60 sec
-            time = parseInt(hour)
         } else {
-            time = parseInt(input2)
+            seekk();
         }
 
-        const embed1 = new Discord.EmbedBuilder()
-        // console.log(`Time : ` + time + `\nTotal : ` + total)
-        if (time < 0 || time > total) {
-            embed1.setColor("#FF0000")
-            embed1.setDescription(`❌ ERROR | Seeking out of Range`)
-            return send(message, { embeds: [embed1] })
+        // Funtion of seek command
+        async function seekk() {
+            let queue = bot.distube.getQueue(message);
+            const notPaused = new Discord.EmbedBuilder()
+            if (queue.isPlaying) {
+                notPaused.setColor("#FF0000");
+                notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
+                notPaused.setDescription(`Play something first!`);
+                return send(message, { embeds: [notPaused] })
+            };
+
+            let track = queue.songs[0];
+
+            var total2 = track.formattedDuration;
+            var total;
+            if (total2.includes(`:`)) {
+                let total1 = total2.split(`:`)
+                if (total1.length == 2) { // 1:30  // Minutes to Secs
+                    let min = total1[0] * 60 // 60 sec
+                    let sec = total1[1] // 30
+                    total = parseInt(min) + parseInt(sec)
+                } else if (total1.length == 3) { // 1:20:30  //Hours to Secs
+                    let hou = total1[0] * 60 * 60 // 3600 sec
+                    let min = total1[1] * 60 // 60 sec
+                    let sec = total1[2] // 30
+                    total = parseInt(hou) + parseInt(min) + parseInt(sec)
+                } else {
+                    total = parseInt(total1)
+                }
+            }
+            // console.log(`total ` + total)
+            let time;
+            let input2 = options[0]
+            if (input2.includes(`:`)) {
+                let input = input2.split(`:`)
+                if (input.length >= 2) { // 1:30  // Minutes to Secs
+                    let min = input[0] * 60 // 60 sec
+                    let sec = input[1] // 30
+                    time = parseInt(min) + parseInt(sec)
+                } else if (input.length >= 3) { // 1:20:30  //Hours to Secs
+                    let hou = input[0] * 60 * 60 // 3600 sec
+                    let min = input[1] * 60 // 60 sec
+                    let sec = input[2] // 30
+                    time = parseInt(hou) + parseInt(min) + parseInt(sec)
+                } else {
+                    time = parseInt(input)
+                }
+            } else if (input2.includes('m')) {
+                let input = input2.split(`m`)
+                let min = input[0] * 60 // 60 sec
+                time = parseInt(min)
+            } else if (input2.includes('h')) {
+                let input = input2.split(`m`)
+                let hour = input[0] * 60 * 60 // 60 sec
+                time = parseInt(hour)
+            } else {
+                time = parseInt(input2)
+            }
+
+            const embed1 = new Discord.EmbedBuilder()
+            // console.log(`Time : ` + time + `\nTotal : ` + total)
+            if (time < 0 || time > total) {
+                embed1.setColor("#FF0000")
+                embed1.setDescription(`❌ ERROR | Seeking out of Range`)
+                return send(message, { embeds: [embed1] })
+            }
+
+            const alreadyPaused = new Discord.EmbedBuilder()
+            if (queue.paused) {
+                alreadyPaused.setColor("#FF0000");
+                alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
+                alreadyPaused.setDescription(`First resume the song then try to seek!`);
+                return send(message, { embeds: [alreadyPaused] })
+            };
+
+            bot.distube.seek(message, Number(time));
+            const seek = new Discord.EmbedBuilder()
+            seek.setTitle(":fast_forward: Seeked!");
+            seek.setDescription(`Seeked the song for \`${ms((time * 1000), { long: true })}\``)
+            seek.setColor(message.guild.members.me.displayHexColor);
+            return send(message, { embeds: [seek] })
         }
-
-        const alreadyPaused = new Discord.EmbedBuilder()
-        if (queue.paused) {
-            alreadyPaused.setColor("#FF0000");
-            alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
-            alreadyPaused.setDescription(`First resume the song then try to seek!`);
-            return send(message, { embeds: [alreadyPaused] })
-        };
-
-        bot.distube.seek(message, Number(time));
-        const seek = new Discord.EmbedBuilder()
-        seek.setTitle(":fast_forward: Seeked!");
-        seek.setDescription(`Seeked the song for \`${ms((time * 1000), { long: true })}\``)
-        seek.setColor("#00ff00");
-        return send(message, { embeds: [seek] })
-
     }
 
 

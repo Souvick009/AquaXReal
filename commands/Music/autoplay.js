@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
+const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "autoplay",
@@ -44,11 +45,22 @@ module.exports = {
             let mode = queue.toggleAutoplay(message);
             const autoplay = new Discord.EmbedBuilder();
             autoplay.setDescription("Autoplay Mode Set To: `" + (mode ? "On" : "Off") + "`");
-            autoplay.setColor("#FFFF00");
+            autoplay.setColor(message.guild.members.me.displayHexColor);
             send(message, { embeds: [autoplay] });
         }
 
-        autoplay()
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
+            if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
+                autoplay();
+            } else {
+                const samevc = new Discord.EmbedBuilder()
+                samevc.setColor("#FF0000")
+                samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
+                return send(message, { embeds: [samevc] })
+            }
+        } else {
+            autoplay();
+        }
     }
 
 }
