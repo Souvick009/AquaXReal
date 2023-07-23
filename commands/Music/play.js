@@ -52,12 +52,21 @@ module.exports = {
         //     }
         // }, 1000);
 
+        let queue = await bot.distube.getQueue(message);
+
         const search = new Discord.EmbedBuilder()
         search.setDescription(":mag: **Searching! **" + options[0])
         search.setColor("#FFFF00");
         send(message, { embeds: [search] })
         // console.log(message);
         const music = options[0];
+        if (!queue) {
+            console.log(bot.distube.customPlugins[0].emitEventsAfterFetching)
+            bot.distube.customPlugins[0].emitEventsAfterFetching = false
+            console.log(bot.distube.customPlugins[0].emitEventsAfterFetching)
+        } else {
+            bot.distube.customPlugins[0].emitEventsAfterFetching = true
+        }
         bot.distube.play(message.member.voice.channel, music, {
             textChannel: message.channel,
             member: message.member,

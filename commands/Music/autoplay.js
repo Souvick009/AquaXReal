@@ -23,7 +23,8 @@ module.exports = {
             return send(message, { embeds: [novc] })
         }
 
-        let channel = author.voice.channel.id;
+        let channel = message.guild.members.cache.get(author.id).voice.channel.id
+         //author.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
         if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")

@@ -48,19 +48,25 @@ module.exports = {
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
             return send(message, { embeds: [Searchterm] })
         };
-        // const search = new Discord.EmbedBuilder()
-        // search.setDescription(":mag: **Searching! **" + options[0])
-        // search.setColor("#FFFF00");
-        // const s = await send(message, { embeds: [search] })
+        const search = new Discord.EmbedBuilder()
+        search.setDescription(":mag: **Searching! **" + options[0])
+        search.setColor("#FFFF00");
+        const s = await send(message, { embeds: [search] })
 
         const music = options[0];
-        let results = await bot.distube.search(music, {
-            type: "video",
-            limit: 10
-        })
-
-        if (!results) {
-            return send(message, { content: `No result found for ${music}!` })
+        let results;
+        try {
+            results = await bot.distube.search(music, {
+                type: "video",
+                limit: 10
+            })
+        } catch (err) {
+            if (!results || err.errorCode == 'NO_RESULT') {
+                const embed = new Discord.EmbedBuilder()
+                embed.setColor("#FF0000");
+                embed.setDescription(`:x: No result found for ${music}!`)
+                return message.channel.send({ embeds: [embed] })
+            }
         }
 
         let searchResult = "";
@@ -138,19 +144,19 @@ module.exports = {
         const buttonRow = new Discord.ActionRowBuilder().addComponents(one, two, three, four, five);
         const buttonRow1 = new Discord.ActionRowBuilder().addComponents(six, seven, eight, nine, ten);
         const buttonRow2 = new Discord.ActionRowBuilder().addComponents(cancel);
-        const m = await send(message, { embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: true });
+        const m = await send(message, { embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: false }, false, true);
         var f2 = 0;
-        const filter = i => i.user.id === author.id
+        const filter = i => i.user.id === i.user.id
         const collector = m.createMessageComponentCollector({
             componentType: Discord.ComponentType.Button,
             filter,
-            max: 1,
             time: 30_000,
         });
 
         var flag = 0;
 
         collector.on("collect", async (interaction) => {
+            if (interaction.user.id !== author.id) return interaction.reply({ content: "This is not your interaction", ephemeral: true })
             let userinput = interaction.customId;
             if (userinput == "cancel") {
                 const Cancelled = new Discord.ButtonBuilder();
@@ -160,12 +166,11 @@ module.exports = {
                 Cancelled.setDisabled(true);
                 const buttonRow3 = new Discord.ActionRowBuilder().addComponents(Cancelled);
                 flag = 1
-                return interaction.update({ embeds: [embed], components: [buttonRow3], ephemeral: true })
-                // flag = 1
-                // search.setDescription(":x: **Search Cancelled! **" + options[0])
-                // search.setColor("#FF0000");
-                // s.edit({ embeds: [search] })
-                // return interaction.message.delete();
+                interaction.update({ embeds: [embed], components: [buttonRow3], ephemeral: false })
+                search.setDescription(":x: **Search Cancelled! **" + options[0])
+                search.setColor("#FF0000");
+                s.edit({ embeds: [search] })
+                return interaction.message.delete();
             } else if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
                 interaction.reply({ content: "You answered an invalid number!", ephemeral: true });
                 flag = 1
@@ -176,23 +181,24 @@ module.exports = {
                 textChannel: interaction.channel,
             })
             flag = 1
-            one.setDisabled(true)
-            two.setDisabled(true)
-            three.setDisabled(true)
-            four.setDisabled(true)
-            five.setDisabled(true)
-            six.setDisabled(true)
-            seven.setDisabled(true)
-            eight.setDisabled(true)
-            nine.setDisabled(true)
-            ten.setDisabled(true)
-            cancel.setDisabled(true)
-            const buttonRow = new Discord.ActionRowBuilder().addComponents(one, two, three, four, five);
-            const buttonRow1 = new Discord.ActionRowBuilder().addComponents(six, seven, eight, nine, ten);
-            const buttonRow2 = new Discord.ActionRowBuilder().addComponents(cancel);
-            interaction.update({ embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: true })
+            //s.delete();
+            return interaction.message.delete();
+            // one.setDisabled(true)
+            // two.setDisabled(true)
+            // three.setDisabled(true)
+            // four.setDisabled(true)
+            // five.setDisabled(true)
+            // six.setDisabled(true)
+            // seven.setDisabled(true)
+            // eight.setDisabled(true)
+            // nine.setDisabled(true)
+            // ten.setDisabled(true)
+            // cancel.setDisabled(true)
+            // const buttonRow = new Discord.ActionRowBuilder().addComponents(one, two, three, four, five);
+            // const buttonRow1 = new Discord.ActionRowBuilder().addComponents(six, seven, eight, nine, ten);
+            // const buttonRow2 = new Discord.ActionRowBuilder().addComponents(cancel);
+            // interaction.update({ embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: false })
             // return interaction.reply({ embeds: [Playsong], ephemeral: false })
-            return
         })
 
         collector.on("end", async (interaction) => {
@@ -211,7 +217,7 @@ module.exports = {
                 const buttonRow = new Discord.ActionRowBuilder().addComponents(one, two, three, four, five);
                 const buttonRow1 = new Discord.ActionRowBuilder().addComponents(six, seven, eight, nine, ten);
                 const buttonRow2 = new Discord.ActionRowBuilder().addComponents(cancel);
-                await m.edit({ embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: true });
+                await m.edit({ embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: false });
             } else
                 return
 

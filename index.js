@@ -28,13 +28,15 @@ const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboP
 module.exports = { token: token };
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
+const { DeezerPlugin } = require("@distube/deezer");
+const { SoundCloudPlugin } = require("@distube/soundcloud");
 
 // Queue status template
 const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${queue.filter || "Off"}\` | **Loop:** \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | **Autoplay:** \`${queue.autoplay ? "On" : "Off"}\``;
 const { YtDlpPlugin } = require("@distube/yt-dlp")
 
 bot.distube = new DisTube(bot, {
-    plugins: [new YtDlpPlugin({ update: false }), new SpotifyPlugin()],
+    plugins: [new YtDlpPlugin({ update: false }), new SpotifyPlugin({ emitEventsAfterFetching: true }), new DeezerPlugin(), new SoundCloudPlugin()],
     directLink: true,
     searchSongs: 1,
     emitNewSongOnly: true,
@@ -62,7 +64,6 @@ bot.distube = new DisTube(bot, {
         "subboost": "asubboost,dynaudnorm=f=200",
         "8d": "haas,bass=g=6,dynaudnorm=f=200",
     },
-    plugins: [new SpotifyPlugin()],
 });
 
 bot.distube
@@ -77,13 +78,13 @@ bot.distube
     .on("playSong", (queue, song) => {
         const Playsong = new Discord.EmbedBuilder();
         Playsong.setDescription(`Now playing [${song.name}](${song.url})`)
-        Playsong.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
+        //Playsong.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
         return queue.textChannel.send({ embeds: [Playsong] })
     })
     .on("addSong", (queue, song) => {
         const embed = new Discord.EmbedBuilder()
         embed.setAuthor({ name: `Added To The Queue`, iconURL: bot.user.displayAvatarURL() })
-        embed.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
+        //embed.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
         embed.setDescription(`[${song.name}](${song.url})`)
         embed.setThumbnail(song.thumbnail)
         var position = queue.songs.length - 1
@@ -95,37 +96,8 @@ bot.distube
         return queue.textChannel.send({ embeds: [embed] })
 
     })
-    //     .on("playSong", (queue, song) => {
-    //         const Playsong = new Discord.EmbedBuilder();
-    //         Playsong.setDescription(`Now playing [${song.name}](${song.url})`)
-    //         // Playsong.setURL(song.url)
-    //         return queue.textChannel.send({ embeds: [Playsong] })
-    //         // const Playsong = new Discord.EmbedBuilder();
-    //         // Playsong.setTitle("Playing :notes: " + song.name)
-    //         // Playsong.setURL(song.url)
-    //         // Playsong.addField("Duration", `\`${song.formattedDuration}\``)
-    //         // Playsong.addField("QueueStatus", status(queue))
-    //         // Playsong.setColor("#00ff00");
-    //         // Playsong.setThumbnail(song.thumbnail)
-    //         // Playsong.setFooter(`Requested by: ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
-    //         // Playsong.setTimestamp();
-    //         // message.channel.send(Playsong)
-    //     })
-    //     .on("addSong", (queue, song) => {
-    //         const embed = new Discord.EmbedBuilder()
-    //         embed.setAuthor({ name: `Added To The Queue`, iconURL: bot.user.displayAvatarURL() })
-    //         embed.setDescription(`[${song.name}](${song.url})`)
-    //         embed.setThumbnail(song.thumbnail)
-    //         var position = queue.songs.length - 1
-    //         embed.addFields(
-    //             { name: "Channel", value: song.uploader.name, inline: true },
-    //             { name: "Duration", value: song.formattedDuration, inline: true },
-    //             { name: "Position In The Queue", value: position.toString(), inline: true },
-    //         )
-    //         queue.textChannel.send({ embeds: [embed] })
-
-    //     })
     .on("addList", (queue, playlist) => {
+        console.log(playlist)
         const AddList = new Discord.EmbedBuilder();
         // console.log(playlist.properties)
         // if (playlist.playlist) {
@@ -144,13 +116,13 @@ bot.distube
         queue.textChannel.send({ embeds: [AddList] })
     })
     .on("searchResult", (message, result) => {
-        let i = 0;
-        const SearchResult = new Discord.EmbedBuilder();
-        SearchResult.setDescription(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
-        SearchResult.setColor("#FFFF00");
-        SearchResult.setFooter(bot.user.username, bot.user.displayAvatarURL());
-        SearchResult.setTimestamp();
-        message.channel.send({ embeds: [SearchResult] })
+        // let i = 0;
+        // const SearchResult = new Discord.EmbedBuilder();
+        // SearchResult.setDescription(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+        // SearchResult.setColor("#FFFF00");
+        // SearchResult.setFooter(bot.user.username, bot.user.displayAvatarURL());
+        // SearchResult.setTimestamp();
+        // message.channel.send({ embeds: [SearchResult] })
     })
     // DisTubeOptions.searchSongs = true
     .on("searchCancel", (message) => {
