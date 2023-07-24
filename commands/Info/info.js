@@ -3,7 +3,7 @@ const send = require("../../utils/sendMessage.js")
 
 module.exports = {
   name: "info",
-  description: "Returns info about Aqua X Real bot",
+  description: "Displays general information or details about the bot.",
   usage: "<command>",
   example: "/info",
   accessableby: "None",

@@ -4,7 +4,7 @@ const send = require("../../utils/sendMessage.js")
 module.exports = {
     name: "help",
     category: "Info",
-    description: "Returns all commands, or one specific command info",
+    description: "Provides information and usage instructions for various commands.",
     usage: "<command>",
     example: "/help, /help volume, /help queue, /help play",
     accessableby: "Everyone",
@@ -72,7 +72,7 @@ function getCMD(bot, message, input) {
     if (cmd.name) info = `**Command name**: ${cmd.name}`;
     if (cmd.description) info += `\n**Description**: ${cmd.description}`;
     if (cmd.example) info += `\n**Example**: ${cmd.example}`;
-    if (cmd.accessableby) info += `\n**Accessableby**: ${cmd.accessableby}`;
+    //if (cmd.accessableby) info += `\n**Accessableby**: ${cmd.accessableby}`;
     if (cmd.usage) {
         info += `\n**Usage**: ${cmd.usage}`;
         embed.setFooter({ text: `Syntax: <> = required, [] = optional` });

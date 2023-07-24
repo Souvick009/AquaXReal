@@ -5,7 +5,7 @@ const { PermissionFlagsBits } = require("discord.js");
 module.exports = {
     name: "move",
     accessableby: "Everyone",
-    description: "Moves the song from one position to another",
+    description: "Moves a song from one position in the queue to another.",
     usage: "/remove",
     example: "/remove",
     cooldown: 5,
@@ -24,7 +24,8 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
+        var i = await message.deferReply()
+        if (!message.member.voice.channel) return i.edit({ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -32,7 +33,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
@@ -46,29 +47,29 @@ module.exports = {
                     const samevc = new Discord.EmbedBuilder()
                     samevc.setColor("#FF0000")
                     samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                    return send(message, { embeds: [samevc] })
+                    return i.edit({ embeds: [samevc] })
                 }
             } else {
                 moveSong();
             }
 
             async function moveSong() {
-                if (isNaN(parseInt(options[0])) || !options[0]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
+                if (isNaN(parseInt(options[0])) || !options[0]) return i.edit({ content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
                 let remove = options[0] //4
                 let arr = queue.songs;
-                if (remove > arr.length || remove < 0) { return send(message, { content: 'Thats Not A Valid Number.' }) } // If Number Is Not Their In Queue
+                if (remove > arr.length || remove < 0) { return i.edit({ content: 'Thats Not A Valid Number.' }) } // If Number Is Not Their In Queue
                 var add = options[1] //1
-                if (isNaN(parseInt(options[1])) || !options[1]) return send(message, { content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
+                if (isNaN(parseInt(options[1])) || !options[1]) return i.edit({ content: 'Enter A Valid Number.\nUse `>>queue` To See Number Of the Song.' }) // If Number Is Not A Number or Not A Valid Number.
                 var removed = arr[remove]
                 arr.splice(remove, 1)
                 arr.splice(add, 0, removed)
                 const embed = new Discord.EmbedBuilder()
                     .setDescription(`✅ Moved [${removed.name}](${removed.url}) from ${remove} to ${add}`)
                     .setColor(message.guild.members.me.displayHexColor)
-                send(message, { embeds: [embed] })
+                i.edit({ embeds: [embed] })
             }
         } else if (!queue) {
-            return send(message, { content: "Nothing is playing right now!" })
+            return i.edit({ content: "Nothing is playing right now!" })
         };
     }
 

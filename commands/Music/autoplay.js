@@ -5,13 +5,14 @@ const { PermissionFlagsBits } = require("discord.js");
 module.exports = {
     name: "autoplay",
     accessableby: "Everyone",
-    description: "For toggling the autoplay mode",
+    description: "Enables automatic playback of the related song in the queue.",
     usage: "/autoplay",
     example: "/autoplay",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        if (!message.member.voice.channel) return send(message, {
+        var i = await message.deferReply()
+        if (!message.member.voice.channel) return i.edit({
             content: 'You must be in a voice channel to use this command.'
         });
 
@@ -20,17 +21,17 @@ module.exports = {
             novc.setColor("#FF0000")
             novc.setTitle(`❌ ERROR | I am not connected with your voice channel`)
             novc.setDescription(`Channel Name: \`${message.member.voice.channel.name}\``)
-            return send(message, { embeds: [novc] })
+            return i.edit({ embeds: [novc] })
         }
 
         let channel = message.guild.members.cache.get(author.id).voice.channel.id
-         //author.voice.channel.id;
+        //author.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
         if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         let queue = bot.distube.getQueue(message);
@@ -39,7 +40,7 @@ module.exports = {
             notPaused.setColor("#FF0000");
             notPaused.setTitle(`❌ ERROR | Cannot turn on autoplay mode`);
             notPaused.setDescription(`Play something first!`);
-            return send(message, { embeds: [notPaused] })
+            return i.edit({ embeds: [notPaused] })
         };
 
         async function autoplay() {
@@ -47,7 +48,7 @@ module.exports = {
             const autoplay = new Discord.EmbedBuilder();
             autoplay.setDescription("Autoplay Mode Set To: `" + (mode ? "On" : "Off") + "`");
             autoplay.setColor(message.guild.members.me.displayHexColor);
-            send(message, { embeds: [autoplay] });
+            return i.edit({ embeds: [autoplay] });
         }
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -57,7 +58,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return send(message, { embeds: [samevc] })
+                return i.edit({ embeds: [samevc] })
             }
         } else {
             autoplay();

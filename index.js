@@ -97,7 +97,6 @@ bot.distube
 
     })
     .on("addList", (queue, playlist) => {
-        console.log(playlist)
         const AddList = new Discord.EmbedBuilder();
         // console.log(playlist.properties)
         // if (playlist.playlist) {

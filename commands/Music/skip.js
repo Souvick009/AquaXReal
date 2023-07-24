@@ -5,13 +5,14 @@ const { PermissionFlagsBits } = require('discord.js');
 module.exports = {
     name: "skip",
     accessableby: "Everyone",
-    description: "Skips the current song",
+    description: "Skips the current song and moves to the next one in the queue.",
     usage: "/skip",
     example: "/skip",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        if (!message.member.voice.channel) return send(message, { content: 'You must be in a voice channel to use this command.' });
+        var i = await message.deferReply()
+        if (!message.member.voice.channel) return i.edit({ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -20,13 +21,13 @@ module.exports = {
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embdes: [samevc] })
+            return i.edit({ embdes: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
 
         if (!queue) {
-            send(message, { content: "The Queue is Empty" })
+            i.edit({ content: "The Queue is Empty" })
         }
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -49,7 +50,7 @@ module.exports = {
                 const embed = new Discord.EmbedBuilder();
                 embed.setColor(message.guild.members.me.displayHexColor);
                 embed.setDescription(`⏭ VoteSkip : ${vote}/${message.guild.members.me.voice.channel.members.size - 1}`)
-                const m = await send(message, { embeds: [embed], components: [buttonRow] });
+                const m = await i.edit({ embeds: [embed], components: [buttonRow] });
 
                 const filter = (i) => i.user.id === message.guild.members.me.voice.channel.members.get(i.user.id).user.id;
                 const collector = m.createMessageComponentCollector({
@@ -72,7 +73,7 @@ module.exports = {
                             const embed = new Discord.EmbedBuilder();
                             embed.setColor(message.guild.members.me.displayHexColor);
                             embed.setDescription(`⏭ Skipped the song!`)
-                            send(message, { embeds: [embed], components: [] })
+                            return await interaction.update({ embeds: [embed], components: [] })
                         }
                         if (i == 0) {
                             arr[i] = interaction.user.id
@@ -97,12 +98,15 @@ module.exports = {
                         const size = message.guild.members.me.voice.channel.members.size - 1;
                         vote++;
                         if (vote >= Math.round((size / 2))) {
-                            bot.distube.skip(message)
+                            try {
+                                bot.distube.skip(message)
+                            } catch (err) {
+
+                            }
                             const embed = new Discord.EmbedBuilder();
                             embed.setColor(message.guild.members.me.displayHexColor);
                             embed.setDescription(`⏭ Skipped the song!`)
-                            await interaction.update({ embeds: [embed], components: [] })
-                            flag = true
+                            return await interaction.update({ embeds: [embed], components: [] })
                         } else {
                             embed.setColor(message.guild.members.me.displayHexColor);
                             embed.setDescription(`⏭ VoteSkip : ${vote}/${message.guild.members.me.voice.channel.members.size - 1}`)
@@ -168,7 +172,7 @@ module.exports = {
             const embed = new Discord.EmbedBuilder();
             embed.setColor(message.guild.members.me.displayHexColor);
             embed.setDescription(`⏭ Skipped the song!`)
-            send(message, { embeds: [embed] })
+            i.edit({ embeds: [embed] })
         }
 
 

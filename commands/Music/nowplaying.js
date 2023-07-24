@@ -6,18 +6,19 @@ const send = require("../../utils/sendMessage.js")
 module.exports = {
     name: "nowplaying",
     accessableby: "Everyone",
-    description: "Shows the details about the current song",
+    description: "Displays information about the currently playing song.",
     usage: "/nowplaying",
     example: "/nowplaying",
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
+        var i = await message.deferReply()
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return send(message, { embeds: [vc] })
+            return i.edit({ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -26,7 +27,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return message.channel.send({ embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         //function for creating a bar
@@ -72,7 +73,7 @@ module.exports = {
                 var split = bar[0].split("🔘");
                 // console.log(split[0] + '\n' + split[1])
                 var bar1;
-                if (split[1] == undefined) {
+                if (split[1] == undefined || split[1] == '') {
                     bar1 = `🔘${bar[0]}`
                 } else {
                     bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
@@ -101,9 +102,9 @@ module.exports = {
                 { name: "Duration: ", value: duration, inline: false },
                 { name: "QueueStatus", value: status(queue), inline: false }
             ])
-            return send(message, { embeds: [nowplaying] })
+            return i.edit({ embeds: [nowplaying] })
         } else if (!queue) {
-            return send(message, { content: "Nothing is playing right now!" })
+            return i.edit({ content: "Nothing is playing right now!" })
         };
     }
 }

@@ -5,7 +5,7 @@ const { PermissionFlagsBits } = require("discord.js");
 module.exports = {
     name: "playskip",
     accessableby: "Everyone",
-    description: "Skips the current song and plays the new song",
+    description: "Skips the current song and immediately plays the song requested by the user.",
     usage: "/play",
     example: "/play ",
     cooldown: 5,
@@ -18,13 +18,14 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
+        var i = await message.deferReply()
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return send(message, { embeds: [vc] })
+            return i.edit({ embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
@@ -37,7 +38,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -47,25 +48,25 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return send(message, { embeds: [samevc] })
+                return i.edit({ embeds: [samevc] })
             }
         } else {
             playskip();
         }
-        
+
         async function playskip() {
             const Searchterm = new Discord.EmbedBuilder()
             if (!options[0]) {
                 Searchterm.setColor("#FF0000")
                 Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
                 Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
-                return send(message, { embeds: [Searchterm] })
+                return i.edit({ embeds: [Searchterm] })
             };
 
             const search = new Discord.EmbedBuilder()
             search.setDescription(":mag: **Searching! **" + options[0])
             search.setColor("#FFFF00");
-            send(message, { embeds: [search] })
+            i.edit({ embeds: [search] })
 
             const music = options[0]
             bot.distube.play(message.member.voice.channel, music, {

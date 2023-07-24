@@ -5,7 +5,7 @@ const { PermissionFlagsBits } = require("discord.js");
 module.exports = {
     name: "loop",
     accessableby: "Everyone",
-    description: "For Switching the loop mode",
+    description: "Enables or disables looping of the current song.",
     usage: "/loop",
     example: "/loop",
     cooldown: 5,
@@ -32,9 +32,10 @@ module.exports = {
         ]
     }],
     run: async (bot, message, args, options, author) => {
+        var i = await message.deferReply()
         const voiceChannel = message.member.voice.channel;
 
-        if (!voiceChannel) return send(message, { content: 'You need to be in a channel to execute this command!' });
+        if (!voiceChannel) return i.edit({ content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -42,7 +43,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
@@ -56,7 +57,7 @@ module.exports = {
                     const samevc = new Discord.EmbedBuilder()
                     samevc.setColor("#FF0000")
                     samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                    return send(message, { embeds: [samevc] })
+                    return i.edit({ embeds: [samevc] })
                 }
             } else {
                 loop();
@@ -69,19 +70,19 @@ module.exports = {
                         const Loop = new Discord.EmbedBuilder();
                         Loop.setDescription("**Loop mode set to:** OFF");
                         Loop.setColor(message.guild.members.me.displayHexColor);
-                        send(message, { embeds: [Loop] })
+                        i.edit({ embeds: [Loop] })
                     } else if (options[0] == `This Song`) {
                         bot.distube.setRepeatMode(message, 1)
                         const Loop = new Discord.EmbedBuilder();
                         Loop.setDescription("**Loop mode set to:** This song");
                         Loop.setColor(message.guild.members.me.displayHexColor);
-                        send(message, { embeds: [Loop] })
+                        i.edit({ embeds: [Loop] })
                     } else if (options[0] == `Queue`) {
                         bot.distube.setRepeatMode(message, 2)
                         const Loop = new Discord.EmbedBuilder();
                         Loop.setDescription("**Loop mode set to:** Queue");
                         Loop.setColor(message.guild.members.me.displayHexColor);
-                        send(message, { embeds: [Loop] })
+                        i.edit({ embeds: [Loop] })
                     }
                 } else {
                     queue.setRepeatMode()
@@ -96,11 +97,11 @@ module.exports = {
                     }
                     Loop.setDescription(`**Loop mode set to:** ${mode}`);
                     Loop.setColor(message.guild.members.me.displayHexColor);
-                    send(message, { embeds: [Loop] })
+                    i.edit({ embeds: [Loop] })
                 }
             }
         } else if (!queue) {
-            return send(message, { content: "Nothing is playing right now!" })
+            return i.edit({ content: "Nothing is playing right now!" })
         };
     }
 }

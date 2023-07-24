@@ -4,7 +4,7 @@ const { ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBit
 module.exports = {
     name: "play",
     accessableby: "Everyone",
-    description: "Plays the song",
+    description: "Starts playing a song or adds it to the queue if a song is already playing.",
     usage: "/play",
     example: "/play ",
     cooldown: 5,
@@ -17,18 +17,23 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
+        try {
+            var i = await message.deferReply()
+        } catch (err) {
+            console.log(message)
+        }
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return send(message, { embeds: [vc] })
+            return i.edit({ embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) return send('Missing connect premission');
-        if (!permissions.has(PermissionFlagsBits.Connect)) return send(message, { content: 'Missing speak permission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing connect premission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing speak permission' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -36,7 +41,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${author.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
         // message.guild.members.me.voice.channel.setRTCRegion("singapore")
         // const region = message.guild.members.me.voice.channel.rtcRegion
@@ -57,13 +62,11 @@ module.exports = {
         const search = new Discord.EmbedBuilder()
         search.setDescription(":mag: **Searching! **" + options[0])
         search.setColor("#FFFF00");
-        send(message, { embeds: [search] })
+        i.edit({ embeds: [search] })
         // console.log(message);
         const music = options[0];
         if (!queue) {
-            console.log(bot.distube.customPlugins[0].emitEventsAfterFetching)
             bot.distube.customPlugins[0].emitEventsAfterFetching = false
-            console.log(bot.distube.customPlugins[0].emitEventsAfterFetching)
         } else {
             bot.distube.customPlugins[0].emitEventsAfterFetching = true
         }

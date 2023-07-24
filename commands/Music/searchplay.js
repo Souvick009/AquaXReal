@@ -12,25 +12,26 @@ module.exports = {
     category: "Music",
     options: [{
         name: "song",
-        description: "The song which you want to play",
+        description: "Searches for a song and starts playing it.",
         required: true,
         type: 3, //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
+        var i = await message.deferReply()
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setFooter({ text: "Requested by " + author.tag, iconURL: author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return send(message, { embeds: [vc] })
+            return i.edit({ embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) return send(message, { content: 'Missing connect premission' });
-        if (!permissions.has(PermissionFlagsBits.Speak)) return send(message, { content: 'Missing speak permission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing connect premission' });
+        if (!permissions.has(PermissionFlagsBits.Speak)) return i.edit({ content: 'Missing speak permission' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -38,7 +39,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return send(message, { embeds: [samevc] })
+            return i.edit({ embeds: [samevc] })
         };
 
         const Searchterm = new Discord.EmbedBuilder()
@@ -46,12 +47,19 @@ module.exports = {
             Searchterm.setColor("#FF0000")
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
-            return send(message, { embeds: [Searchterm] })
+            return i.edit({ embeds: [Searchterm] })
         };
         const search = new Discord.EmbedBuilder()
         search.setDescription(":mag: **Searching! **" + options[0])
         search.setColor("#FFFF00");
-        const s = await send(message, { embeds: [search] })
+
+        var s
+        try {
+            s = await i.edit({ embeds: [search] })
+        } catch (err) {
+            console.log(message)
+            console.log(err)
+        }
 
         const music = options[0];
         let results;
@@ -144,7 +152,7 @@ module.exports = {
         const buttonRow = new Discord.ActionRowBuilder().addComponents(one, two, three, four, five);
         const buttonRow1 = new Discord.ActionRowBuilder().addComponents(six, seven, eight, nine, ten);
         const buttonRow2 = new Discord.ActionRowBuilder().addComponents(cancel);
-        const m = await send(message, { embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: false }, false, true);
+        const m = await message.channel.send({ embeds: [embed], components: [buttonRow, buttonRow1, buttonRow2], ephemeral: false });
         var f2 = 0;
         const filter = i => i.user.id === i.user.id
         const collector = m.createMessageComponentCollector({
