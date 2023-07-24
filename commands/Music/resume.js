@@ -10,12 +10,20 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
+
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -24,7 +32,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
         let queue = bot.distube.getQueue(message);
@@ -36,7 +44,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message, { embeds: [samevc] })
             }
         } else {
             resume();
@@ -48,7 +56,7 @@ module.exports = {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot resume the Song`);
                 notPaused.setDescription(`It's not paused!`);
-                return i.edit({ embeds: [notPaused] })
+                return sendM(message, { embeds: [notPaused] })
             };
             //Function to wait some time
             const delay = function (delayInms) {
@@ -70,7 +78,7 @@ module.exports = {
             const resumed = new Discord.EmbedBuilder()
             resumed.setColor(message.guild.members.me.displayHexColor);
             resumed.setDescription(`▶ Resumed the Song: [${track.name}](${track.url})`)
-            return i.edit({ embeds: [resumed] })
+            return sendM(message, { embeds: [resumed] })
         }
     }
 }

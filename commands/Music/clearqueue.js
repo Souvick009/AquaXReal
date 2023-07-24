@@ -15,8 +15,25 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
-        if (!message.member.voice.channel) return i.edit({ content: 'You must be in a voice channel to use this command.' });
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
+        if (!message.member.voice.channel) return sendM(message,{ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -25,7 +42,7 @@ module.exports = {
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             // samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`❌ ERROR | Please join my voice channel first\nChannel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message,{ embeds: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
@@ -39,7 +56,7 @@ module.exports = {
                     const samevc = new Discord.EmbedBuilder()
                     samevc.setColor("#FF0000")
                     samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                    return i.edit({ embeds: [samevc] })
+                    return sendM(message,{ embeds: [samevc] })
                 }
             } else {
                 removeSong();
@@ -56,11 +73,11 @@ module.exports = {
                 const embed = new Discord.EmbedBuilder()
                     .setDescription(`Cleared the queue`)
                     .setColor(message.guild.members.me.displayHexColor)
-                return i.edit({ embeds: [embed] })
+                return sendM(message,{ embeds: [embed] })
 
             }
         } else if (!queue) {
-            return i.edit({ content: "Nothing is playing right now!" })
+            return sendM(message,{ content: "Nothing is playing right now!" })
         };
     }
 

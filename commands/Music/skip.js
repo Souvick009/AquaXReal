@@ -4,6 +4,7 @@ const { PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     name: "skip",
+    aliases: ['s'],
     accessableby: "Everyone",
     description: "Skips the current song and moves to the next one in the queue.",
     usage: "/skip",
@@ -11,8 +12,25 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
-        if (!message.member.voice.channel) return i.edit({ content: 'You must be in a voice channel to use this command.' });
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
+        if (!message.member.voice.channel) return sendM(message,{ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -21,13 +39,13 @@ module.exports = {
             samevc.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embdes: [samevc] })
+            return sendM(message,{ embdes: [samevc] })
         };
 
         let queue = await bot.distube.getQueue(message);
 
         if (!queue) {
-            i.edit({ content: "The Queue is Empty" })
+            sendM(message,{ content: "The Queue is Empty" })
         }
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -50,7 +68,7 @@ module.exports = {
                 const embed = new Discord.EmbedBuilder();
                 embed.setColor(message.guild.members.me.displayHexColor);
                 embed.setDescription(`⏭ VoteSkip : ${vote}/${message.guild.members.me.voice.channel.members.size - 1}`)
-                const m = await i.edit({ embeds: [embed], components: [buttonRow] });
+                const m = await sendM(message,{ embeds: [embed], components: [buttonRow] });
 
                 const filter = (i) => i.user.id === message.guild.members.me.voice.channel.members.get(i.user.id).user.id;
                 const collector = m.createMessageComponentCollector({
@@ -172,7 +190,7 @@ module.exports = {
             const embed = new Discord.EmbedBuilder();
             embed.setColor(message.guild.members.me.displayHexColor);
             embed.setDescription(`⏭ Skipped the song!`)
-            i.edit({ embeds: [embed] })
+            sendM(message,{ embeds: [embed] })
         }
 
 

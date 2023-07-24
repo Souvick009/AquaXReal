@@ -4,6 +4,7 @@ const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "queue",
+    aliases: ['q'],
     accessableby: "Everyone",
     description: "Displays the list of upcoming songs in the queue.",
     usage: "/queue",
@@ -11,7 +12,21 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         let queue = await bot.distube.getQueue(message);
 
 
@@ -38,7 +53,7 @@ module.exports = {
 
             Utils.createEmbedPages(bot, message, toSend, options)
         } else if (!queue) {
-            return i.edit({ content: "Nothing is playing right now!" })
+            return sendM(message,{ content: "Nothing is playing right now!" })
         };
 
     }

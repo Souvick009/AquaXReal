@@ -3,6 +3,7 @@ const send = require("../../utils/sendMessage.js")
 const { ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBits } = require('discord.js');
 module.exports = {
     name: "play",
+    aliases: ['p'],
     accessableby: "Everyone",
     description: "Starts playing a song or adds it to the queue if a song is already playing.",
     usage: "/play",
@@ -17,23 +18,35 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        try {
-            var i = await message.deferReply()
-        } catch (err) {
-            console.log(message)
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
         }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
+
+
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing connect premission' });
-        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing speak permission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return sendM(message, { content: 'Missing connect premission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return sendM(message, { content: 'Missing speak permission' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -41,7 +54,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${author.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
         // message.guild.members.me.voice.channel.setRTCRegion("singapore")
         // const region = message.guild.members.me.voice.channel.rtcRegion
@@ -58,13 +71,18 @@ module.exports = {
         // }, 1000);
 
         let queue = await bot.distube.getQueue(message);
-
+        var req;
+        if (message.type == 2) {
+            req = options[0];
+        } else {
+            req = args.join(" ")
+        }
         const search = new Discord.EmbedBuilder()
-        search.setDescription(":mag: **Searching! **" + options[0])
+        search.setDescription(":mag: **Searching! **" + req)
         search.setColor("#FFFF00");
-        i.edit({ embeds: [search] })
+        sendM(message, { embeds: [search] })
         // console.log(message);
-        const music = options[0];
+        const music = req;
         if (!queue) {
             bot.distube.customPlugins[0].emitEventsAfterFetching = false
         } else {

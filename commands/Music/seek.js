@@ -20,10 +20,27 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
-        if (!voice_channel) return i.edit({ content: 'You need to be in a channel to execute this command!' });
+        if (!voice_channel) return sendM(message, { content: 'You need to be in a channel to execute this command!' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -31,7 +48,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
         // Calling the seek function after checking the requirements of DJ role
@@ -42,7 +59,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message, { embeds: [samevc] })
             }
         } else {
             seekk();
@@ -56,8 +73,18 @@ module.exports = {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
                 notPaused.setDescription(`Play something first!`);
-                return i.edit({ embeds: [notPaused] })
+                return sendM(message, { embeds: [notPaused] })
             };
+            var req;
+            if (message.type != 2) {
+                if (!args[0]) {
+                    notPaused.setColor("#FF0000");
+                    notPaused.setDescription(`❌ ERROR | Didn't specified the time to seek`);
+                    return sendM(message, { embeds: [notPaused] })
+                }
+                req = args.join(" ")
+            } else
+                req = options[0]
 
             let track = queue.songs[0];
 
@@ -80,7 +107,7 @@ module.exports = {
             }
             // console.log(`total ` + total)
             let time;
-            let input2 = options[0]
+            let input2 = req
             if (input2.includes(`:`)) {
                 let input = input2.split(`:`)
                 if (input.length >= 2) { // 1:30  // Minutes to Secs
@@ -112,7 +139,7 @@ module.exports = {
             if (time < 0 || time > total) {
                 embed1.setColor("#FF0000")
                 embed1.setDescription(`❌ ERROR | Seeking out of Range`)
-                return i.edit({ embeds: [embed1] })
+                return sendM(message, { embeds: [embed1] })
             }
 
             const alreadyPaused = new Discord.EmbedBuilder()
@@ -120,7 +147,7 @@ module.exports = {
                 alreadyPaused.setColor("#FF0000");
                 alreadyPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
                 alreadyPaused.setDescription(`First resume the song then try to seek!`);
-                return i.edit({ embeds: [alreadyPaused] })
+                return sendM(message, { embeds: [alreadyPaused] })
             };
 
             bot.distube.seek(message, Number(time));
@@ -128,7 +155,7 @@ module.exports = {
             seek.setTitle(":fast_forward: Seeked!");
             seek.setDescription(`Seeked the song for \`${ms((time * 1000), { long: true })}\``)
             seek.setColor(message.guild.members.me.displayHexColor);
-            return i.edit({ embeds: [seek] })
+            return sendM(message, { embeds: [seek] })
         }
     }
 

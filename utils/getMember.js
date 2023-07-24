@@ -52,12 +52,12 @@ module.exports = async (bot, args, options, message, author, self, botUsersFetch
     } else {
         //pls fix the reply gltich from this line, also pls dont edit code of any other file, and if there is a need to then ask me first
         // console.log(options)
-        if (options[0]) {
+        if (args[0]) {
             var user;
             try {
                 if (message.mentions.repliedUser) {
-                    if (options[0].startsWith('<@') && options[0].endsWith('>')) {
-                        user = options[0].slice(2, -1);
+                    if (args[0].startsWith('<@') && args[0].endsWith('>')) {
+                        user = args[0].slice(2, -1);
 
                         if (user.startsWith('!')) {
                             user = user.slice(1);
@@ -65,11 +65,11 @@ module.exports = async (bot, args, options, message, author, self, botUsersFetch
                         member = await message.guild.members.fetch(user)
                     } else {
                         // console.log(`arg ` + options[0] + `\n`)
-                        member = message.mentions.members.get(Array.from(message.mentions.members.keys())[1]) || await message.guild.members.fetch(options[0]).catch(error => console.log())
+                        member = message.mentions.members.get(Array.from(message.mentions.members.keys())[1]) || await message.guild.members.fetch(args[0]).catch(error => console.log())
                     }
                 } else {
                     // console.log(`args ` + options[0])
-                    member = message.mentions.members.first() || await message.guild.members.fetch(options[0]).catch(error => console.log())
+                    member = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(error => console.log())
                 }
 
                 if (dont_return == false) {

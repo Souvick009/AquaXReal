@@ -19,19 +19,36 @@ module.exports = {
     }],
     run: async (bot, message, args, options, author) => {
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        async function sendM(message, toSend) {
+            if (message.type == 2) {
+                return await i.edit(toSend)
+            } else {
+                return message.reply(toSend)
+            }
+        }
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setFooter({ text: "Requested by " + author.tag, iconURL: author.displayAvatarURL() });
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'Missing connect premission' });
-        if (!permissions.has(PermissionFlagsBits.Speak)) return i.edit({ content: 'Missing speak permission' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return sendM(message, { content: 'Missing connect premission' });
+        if (!permissions.has(PermissionFlagsBits.Speak)) return sendM(message, { content: 'Missing speak permission' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -39,7 +56,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
         const Searchterm = new Discord.EmbedBuilder()
@@ -47,21 +64,29 @@ module.exports = {
             Searchterm.setColor("#FF0000")
             Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
-            return i.edit({ embeds: [Searchterm] })
+            return sendM(message, { embeds: [Searchterm] })
         };
+        
+        var req;
+        if (message.type == 2) {
+            req = options[0];
+        } else {
+            req = args.join(" ")
+        }
+
         const search = new Discord.EmbedBuilder()
-        search.setDescription(":mag: **Searching! **" + options[0])
+        search.setDescription(":mag: **Searching! **" + req)
         search.setColor("#FFFF00");
 
         var s
         try {
-            s = await i.edit({ embeds: [search] })
+            s = await sendM(message, { embeds: [search] })
         } catch (err) {
             console.log(message)
             console.log(err)
         }
 
-        const music = options[0];
+        const music = req
         let results;
         try {
             results = await bot.distube.search(music, {
@@ -179,6 +204,7 @@ module.exports = {
                 search.setColor("#FF0000");
                 s.edit({ embeds: [search] })
                 return interaction.message.delete();
+                
             } else if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
                 interaction.reply({ content: "You answered an invalid number!", ephemeral: true });
                 flag = 1

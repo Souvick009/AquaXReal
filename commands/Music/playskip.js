@@ -18,19 +18,36 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message,{ embeds: [vc] })
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) return message.channel.send('Missing connect premission');
-        if (!permissions.has('SPEAK')) return message.channel.send('Missing speak permission');
+        if (!permissions.has(PermissionFlagsBits.Connect)) return message.channel.send('Missing connect premission');
+        if (!permissions.has(PermissionFlagsBits.Speak)) return message.channel.send('Missing speak permission');
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
@@ -38,7 +55,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message,{ embeds: [samevc] })
         };
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -48,7 +65,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message,{ embeds: [samevc] })
             }
         } else {
             playskip();
@@ -60,15 +77,22 @@ module.exports = {
                 Searchterm.setColor("#FF0000")
                 Searchterm.setTitle(`❌ ERROR | You didn't provided a Searchterm`)
                 Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
-                return i.edit({ embeds: [Searchterm] })
+                return sendM(message,{ embeds: [Searchterm] })
             };
 
-            const search = new Discord.EmbedBuilder()
-            search.setDescription(":mag: **Searching! **" + options[0])
-            search.setColor("#FFFF00");
-            i.edit({ embeds: [search] })
+            var req;
+        if (message.type == 2) {
+            req = options[0];
+        } else {
+            req = args.join(" ")
+        }
 
-            const music = options[0]
+            const search = new Discord.EmbedBuilder()
+            search.setDescription(":mag: **Searching! **" + req)
+            search.setColor("#FFFF00");
+            sendM(message,{ embeds: [search] })
+
+            const music = req
             bot.distube.play(message.member.voice.channel, music, {
                 member: message.member,
                 textChannel: message.channel,

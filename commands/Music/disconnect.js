@@ -4,6 +4,7 @@ const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "disconnect",
+    aliases: ['dc'],
     accessableby: "Everyone",
     description: "Disconnects the bot from the voice channel",
     usage: "/disconnect",
@@ -11,14 +12,31 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message,{ embeds: [vc] })
         };
 
         const novc = new Discord.EmbedBuilder()
@@ -26,7 +44,7 @@ module.exports = {
             novc.setColor("#FF0000")
             novc.setTitle(`❌ ERROR | I am not connected with your voice channel`)
             novc.setDescription(`Channel Name: \`${message.member.voice.channel.name}\``)
-            return i.edit({ embeds: [novc] })
+            return sendM(message,{ embeds: [novc] })
         }
 
         let channel = message.member.voice.channel.id;
@@ -35,7 +53,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join my voice channel first`)
             samevc.setDescription(`Channel Name: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message,{ embeds: [samevc] })
         };
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -45,7 +63,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message,{ embeds: [samevc] })
             }
         } else {
             dc();
@@ -56,7 +74,7 @@ module.exports = {
             const embed1 = new Discord.EmbedBuilder();
             embed1.setColor(message.guild.members.me.displayHexColor);
             embed1.setDescription('Successfully Disconnected!');
-            return i.edit({ embeds: [embed1] })
+            return sendM(message,{ embeds: [embed1] })
         }
     }
 }

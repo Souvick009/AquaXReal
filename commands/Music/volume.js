@@ -4,6 +4,7 @@ const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     name: "volume",
+    aliases: ['vol'],
     accessableby: "Everyone",
     description: "Adjusts the volume level of the bot.",
     usage: "/volume",
@@ -18,13 +19,30 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message,{ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -33,7 +51,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message,{ embeds: [samevc] })
         };
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
@@ -43,7 +61,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message,{ embeds: [samevc] })
             }
         } else {
             setVolume();
@@ -56,7 +74,7 @@ module.exports = {
                 embed.setColor("#FF0000")
                 embed.setTitle(`❌ ERROR | You didn't provided a vaild volume number`)
                 embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`/volume <0-200>\``)
-                return i.edit({ embeds: [embed] })
+                return sendM(message,{ embeds: [embed] })
             };
 
             const embed1 = new Discord.EmbedBuilder()
@@ -64,7 +82,7 @@ module.exports = {
                 embed1.setColor("#FF0000")
                 embed1.setTitle(`❌ ERROR | Volume out of Range`)
                 embed1.setDescription(`Usage: \`/volume <0-200>\``)
-                return i.edit({ embeds: [embed1] })
+                return sendM(message,{ embeds: [embed1] })
             };
 
             var queue = bot.distube.getQueue(message)
@@ -73,14 +91,14 @@ module.exports = {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot change my volume`);
                 notPaused.setDescription(`Play something first!`);
-                return i.edit({ embeds: [notPaused] })
+                return sendM(message,{ embeds: [notPaused] })
             };
             bot.distube.setVolume(message, Number(options[0]));
 
             const embed3 = new Discord.EmbedBuilder()
             embed3.setColor(message.guild.members.me.displayHexColor)
             embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
-            return i.edit({ embeds: [embed3] })
+            return sendM(message,{ embeds: [embed3] })
         }
 
     }

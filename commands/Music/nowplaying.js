@@ -5,6 +5,7 @@ const send = require("../../utils/sendMessage.js")
 
 module.exports = {
     name: "nowplaying",
+    aliases: ['np'],
     accessableby: "Everyone",
     description: "Displays information about the currently playing song.",
     usage: "/nowplaying",
@@ -12,13 +13,27 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message,{ embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -27,7 +42,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message,{ embeds: [samevc] })
         };
 
         //function for creating a bar
@@ -102,9 +117,9 @@ module.exports = {
                 { name: "Duration: ", value: duration, inline: false },
                 { name: "QueueStatus", value: status(queue), inline: false }
             ])
-            return i.edit({ embeds: [nowplaying] })
+            return sendM(message,{ embeds: [nowplaying] })
         } else if (!queue) {
-            return i.edit({ content: "Nothing is playing right now!" })
+            return sendM(message,{ content: "Nothing is playing right now!" })
         };
     }
 }

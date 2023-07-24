@@ -24,13 +24,30 @@ module.exports = {
         req: "user"
     }],
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -39,13 +56,21 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
 
         let queue = bot.distube.getQueue(message);
         if (queue) {
             // var mentionedUser = options[0]
+            const samevc = new Discord.EmbedBuilder()
+            if (message.type != 2) {
+                if (!args[0]) {
+                    samevc.setColor("#FF0000")
+                    samevc.setDescription(`❌ ERROR | Didn't mentioned anyone to suggest the song`)
+                    return sendM(message, { embeds: [samevc] })
+                }
+            }
             var mentionedUser = await getMember(bot, args, options, message, false, false, true, 0, false)
             if (!options[1])
                 var msg = "Not Provided"
@@ -55,7 +80,7 @@ module.exports = {
             const dmEmbed = new Discord.EmbedBuilder()
                 .setColor(0x00FFFF)
                 .setThumbnail(queue.songs[0].thumbnail)
-                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by <@${author.id}> (${author.tag}) \n\n Message - ${msg} `)
+                .setDescription(`[${queue.songs[0].name}](${queue.songs[0].url}) -  Suggested by <@${author.id}> (${author.username}) \n\n Message - ${msg} `)
                 .setTimestamp()
             var blocked = false;
             await mentionedUser.send({
@@ -71,18 +96,18 @@ module.exports = {
                     const errEmbed = new Discord.EmbedBuilder();
                     errEmbed.setColor(0xFF0000)
                     errEmbed.setDescription(`❌ The user's dm is closed! `);
-                    return i.edit({
+                    return sendM(message, {
                         embeds: [errEmbed]
                     }, false);
                 } else {
                     const save = new Discord.EmbedBuilder()
                     save.setColor(message.guild.members.me.displayHexColor);
                     save.setDescription(`✅ Suggested the current track to the mentioned user`)
-                    return i.edit({ embeds: [save] })
+                    return sendM(message, { embeds: [save] })
                 }
             })
         } else if (!queue) {
-            return i.edit({ content: "Nothing is playing right now!" })
+            return sendM(message, { content: "Nothing is playing right now!" })
         };
     }
 }

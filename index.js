@@ -4,7 +4,7 @@ const GatewayIntentBits = Discord.GatewayIntentBits
 // - const { Client, Intents } = require('discord.js');
 // + const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
-const bot = new Discord.Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildVoiceStates] })
+const bot = new Discord.Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] })
 // - const client = new Client({ intents: [Intents.FLAGS.GUILDS], partials: ['CHANNEL'] });
 // + const client = new Client({ intents: [GatewayIntentBits.Guilds], partials: [Partials.Channel] });
 const { readdirSync } = require("fs");

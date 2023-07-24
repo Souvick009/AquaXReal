@@ -62,26 +62,44 @@ module.exports = {
         ]
     }],
     run: async (bot, message, args, options, author) => {
-        var i = await message.deferReply()
+        if (message.type == 2) {
+            try {
+                var i = await message.deferReply()
+            } catch (err) {
+                console.log(message)
+            }
+            options = options
+        } else {
+            options = args
+        }
+
+        function sendM(message, toSend) {
+            if (message.type == 2) {
+                i.edit(toSend)
+            } else {
+                message.reply(toSend)
+            }
+        }
+
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return i.edit({ embeds: [vc] });
+            return sendM(message, { embeds: [vc] });
         };
 
         const permissions = voice_channel.permissionsFor(message.client.user);
-        if (!permissions.has(PermissionFlagsBits.Connect)) return i.edit({ content: 'I don\'t have CONNECT permission in that voice channel' });
-        if (!permissions.has(PermissionFlagsBits.Speak)) return i.edit({ content: 'I don\'t have SPEAK permission in that voice channel' });
+        if (!permissions.has(PermissionFlagsBits.Connect)) return sendM(message, { content: 'I don\'t have CONNECT permission in that voice channel' });
+        if (!permissions.has(PermissionFlagsBits.Speak)) return sendM(message, { content: 'I don\'t have SPEAK permission in that voice channel' });
 
         let channel = message.member.voice.channel.id;
         const samevc = new Discord.EmbedBuilder()
         if (bot.distube.getQueue(message) && channel !== message.guild.members.me.voice.channel.id) {
             samevc.setColor("#FF0000")
             samevc.setDescription(`❌ ERROR | Please join **my** voice channel first\nChannelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return i.edit({ embeds: [samevc] });
+            return sendM(message, { embeds: [samevc] });
         };
 
         let queue = await bot.distube.getQueue(message);
@@ -92,7 +110,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return i.edit({ embeds: [samevc] })
+                return sendM(message, { embeds: [samevc] })
             }
         } else {
             filter();
@@ -103,7 +121,7 @@ module.exports = {
             if (!queue.playing) {
                 notPlaying.setColor("#FF0000");
                 notPlaying.setDescription(`❌ ERROR | Can't Filter the song\nI'm not playing anything!`);
-                return i.edit({ embeds: [notPlaying] });
+                return sendM(message, { embeds: [notPlaying] });
             };
 
             const Filtertype = new Discord.EmbedBuilder()
@@ -111,7 +129,7 @@ module.exports = {
                 Filtertype.setColor("#FF0000");
                 Filtertype.setTitle(`❌ ERROR | Please add a Filtertype`);
                 Filtertype.setDescription(`Usage: \`/filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048));
-                return i.edit({ embeds: [Filtertype] });
+                return sendM(message, { embeds: [Filtertype] });
             };
             let input;
             const validFiltertype = new Discord.EmbedBuilder()
@@ -119,7 +137,7 @@ module.exports = {
                 validFiltertype.setColor("#FF0000")
                 validFiltertype.setTitle(`❌ ERROR | Not a valid Filtertype`)
                 validFiltertype.setDescription(`Usage: \`/filter <Filtertype>\`\nFilter types:\n> \`${filters.join("`, `")}\``.substr(0, 2048))
-                return i.edit({ embeds: [validFiltertype] });
+                return sendM(message, { embeds: [validFiltertype] });
             }
 
             input = options[0].toLowerCase();
@@ -128,20 +146,20 @@ module.exports = {
                 const Filterdone = new Discord.EmbedBuilder()
                 Filterdone.setColor(message.guild.members.me.displayHexColor);
                 Filterdone.setTitle(`✅ Successfully cleared the filters`);
-                return i.edit({ embeds: [Filterdone] });
+                return sendM(message, { embeds: [Filterdone] });
             } else {
                 if (queue.filters.names.includes(input)) {
                     queue.filters.remove(input);
                     const Filterdone = new Discord.EmbedBuilder()
                     Filterdone.setColor(message.guild.members.me.displayHexColor);
                     Filterdone.setTitle(`✅ Successfully removed filter : \`${options[0]}\``);
-                    return i.edit({ embeds: [Filterdone] });
+                    return sendM(message, { embeds: [Filterdone] });
                 } else {
                     queue.filters.add(input);
                     const Filterdone = new Discord.EmbedBuilder()
                     Filterdone.setColor(message.guild.members.me.displayHexColor);
                     Filterdone.setTitle(`✅ Successfully set filter to: \`${options[0]}\``);
-                    return i.edit({ embeds: [Filterdone] });
+                    return sendM(message, { embeds: [Filterdone] });
                 }
             }
         }
