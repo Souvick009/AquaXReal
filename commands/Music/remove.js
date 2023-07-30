@@ -29,13 +29,14 @@ module.exports = {
             options = args
         }
 
-        function sendM(message, toSend) {
+        async function sendM(message, toSend) {
             if (message.type == 2) {
-                i.edit(toSend)
+                return await message.edit(toSend)
             } else {
-                message.reply(toSend)
+                return await message.reply(toSend)
             }
         }
+        
         if (!message.member.voice.channel) return sendM(message,{ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;
@@ -78,9 +79,8 @@ module.exports = {
                     .setTitle(`Song Removed:`)
                     .setDescription(`[${arr[remove].name}](${arr[remove].url})`)
                     .setColor(message.guild.members.me.displayHexColor)
-                    .addFields({ name: 'Song Removed by:-', value: author.username })
                     .setTimestamp()
-                    .setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
+                    .setFooter({ text: `Song Removed by:- ${author.username}`})
                 sendM(message,{ embeds: [embed] })
                 if (remove === 0) {
                     skip.execute(message, args)

@@ -21,11 +21,11 @@ module.exports = {
             options = args
         }
 
-        function sendM(message, toSend) {
+        async function sendM(message, toSend) {
             if (message.type == 2) {
-                i.edit(toSend)
+                return await message.edit(toSend)
             } else {
-                message.reply(toSend)
+                return await message.reply(toSend)
             }
         }
         const voice_channel = message.member.voice.channel;

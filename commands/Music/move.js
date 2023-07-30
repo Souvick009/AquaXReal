@@ -35,13 +35,14 @@ module.exports = {
             options = args
         }
 
-        function sendM(message, toSend) {
+        async function sendM(message, toSend) {
             if (message.type == 2) {
-                i.edit(toSend)
+                return await message.edit(toSend)
             } else {
-                message.reply(toSend)
+                return await message.reply(toSend)
             }
         }
+        
         if (!message.member.voice.channel) return sendM(message,{ content: 'You must be in a voice channel to use this command.' });
 
         let channel = message.member.voice.channel.id;

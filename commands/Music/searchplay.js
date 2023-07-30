@@ -32,7 +32,7 @@ module.exports = {
 
         async function sendM(message, toSend) {
             if (message.type == 2) {
-                return await i.edit(toSend)
+                return await message.edit(toSend)
             } else {
                 return message.reply(toSend)
             }

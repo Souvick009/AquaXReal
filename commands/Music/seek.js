@@ -31,13 +31,14 @@ module.exports = {
             options = args
         }
 
-        function sendM(message, toSend) {
+        async function sendM(message, toSend) {
             if (message.type == 2) {
-                i.edit(toSend)
+                return await message.edit(toSend)
             } else {
-                message.reply(toSend)
+                return await message.reply(toSend)
             }
         }
+        
         //Checking for the voicechannel and permissions (you can add more permissions if you like).
         const voice_channel = message.member.voice.channel;
         if (!voice_channel) return sendM(message, { content: 'You need to be in a channel to execute this command!' });
