@@ -21,7 +21,7 @@ module.exports = {
         // Send the info of that command found
         // If no info found, return not found embed.
         if (message.type != 2)
-            options = args
+            options = args;
         if (options[0]) {
             return getCMD(bot, message, options[0]);
         } else {

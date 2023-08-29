@@ -48,7 +48,7 @@ module.exports = {
             sendM(message, { content: "The Queue is Empty" })
         }
 
-        if ((message.guild.members.me.voice.channel.members.size - 1) > 1) {
+        if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
             if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
                 skipSong();
             } else {

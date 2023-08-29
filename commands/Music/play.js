@@ -30,7 +30,12 @@ module.exports = {
             if (message.type == 2) {
                 return await message.edit(toSend)
             } else {
-                return await message.reply(toSend)
+                let m = await message.channel.messages.fetch(message.id);
+                try {
+                    return await message.reply(toSend);
+                } catch (err) {
+                    return message.channel.send(toSend);
+                }
             }
         }
 
@@ -56,27 +61,18 @@ module.exports = {
             samevc.setDescription(`Channel Name: \`${author.me.voice.channel.name}\``)
             return sendM(message, { embeds: [samevc] })
         };
-        // message.guild.members.me.voice.channel.setRTCRegion("singapore")
-        // const region = message.guild.members.me.voice.channel.rtcRegion
-        // const i = 0;
-        // setTimeout(() => {
-        //     while (i != 1) {
-        //         const check = region.split('e');
-        //         if (check[1] < 1000) {
-        //             message.guild.members.me.voice.channel.setRTCRegion("singapore")
-        //         } else {
-        //             i = 1;
-        //         }
-        //     }
-        // }, 1000);
 
         let queue = await bot.distube.getQueue(message);
         var req;
         if (message.type == 2) {
             req = options[0];
         } else {
+            if (args.length == 0)
+                return message.reply("Please specify the song name or link!")
             req = args.join(" ")
         }
+        if (req.startsWith("https://open.spotify.com/playlist/"))
+            sendM(message, { content: "**Note : The more songs you have in your playlist, the more time the bot will take to load...**" })
         const search = new Discord.EmbedBuilder()
         search.setDescription(":mag: **Searching! **" + req)
         search.setColor("#FFFF00");
@@ -97,7 +93,3 @@ module.exports = {
     }
 
 }
-
-
-
-
