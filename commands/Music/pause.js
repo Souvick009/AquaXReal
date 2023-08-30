@@ -25,13 +25,13 @@ module.exports = {
                 return await message.reply(toSend)
             }
         }
-        
+
         const voice_channel = message.member.voice.channel;
         const vc = new Discord.EmbedBuilder()
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return sendM(message,{ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -40,10 +40,13 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return sendM(message,{ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
         let queue = bot.distube.getQueue(message);
+        if (!queue) {
+            return sendM(message, { content: "Nothing is playing right now!" })
+        };
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
             if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
                 pause();
@@ -51,7 +54,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return sendM(message,{ embeds: [samevc] })
+                return sendM(message, { embeds: [samevc] })
             }
         } else {
             pause();
@@ -63,7 +66,7 @@ module.exports = {
                 alreadyPaused.setColor("#FF0000");
                 alreadyPaused.setTitle(`❌ ERROR | Cannot pause the Song`);
                 alreadyPaused.setDescription(`It's already paused!`);
-                return sendM(message,{ embeds: [alreadyPaused] })
+                return sendM(message, { embeds: [alreadyPaused] })
             };
 
             queue.pause(message);
@@ -72,7 +75,7 @@ module.exports = {
             const paused = new Discord.EmbedBuilder()
             paused.setColor(message.guild.members.me.displayHexColor);
             paused.setDescription(`⏸ Paused the Song: [${track.name}](${track.url})`)
-            return sendM(message,{ embeds: [paused] })
+            return sendM(message, { embeds: [paused] })
         }
     }
 }

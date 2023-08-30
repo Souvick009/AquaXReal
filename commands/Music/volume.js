@@ -42,7 +42,7 @@ module.exports = {
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return sendM(message,{ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -51,9 +51,13 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return sendM(message,{ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
+        var queue = bot.distube.getQueue(message)
+        if (!queue) {
+            return sendM(message, { content: "Nothing is playing right now!" })
+        };
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
             if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
                 setVolume();
@@ -61,7 +65,7 @@ module.exports = {
                 const samevc = new Discord.EmbedBuilder()
                 samevc.setColor("#FF0000")
                 samevc.setDescription(`❌ ERROR | You need to have the D.J. role in order to use the command while have more than 2 members in the vc`)
-                return sendM(message,{ embeds: [samevc] })
+                return sendM(message, { embeds: [samevc] })
             }
         } else {
             setVolume();
@@ -74,7 +78,7 @@ module.exports = {
                 embed.setColor("#FF0000")
                 embed.setTitle(`❌ ERROR | You didn't provided a vaild volume number`)
                 embed.setDescription(`Current Volume: \`${bot.distube.getQueue(message).volume}%\`\nUsage: \`/volume <0-200>\``)
-                return sendM(message,{ embeds: [embed] })
+                return sendM(message, { embeds: [embed] })
             };
 
             const embed1 = new Discord.EmbedBuilder()
@@ -82,23 +86,22 @@ module.exports = {
                 embed1.setColor("#FF0000")
                 embed1.setTitle(`❌ ERROR | Volume out of Range`)
                 embed1.setDescription(`Usage: \`/volume <0-200>\``)
-                return sendM(message,{ embeds: [embed1] })
+                return sendM(message, { embeds: [embed1] })
             };
 
-            var queue = bot.distube.getQueue(message)
             const notPaused = new Discord.EmbedBuilder()
             if (!queue || !queue.playing) {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot change my volume`);
                 notPaused.setDescription(`Play something first!`);
-                return sendM(message,{ embeds: [notPaused] })
+                return sendM(message, { embeds: [notPaused] })
             };
             bot.distube.setVolume(message, Number(options[0]));
 
             const embed3 = new Discord.EmbedBuilder()
             embed3.setColor(message.guild.members.me.displayHexColor)
             embed3.setDescription(`🔊 Changed the Volume to: \`${options[0]}%\``)
-            return sendM(message,{ embeds: [embed3] })
+            return sendM(message, { embeds: [embed3] })
         }
 
     }

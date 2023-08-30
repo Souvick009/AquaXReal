@@ -24,7 +24,8 @@ const { Routes } = require('discord-api-types/v9');
 //     ]
 // })
 const fs = require('fs');
-const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboPo7Fwo";
+const token = "Njk4OTA1NDA1MDYxMDcwOTA5.GQfFsm.d8J-RREEsuqgP4hafyRf4JSUAGLYG7Xolqo4Gc";
+//"ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboPo7Fwo"
 module.exports = { token: token };
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
@@ -36,7 +37,11 @@ const status = (queue) => `**Volume:** \`${queue.volume}%\` | **Filter:** \`${qu
 const { YtDlpPlugin } = require("@distube/yt-dlp")
 
 bot.distube = new DisTube(bot, {
-    plugins: [new YtDlpPlugin({ update: false }), new SpotifyPlugin({ emitEventsAfterFetching: true }), new DeezerPlugin(), new SoundCloudPlugin()],
+    plugins: [new YtDlpPlugin({ update: false }), new SpotifyPlugin({
+        emitEventsAfterFetching: true,
+        songsPerRequest: 3,
+        requestDelay: 10000,
+    }), new DeezerPlugin(), new SoundCloudPlugin()],
     directLink: true,
     searchSongs: 1,
     emitNewSongOnly: true,
@@ -66,6 +71,10 @@ bot.distube = new DisTube(bot, {
     },
 });
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 bot.distube
     .on("initQueue", queue => {
         queue.autoplay = false;
@@ -75,11 +84,12 @@ bot.distube
     .on("searchNoResult", () => { })
     .on("searchInvalidAnswer", () => { })
     .on("searchDone", () => { })
-    .on("playSong", (queue, song) => {
+
+    .on("playSong", async (queue, song) => {
         const Playsong = new Discord.EmbedBuilder();
         Playsong.setDescription(`Now playing [${song.name}](${song.url})`)
         //Playsong.setFooter({ text: `Requested by: ${song.member.user.username}`, iconURL: song.member.user.displayAvatarURL() })
-        return queue.textChannel.send({ embeds: [Playsong] })
+        queue.textChannel.send({ embeds: [Playsong] })
     })
     .on("addSong", (queue, song) => {
         const embed = new Discord.EmbedBuilder()

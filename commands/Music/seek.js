@@ -70,7 +70,7 @@ module.exports = {
         async function seekk() {
             let queue = bot.distube.getQueue(message);
             const notPaused = new Discord.EmbedBuilder()
-            if (queue.isPlaying) {
+            if (!queue) {
                 notPaused.setColor("#FF0000");
                 notPaused.setTitle(`❌ ERROR | Cannot seek the Song`);
                 notPaused.setDescription(`Play something first!`);

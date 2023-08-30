@@ -33,7 +33,7 @@ module.exports = {
         if (!voice_channel) {
             vc.setColor("#FF0000")
             vc.setTitle(`❌ ERROR | Please join a voice channel first`)
-            return sendM(message,{ embeds: [vc] })
+            return sendM(message, { embeds: [vc] })
         };
 
         let channel = message.member.voice.channel.id;
@@ -42,7 +42,7 @@ module.exports = {
             samevc.setColor("#FF0000")
             samevc.setTitle(`❌ ERROR | Please join **my** voice channel first`)
             samevc.setDescription(`Channelname: \`${message.guild.members.me.voice.channel.name}\``)
-            return sendM(message,{ embeds: [samevc] })
+            return sendM(message, { embeds: [samevc] })
         };
 
         //function for creating a bar
@@ -88,11 +88,22 @@ module.exports = {
                 var split = bar[0].split("🔘");
                 // console.log(split[0] + '\n' + split[1])
                 var bar1;
-                if (split[1] == undefined || split[1] == '') {
-                    bar1 = `🔘${bar[0]}`
+
+                if (split[1] == undefined || split[1] == '' || split[0] == '') {
+                    if (!split[0])
+                        bar1 = `🔘${bar[0]}`
+                    else
+                        bar1 = `🔘${split[0]}`
+                    console.log('1')
                 } else {
                     bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
+                    console.log('2')
                 }
+                console.log(split)
+                console.log(bar[0])
+                console.log(`🔘${bar[0]}`)
+                console.log(bar1)
+
                 duration = `${bar1}\n${current} / ${total}`
             }
 
@@ -117,9 +128,9 @@ module.exports = {
                 { name: "Duration: ", value: duration, inline: false },
                 { name: "QueueStatus", value: status(queue), inline: false }
             ])
-            return sendM(message,{ embeds: [nowplaying] })
+            return sendM(message, { embeds: [nowplaying] })
         } else if (!queue) {
-            return sendM(message,{ content: "Nothing is playing right now!" })
+            return sendM(message, { content: "Nothing is playing right now!" })
         };
     }
 }

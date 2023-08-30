@@ -36,7 +36,9 @@ module.exports = {
         };
 
         let queue = bot.distube.getQueue(message);
-
+        if (!queue) {
+            return sendM(message,{ content: "Nothing is playing right now!" })
+        };
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {
             if (message.member.roles.cache.has("685843002123616256") || message.member.roles.cache.has("684653909419229204") || message.member.permissions.has([PermissionFlagsBits.Administrator])) {
                 resume();
