@@ -1,0 +1,10 @@
+These are the packages which are edited and if you get installed a fresh packages of these,
+ then the bot wont function properly since these are custumly edited
+
+and for the first two you need to install bluebird -> npm i bluebird@latest
+
+1) Node Modules - > @distube - > dist -> index.js
+
+2) Node Modules - > @distube - > dist -> index.d.ts
+
+3) Node Modules - > utils-discord -> v14 -> index.js
