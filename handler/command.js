@@ -55,7 +55,7 @@ module.exports = (client) => {
             console.log('Started refreshing application (/) commands.');
 
             await rest.put(
-                Routes.applicationCommands("698905405061070909"), { //815171627095556106
+                Routes.applicationCommands("815171627095556106"), { //698905405061070909
                 body: commandss
             },
             ).catch(err => console.log(err));

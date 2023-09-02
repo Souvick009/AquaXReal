@@ -66,7 +66,7 @@ module.exports = {
             Searchterm.setDescription(`Usage: \`/play <URL / TITLE>\``)
             return sendM(message, { embeds: [Searchterm] })
         };
-        
+
         var req;
         if (message.type == 2) {
             req = options[0];
@@ -200,11 +200,17 @@ module.exports = {
                 const buttonRow3 = new Discord.ActionRowBuilder().addComponents(Cancelled);
                 flag = 1
                 interaction.update({ embeds: [embed], components: [buttonRow3], ephemeral: false })
-                search.setDescription(":x: **Search Cancelled! **" + options[0])
+                var req;
+                if (message.type == 2) {
+                    req = options[0];
+                } else {
+                    req = args.join(" ")
+                }
+                search.setDescription(":x: **Search Cancelled! **" + req)
                 search.setColor("#FF0000");
                 s.edit({ embeds: [search] })
                 return interaction.message.delete();
-                
+
             } else if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
                 interaction.reply({ content: "You answered an invalid number!", ephemeral: true });
                 flag = 1

@@ -24,8 +24,8 @@ const { Routes } = require('discord-api-types/v9');
 //     ]
 // })
 const fs = require('fs');
-const token = "Njk4OTA1NDA1MDYxMDcwOTA5.GQfFsm.d8J-RREEsuqgP4hafyRf4JSUAGLYG7Xolqo4Gc";
-//"ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboPo7Fwo"
+const token = "ODE1MTcxNjI3MDk1NTU2MTA2.GltDVx.W2gvtAy7FaxpfxoJ0RDmv42MPBfOFcboPo7Fwo";
+//"Njk4OTA1NDA1MDYxMDcwOTA5.GQfFsm.d8J-RREEsuqgP4hafyRf4JSUAGLYG7Xolqo4Gc"
 module.exports = { token: token };
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
