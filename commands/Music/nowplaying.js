@@ -99,10 +99,10 @@ module.exports = {
                     bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
                     console.log('2')
                 }
-                console.log(split)
-                console.log(bar[0])
-                console.log(`🔘${bar[0]}`)
-                console.log(bar1)
+                // console.log(split)
+                // console.log(bar[0])
+                // console.log(`🔘${bar[0]}`)
+                // console.log(bar1)
 
                 duration = `${bar1}\n${current} / ${total}`
             }
