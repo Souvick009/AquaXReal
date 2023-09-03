@@ -27,7 +27,12 @@ module.exports = {
             if (message.type == 2) {
                 return await message.edit(toSend)
             } else {
-                return await message.reply(toSend)
+                let m = await message.channel.messages.fetch(message.id);
+                try {
+                    return await message.reply(toSend);
+                } catch (err) {
+                    return message.channel.send(toSend);
+                }
             }
         }
         if (!message.member.voice.channel) return sendM(message, { content: 'You must be in a voice channel to use this command.' });

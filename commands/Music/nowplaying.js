@@ -25,7 +25,12 @@ module.exports = {
             if (message.type == 2) {
                 return await message.edit(toSend)
             } else {
-                return await message.reply(toSend)
+                let m = await message.channel.messages.fetch(message.id);
+                try {
+                    return await message.reply(toSend);
+                } catch (err) {
+                    return message.channel.send(toSend);
+                }
             }
         }
         const voice_channel = message.member.voice.channel;
@@ -89,20 +94,25 @@ module.exports = {
                 // console.log(split[0] + '\n' + split[1])
                 var bar1;
 
-                if (split[1] == undefined || split[1] == '' || split[0] == '') {
-                    if (!split[0])
-                        bar1 = `🔘${bar[0]}`
-                    else
-                        bar1 = `🔘${split[0]}`
-                    console.log('1')
-                } else {
-                    bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
-                    console.log('2')
+                if (split[1] == undefined) {  // [ '▬▬▬▬▬▬▬▬▬▬' ]      🔘▬▬▬▬▬▬▬▬▬▬
+                    // if (!split[0])
+                    bar1 = `🔘${split[0]}`
+                    // else
+                    //     bar1 = `🔘${split[0]}`
+                    // console.log('1')
+                } else if (split[0] == '') { // [ '', '▬▬▬▬▬▬▬▬▬▬' ]   🔘▬▬▬▬▬▬▬▬▬▬
+                    bar1 = `${bar[0]}`
+                } else if (split[1] == '') { // [ '▬▬▬▬▬▬▬▬▬', '' ]     ▬▬▬▬▬▬▬▬▬🔘
+                    bar1 = `[${split[0]}](${track.url})🔘`
                 }
-                // console.log(split)
-                // console.log(bar[0])
-                // console.log(`🔘${bar[0]}`)
-                // console.log(bar1)
+                else {
+                    bar1 = `[${split[0]}](${track.url})🔘${split[1]}`
+                }
+                console.log(split)
+                console.log(bar[0])
+                console.log(`🔘${bar[0]}`)
+                console.log(`${bar[0]}🔘`)
+                console.log(bar1)
 
                 duration = `${bar1}\n${current} / ${total}`
             }

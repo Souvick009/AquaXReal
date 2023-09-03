@@ -35,7 +35,12 @@ module.exports = {
             if (message.type == 2) {
                 return await message.edit(toSend)
             } else {
-                return await message.reply(toSend)
+                let m = await message.channel.messages.fetch(message.id);
+                try {
+                    return await message.reply(toSend);
+                } catch (err) {
+                    return message.channel.send(toSend);
+                }
             }
         }
         
@@ -153,8 +158,8 @@ module.exports = {
 
             bot.distube.seek(message, Number(time));
             const seek = new Discord.EmbedBuilder()
-            seek.setTitle(":fast_forward: Seeked!");
-            seek.setDescription(`Seeked the song for \`${ms((time * 1000), { long: true })}\``)
+            // seek.setTitle(":fast_forward: Seeked!");
+            seek.setDescription(`:fast_forward: Seeked the song for \`${ms((time * 1000), { long: true })}\``)
             seek.setColor(message.guild.members.me.displayHexColor);
             return sendM(message, { embeds: [seek] })
         }
