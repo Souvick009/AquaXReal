@@ -8,3 +8,5 @@ and for the first two you need to install bluebird -> npm i bluebird@latest
 2) Node Modules - > @distube - > dist -> index.d.ts
 
 3) Node Modules - > utils-discord -> v14 -> index.js
+
+4) Node Modules - > distube - > dist -> index.js (Skip funtion, Shuffle Funstion)
