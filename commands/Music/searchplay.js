@@ -4,10 +4,10 @@ const { PermissionFlagsBits } = require("discord.js");
 module.exports = {
     name: "searchplay",
     aliases: ['sp'],
-    accessableby: "Manage Messages",
-    description: "Check ping of the bot",
-    usage: ">>play",
-    example: ">>play ",
+    accessableby: "",
+    description: "Provides a list of songs to choose from to play",
+    usage: ">>searchplay songname, >>sp songname",
+    example: ">>sp piya re darshan raval",
     cooldown: 5,
     category: "Music",
     options: [{

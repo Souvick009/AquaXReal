@@ -50,7 +50,7 @@ module.exports = {
         let queue = await bot.distube.getQueue(message);
 
         if (!queue) {
-            sendM(message, { content: "The Queue is Empty" })
+           return sendM(message, { content: "The Queue is Empty" })
         }
 
         if ((message.guild.members.me.voice.channel.members.size - 1) > 2) {

@@ -58,14 +58,14 @@ function getCMD(bot, message, input) {
     const embed = new Discord.EmbedBuilder();
 
     // Get the cmd by the name
-    const cmd =
-        bot.commands.get(input.toLowerCase())
+    var cmd = bot.commands.get(input.toLowerCase());
+    if (!cmd) cmd = bot.commands.get(bot.aliases.get(input.toLowerCase()));
 
     let info = `No information found for command **${input.toLowerCase()}**`;
 
     // If no cmd is found, send not found embed
     if (!cmd) {
-        embed.setColor("RED")
+        embed.setColor("Red")
         embed.setDescription(info)
         return send(message, { embeds: [embed] });
     }
