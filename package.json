@@ -24,6 +24,7 @@
     "discord.js": "^14.9.0",
     "distube": "^4.1.0",
     "ffmpeg-static": "^4.4.0",
+    "follow-redirect-url": "^2.0.1",
     "libsodium-wrappers": "^0.7.9",
     "mongoose": "^5.12.5",
     "ms": "^2.1.3",

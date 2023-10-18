@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const send = require("../../utils/sendMessage.js")
+const followRedirect = require('follow-redirect-url');
 const { ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBits } = require('discord.js');
+
 module.exports = {
     name: "play",
     aliases: ['p'],
@@ -71,12 +73,30 @@ module.exports = {
                 return message.reply("Please specify the song name or link!")
             req = args.join(" ")
         }
-        if (req.startsWith("https://open.spotify.com/playlist/"))
+        if (req.startsWith("https://open.spotify.com/playlist/")) {
             sendM(message, { content: "**Note : The more songs you have in your playlist, the more time the bot will take to load...**" })
-        const search = new Discord.EmbedBuilder()
-        search.setDescription(":mag: **Searching! **" + req)
-        search.setColor("#FFFF00");
-        sendM(message, { embeds: [search] })
+        }
+
+        search = req;
+        if (req.startsWith("https://spotify.link/")) {
+            const options = {
+                //max_redirect_length: 1,
+                request_timeout: 10000,
+                ignoreSsslErrors: true
+            };
+            await followRedirect.startFollowing(req, options).then(urls => {
+                req = urls[1].redirectUrl;
+                // const slice = urls[1].redirectUrl.slice(34, 56);
+                // req = `https://open.spotify.com/playlist/${slice}`;
+                // console.log(req.localeCompare("https://open.spotify.com/playlist/7dtM1x0d56RZbswYQAcxVy"));
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+        const embed = new Discord.EmbedBuilder()
+        embed.setDescription(":mag: **Searching! **" + search)
+        embed.setColor("#FFFF00");
+        sendM(message, { embeds: [embed] })
         // console.log(message);
         const music = req;
         if (!queue) {
@@ -89,7 +109,7 @@ module.exports = {
             member: message.member,
             // message
         })
-        // }
+
     }
 
 }
