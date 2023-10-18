@@ -73,9 +73,6 @@ module.exports = {
                 return message.reply("Please specify the song name or link!")
             req = args.join(" ")
         }
-        if (req.startsWith("https://open.spotify.com/playlist/")) {
-            sendM(message, { content: "**Note : The more songs you have in your playlist, the more time the bot will take to load...**" })
-        }
 
         search = req;
         if (req.startsWith("https://spotify.link/")) {
@@ -93,10 +90,17 @@ module.exports = {
                 console.log(error)
             })
         }
+
+
         const embed = new Discord.EmbedBuilder()
         embed.setDescription(":mag: **Searching! **" + search)
         embed.setColor("#FFFF00");
-        sendM(message, { embeds: [embed] })
+        if (req.startsWith("https://open.spotify.com/playlist/") || req.startsWith("https://spotify.link/")) {
+            sendM(message, { embeds: [embed], content: "**Note : The more songs you will have in your playlist, the more time the bot will take to load...**" })
+        } else {
+            sendM(message, { embeds: [embed] })
+        }
+
         // console.log(message);
         const music = req;
         if (!queue) {
