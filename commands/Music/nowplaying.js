@@ -13,9 +13,10 @@ module.exports = {
     cooldown: 5,
     category: "Music",
     run: async (bot, message, args, options, author) => {
+        var i
         if (message.type == 2) {
             try {
-                var i = await message.deferReply()
+                i = await message.deferReply()
             } catch (err) {
                 console.log(message)
             }
@@ -23,7 +24,7 @@ module.exports = {
 
         async function sendM(message, toSend) {
             if (message.type == 2) {
-                return await message.edit(toSend)
+                return await message.editReply(toSend)
             } else {
                 let m = await message.channel.messages.fetch(message.id);
                 try {

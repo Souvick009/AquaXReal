@@ -31,7 +31,7 @@ module.exports = {
 
         async function sendM(message, toSend) {
             if (message.type == 2) {
-                return await message.edit(toSend)
+                return await message.editReply(toSend)
             } else {
                 let m = await message.channel.messages.fetch(message.id);
                 try {

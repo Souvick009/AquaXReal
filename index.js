@@ -52,7 +52,7 @@ bot.distube = new DisTube(bot, {
     youtubeCookie: [
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699563,
             "hostOnly": false,
             "httpOnly": false,
             "name": "__Secure-1PAPISID",
@@ -61,12 +61,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "HmSBGcbb6aAzJm_W/Aa0KcQ3THSL3Fvt79",
+            "value": "lLSwdehm1OpRe_IA/AKe_d_GjGtS7-6RZx",
             "id": 1
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699449,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-1PSID",
@@ -75,12 +75,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "agj-4AhJj5wLQ_cm2aMi2WJLHNNKcBdiSU1Wi-y1kdZQvoiiL3jQvAZd-gh0_mTWf3UhHQ.",
+            "value": "cAjzkgalBaJSSS4_M9DaRSkkBEdJJErPqlbqhPKwJLNbZC29NvxL8i3SajbnOIpz_3SXQQ.",
             "id": 2
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1725422505.293905,
+            "expirationDate": 1729272005.34942,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-1PSIDCC",
@@ -89,12 +89,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "APoG2W8kQoWeDd2yOrSh0tPtL_sDIZUMDideNoocy7m6ca9tUc8dnD1dELS6K8Q9EYxQB-xFTvo",
+            "value": "ACA-OxPnIlL1aCOSxYuIGvOY4NXFCvwMcE66NU0w9MqsVS5DSe-hYomxc1z09aTXdbUZdcSWuUI",
             "id": 3
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1725422109.043838,
+            "expirationDate": 1729271881.730914,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-1PSIDTS",
@@ -103,12 +103,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "sidts-CjEBSAxbGcXGGXFNX1rePBHNBeyUiqU-tNR2Gs5EmQWQ-hsMu3T2CbE-enAGjCqrsGVAEAA",
+            "value": "sidts-CjIB3e41hd0LMZoSLisGtWZdInGxs7jckn056adSMl3EkGq8ACFx8c4_d0axWMDyhPNqqhAA",
             "id": 4
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699582,
             "hostOnly": false,
             "httpOnly": false,
             "name": "__Secure-3PAPISID",
@@ -117,12 +117,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "HmSBGcbb6aAzJm_W/Aa0KcQ3THSL3Fvt79",
+            "value": "lLSwdehm1OpRe_IA/AKe_d_GjGtS7-6RZx",
             "id": 5
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.69947,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-3PSID",
@@ -131,12 +131,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "agj-4AhJj5wLQ_cm2aMi2WJLHNNKcBdiSU1Wi-y1kdZQvoiiqqj8g3kezi3DUzngJ3G_gg.",
+            "value": "cAjzkgalBaJSSS4_M9DaRSkkBEdJJErPqlbqhPKwJLNbZC29mUIXIbTjZp7kd5YS0qPEBw.",
             "id": 6
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1725422505.293933,
+            "expirationDate": 1729272005.349457,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-3PSIDCC",
@@ -145,12 +145,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "APoG2W_LjBcq_PuhGhn8C20wNd-Trbu7GpRySzoGzGiurFcbNtqOHJfuKZWmh6_20eKCZFSSIBVE",
+            "value": "ACA-OxMHJ6QF7wrIRYmCIS0WiTaUF0FEy4nsoxb2JO9kUYGtjjMM3V52jfjPN8gA1Rzgd3FaQn4",
             "id": 7
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1725422109.043954,
+            "expirationDate": 1729271881.731096,
             "hostOnly": false,
             "httpOnly": true,
             "name": "__Secure-3PSIDTS",
@@ -159,12 +159,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "sidts-CjEBSAxbGcXGGXFNX1rePBHNBeyUiqU-tNR2Gs5EmQWQ-hsMu3T2CbE-enAGjCqrsGVAEAA",
+            "value": "sidts-CjIB3e41hd0LMZoSLisGtWZdInGxs7jckn056adSMl3EkGq8ACFx8c4_d0axWMDyhPNqqhAA",
             "id": 8
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699525,
             "hostOnly": false,
             "httpOnly": false,
             "name": "APISID",
@@ -173,12 +173,12 @@ bot.distube = new DisTube(bot, {
             "secure": false,
             "session": false,
             "storeId": "0",
-            "value": "JeZLvma1LJym2c9Q/ARvepkl4e6KBHArQc",
+            "value": "i_Ia1dzOe3w35PYh/AtBIayKu3AF7qDJAn",
             "id": 9
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699488,
             "hostOnly": false,
             "httpOnly": true,
             "name": "HSID",
@@ -187,12 +187,12 @@ bot.distube = new DisTube(bot, {
             "secure": false,
             "session": false,
             "storeId": "0",
-            "value": "Ar2PUXt5aEPSpdmav",
+            "value": "AAapc0YkURQf_46YF",
             "id": 10
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728319334,
+            "expirationDate": 1732294678.752276,
             "hostOnly": false,
             "httpOnly": true,
             "name": "LOGIN_INFO",
@@ -201,12 +201,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "AFmmF2swRgIhAIO-lPZ6GQO4Q6WxtCHs4iGbtYQv7gObKZlWNFoE5iXbAiEA3nI4_ZEnmn-xXOBR6yuJCGef6aEUamz2amRcNFw4wTw:QUQ3MjNmeGFaZmR2TEJZZ18xUVhiTmV1Z2NQNGJMQjZodDJINnNULWVjYnlzdjFVWTd1MkdvOVVSWEtOaEFPSUxKZUNpYkl3MGIzZmEyUlRwUExsdWlMd2dtX09VcEZLYXVlYXBFaVNIdS1vSHdNZ2pKazFlQlNyMUpJWVJMU3pySFo4RmRKaXR0R1lhYmFtSXRSNTktTVBoVHNsblB1WmZR",
+            "value": "AFmmF2swRQIgcTi8pe55aQ3m3ngHJKDXf4WXIWXToHwB4zNXdGoNi0oCIQCQgkfeMnsHuOL8yD3MFn0FD-Cg27aB9agJY3OoKn6nQg:QUQ3MjNmeV94M2NUZGpXN1VIaWFiYjNjeDRCRm5scUtWWGdkSW1hZEpsMm1DXzlzX09xRm5jYUV5VXFQc3VTanpRZHp5UHJPY0o3eHVWb2ZtVm95NFBFLWxhN1pNWl9BSVJyMU94aWhkRmtld2htZkh4THA1ZWU5M01XQzRuVjdxaDdyNk1ZOEdVRnV2U0xYeWJGbGw4d0J4dWt3RlR3bDl3",
             "id": 11
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728446241.878355,
+            "expirationDate": 1732295514.769386,
             "hostOnly": false,
             "httpOnly": false,
             "name": "PREF",
@@ -215,12 +215,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "f4=4000000&tz=Asia.Calcutta&f7=140&f6=40000000&f5=30000",
+            "value": "f4=4000000&f6=40000000&tz=Asia.Calcutta&f5=30000",
             "id": 12
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699544,
             "hostOnly": false,
             "httpOnly": false,
             "name": "SAPISID",
@@ -229,12 +229,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "HmSBGcbb6aAzJm_W/Aa0KcQ3THSL3Fvt79",
+            "value": "lLSwdehm1OpRe_IA/AKe_d_GjGtS7-6RZx",
             "id": 13
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699296,
             "hostOnly": false,
             "httpOnly": false,
             "name": "SID",
@@ -243,12 +243,12 @@ bot.distube = new DisTube(bot, {
             "secure": false,
             "session": false,
             "storeId": "0",
-            "value": "agj-4AhJj5wLQ_cm2aMi2WJLHNNKcBdiSU1Wi-y1kdZQvoiigTF0WZ0v57WzQtd6zHLFYQ.",
+            "value": "cAjzkgalBaJSSS4_M9DaRSkkBEdJJErPqlbqhPKwJLNbZC29YST8vJHBSJ8CtrYepM7WlQ.",
             "id": 14
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1725422505.293772,
+            "expirationDate": 1729272005.34924,
             "hostOnly": false,
             "httpOnly": false,
             "name": "SIDCC",
@@ -257,12 +257,12 @@ bot.distube = new DisTube(bot, {
             "secure": false,
             "session": false,
             "storeId": "0",
-            "value": "APoG2W_3CeQwciWlKYFSC7cPLO1j3XZZBcckb1wBSYAvcf3NWif4UMufqW84end3bUZeYr31dOY",
+            "value": "ACA-OxPqQImWJ0JkvutHB5_TqNd9dphXCuPGLRfGJ1oHG5xGRQEqt1nuiTZtVpeJcrayS4Kiig",
             "id": 15
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1728081348,
+            "expirationDate": 1732291862.699508,
             "hostOnly": false,
             "httpOnly": true,
             "name": "SSID",
@@ -271,12 +271,26 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "AoLI20RzDjihggY8g",
+            "value": "AY6hy0lsJmRhTVjxF",
             "id": 16
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1709394454.223509,
+            "expirationDate": 1697736006,
+            "hostOnly": false,
+            "httpOnly": false,
+            "name": "ST-1b",
+            "path": "/",
+            "sameSite": "unspecified",
+            "secure": false,
+            "session": false,
+            "storeId": "0",
+            "value": "disableCache=true&itct=CBEQsV4iEwiE3-TQzYKCAxXh6nMBHYPtBpQ%3D&csn=MC4yOTU5MDQ5Mzg2OTg5MTY3Ng..&endpoint=%7B%22clickTrackingParams%22%3A%22CBEQsV4iEwiE3-TQzYKCAxXh6nMBHYPtBpQ%3D%22%2C%22commandMetadata%22%3A%7B%22webCommandMetadata%22%3A%7B%22url%22%3A%22%2F%22%2C%22webPageType%22%3A%22WEB_PAGE_TYPE_BROWSE%22%2C%22rootVe%22%3A3854%2C%22apiUrl%22%3A%22%2Fyoutubei%2Fv1%2Fbrowse%22%7D%7D%2C%22browseEndpoint%22%3A%7B%22browseId%22%3A%22FEwhat_to_watch%22%7D%7D",
+            "id": 17
+        },
+        {
+            "domain": ".youtube.com",
+            "expirationDate": 1712666171.752478,
             "hostOnly": false,
             "httpOnly": true,
             "name": "VISITOR_INFO1_LIVE",
@@ -285,12 +299,12 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": false,
             "storeId": "0",
-            "value": "4J2KGuWcH2Q",
-            "id": 17
+            "value": "5zF5RsK_YCs",
+            "id": 18
         },
         {
             "domain": ".youtube.com",
-            "expirationDate": 1709394454.223589,
+            "expirationDate": 1712668187.364227,
             "hostOnly": false,
             "httpOnly": true,
             "name": "VISITOR_PRIVACY_METADATA",
@@ -300,7 +314,7 @@ bot.distube = new DisTube(bot, {
             "session": false,
             "storeId": "0",
             "value": "CgJJThICGgA%3D",
-            "id": 18
+            "id": 19
         },
         {
             "domain": ".youtube.com",
@@ -312,11 +326,10 @@ bot.distube = new DisTube(bot, {
             "secure": true,
             "session": true,
             "storeId": "0",
-            "value": "3B35yNnVJQk",
-            "id": 19
+            "value": "IyoohIyXKnc",
+            "id": 20
         }
     ],
-    //"VISITOR_INFO1_LIVE=4J2KGuWcH2Q; HSID=ADRAfaiTHkXfmjvTM; SSID=AgEul6FL5TQSa_TXk; APISID=8j1tge2V8zSfa9FC/AvXq34xGFPx2qspUz; SAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; __Secure-1PAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; __Secure-3PAPISID=BE6EfDaKmSHjqM7w/AbXaqGAYgLxDmxiuP; PREF=f4=4000000&tz=Asia.Calcutta&f7=150&f6=40000000&f5=30000; SID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BrL1TPLaWF4YHfwWcnpUsAA.; __Secure-1PSID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BRuI_hzbrDa9ekcSMfFEBrg.; __Secure-3PSID=Ygj-4Ov2DN8_gZylHH-ZtC1f7pjfTytoWc9XUt5_NBl9Td8BA9T03fjUCQHKmVDK2QzHyA.; YSC=CaCY73asiBI; LOGIN_INFO=AFmmF2swRgIhAKHXjeoxPXYZMwMK9194TPvXPcdAEN34kXE0tqdHP8SWAiEAsmyLo6PsHuMr5knVq141X2-cm7Sc6D6Rpj-pknpAavY:QUQ3MjNmeDdzbXFfYXd3dmx2OUVwV3VsbTlxanF3bERKR1llOWNJUGVTbUwxN1RhYS1NVU55SXM5NzBEdk03ZjRRUXUtdU1RQzF1X293YWpxUHZwTUxvN1M3aDlQY1lkQzVCNkpjUVRFV0R0b0p0MmU1ZDlaNk1Pa1duakQyYUlHa2NRV3ZZckd6bk55TkljWWtJQW9oQjRiZXJRU3lFYkZ3; SIDCC=APoG2W-m8h9b_RLbdgt5huPHSy4WHaN7ekoGY7oOJDG1O1xF-TDrgfQUBU4J946fz2ABitCwDk8; __Secure-1PSIDCC=APoG2W-2mqEDqyW2TYRkpHeolYF8hWhz32tdbJ1Ia11K5i3znKrnBy8M39acMjLqJgFir5uM0y0; __Secure-3PSIDCC=APoG2W-SgfYtOtfPV3NXbXsKbIkWLnuy5N4VvVDgBx3V5gMeNm26QNzRbn8YAe0DXlRwnST3S5c",
     nsfw: true,
     emitAddListWhenCreatingQueue: false,
     emitAddSongWhenCreatingQueue: false,
@@ -414,7 +427,7 @@ bot.distube
         if (err.errorCode == "UNAVAILABLE_VIDEO") {
             const embed = new Discord.EmbedBuilder();
             embed.setColor("#FF0000")
-            embed.setDescription("Unable to play the song")
+            embed.setDescription("Unable to play the song\nERROR : UNAVAILABLE_VIDEO")
             return channel.send({ embeds: [embed] })
         }
         const error1 = new Discord.EmbedBuilder();

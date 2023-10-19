@@ -32,7 +32,7 @@ module.exports = {
 
         async function sendM(message, toSend) {
             if (message.type == 2) {
-                return await message.edit(toSend)
+                return await message.editReply(toSend)
             } else {
                 return message.reply(toSend)
             }
@@ -209,7 +209,10 @@ module.exports = {
                 search.setDescription(":x: **Search Cancelled! **" + req)
                 search.setColor("#FF0000");
                 s.edit({ embeds: [search] })
-                return interaction.message.delete();
+                console.log("test");
+                interaction.message.delete();
+                return;
+               // return interaction.message.delete();
 
             } else if (Number(userinput) <= 0 || Number(userinput) > 10 || isNaN(parseInt(userinput))) {
                 interaction.reply({ content: "You answered an invalid number!", ephemeral: true });
@@ -222,6 +225,7 @@ module.exports = {
             })
             flag = 1
             //s.delete();
+            console.log("test");
             return interaction.message.delete();
             // one.setDisabled(true)
             // two.setDisabled(true)
