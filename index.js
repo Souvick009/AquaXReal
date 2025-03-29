@@ -25,7 +25,7 @@ const { Routes } = require('discord-api-types/v9');
 // })
 const fs = require('fs');
 const token = "TOKEN";
-//"Njk4OTA1NDA1MDYxMDcwOTA5.GQfFsm.d8J-RREEsuqgP4hafyRf4JSUAGLYG7Xolqo4Gc"
+
 module.exports = { token: token };
 const { DisTube, StreamType } = require('distube');
 const { SpotifyPlugin } = require("@distube/spotify");
