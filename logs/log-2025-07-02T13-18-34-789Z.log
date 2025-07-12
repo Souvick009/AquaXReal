@@ -1,0 +1,32 @@
+[2025-07-02T13:18:34.805Z] [LOG] [dotenv@16.6.0] injecting env (3) from .env
+[2025-07-02T13:18:38.411Z] [LOG] Started refreshing application (/) commands.
+[2025-07-02T13:18:38.414Z] [LOG] .-----------------------------.
+|          Commands           |
+|-----------------------------|
+|    Command    | Load status |
+|---------------|-------------|
+| help.js       | ✅           |
+| info.js       | ✅           |
+| ping.js       | ✅           |
+| autoplay.js   | ✅           |
+| clearqueue.js | ✅           |
+| disconnect.js | ✅           |
+| filter.js     | ✅           |
+| join.js       | ✅           |
+| loop.js       | ✅           |
+| move.js       | ✅           |
+| nowplaying.js | ✅           |
+| pause.js      | ✅           |
+| play.js       | ✅           |
+| playskip.js   | ✅           |
+| queue.js      | ✅           |
+| remove.js     | ✅           |
+| resume.js     | ✅           |
+| save.js       | ✅           |
+| searchplay.js | ✅           |
+| seek.js       | ✅           |
+| shuffle.js    | ✅           |
+| skip.js       | ✅           |
+| suggest.js    | ✅           |
+| volume.js     | ✅           |
+'-----------------------------'

@@ -1,0 +1,34 @@
+[2025-07-04T15:22:37.965Z] [LOG] [dotenv@16.6.0] injecting env (3) from .env
+[2025-07-04T15:22:41.512Z] [LOG] Started refreshing application (/) commands.
+[2025-07-04T15:22:41.514Z] [LOG] .-----------------------------.
+|          Commands           |
+|-----------------------------|
+|    Command    | Load status |
+|---------------|-------------|
+| help.js       | ✅           |
+| info.js       | ✅           |
+| ping.js       | ✅           |
+| autoplay.js   | ✅           |
+| clearqueue.js | ✅           |
+| disconnect.js | ✅           |
+| filter.js     | ✅           |
+| join.js       | ✅           |
+| loop.js       | ✅           |
+| move.js       | ✅           |
+| nowplaying.js | ✅           |
+| pause.js      | ✅           |
+| play.js       | ✅           |
+| playskip.js   | ✅           |
+| queue.js      | ✅           |
+| remove.js     | ✅           |
+| resume.js     | ✅           |
+| save.js       | ✅           |
+| searchplay.js | ✅           |
+| seek.js       | ✅           |
+| shuffle.js    | ✅           |
+| skip.js       | ✅           |
+| suggest.js    | ✅           |
+| volume.js     | ✅           |
+'-----------------------------'
+[2025-07-04T15:22:42.294Z] [LOG] Successfully reloaded application (/) commands.
+[2025-07-04T15:22:46.233Z] [LOG] Aqua Music is Online!
