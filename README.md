@@ -10,7 +10,8 @@ AquaXReal is a music bot built for Discord, supporting queue management, skip, s
 - Music playback from YouTube and more
 - Queue support
 - Skip and Shuffle functionality (custom modified)
-- Discord.js v14 compatible (with manual patches)
+- Discord.js v14 compatible
+- Distube.js v5.0.7 compatible
 
 ---
 
